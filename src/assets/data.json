@@ -1,0 +1,548 @@
+{
+  "ions": {
+    "cations": [
+      {
+        "symbol": "H",
+        "charge": "+",
+        "name": "cation hydrogène",
+        "wrongNames": [
+          "cation hydrogène (I)",
+          "hydrogène",
+          "anion hydrogène"
+        ]
+      },
+      {
+        "symbol": "Li",
+        "charge": "+",
+        "name": "cation lithium",
+        "wrongNames": [
+          "cation lithium (I)",
+          "lithium",
+          "anion lithium"
+        ]
+      },
+      {
+        "symbol": "Be",
+        "charge": "2+",
+        "name": "cation béryllium",
+        "wrongNames": [
+          "cation béryllium (II)",
+          "béryllium",
+          "anion béryllium"
+        ]
+      },
+      {
+        "symbol": "Na",
+        "charge": "+",
+        "name": "cation sodium",
+        "wrongNames": [
+          "cation sodium (I)",
+          "sodium",
+          "anion sodium"
+        ]
+      },
+      {
+        "symbol": "Mg",
+        "charge": "2+",
+        "name": "cation magnésium",
+        "wrongNames": [
+          "cation magnésium (II)",
+          "magnésium",
+          "anion magnésium"
+        ]
+      },
+      {
+        "symbol": "Al",
+        "charge": "3+",
+        "name": "cation aliminium",
+        "wrongNames": [
+          "cation aliminium (III)",
+          "aliminium",
+          "anion aliminium"
+        ]
+      },
+      {
+        "symbol": "K",
+        "charge": "+",
+        "name": "cation potassium",
+        "wrongNames": [
+          "cation potassium (I)",
+          "potassium",
+          "anion potassium"
+        ]
+      },
+      {
+        "symbol": "Ca",
+        "charge": "2+",
+        "name": "cation calcium",
+        "wrongNames": [
+          "cation calcium (II)",
+          "calcium",
+          "anion calcium"
+        ]
+      },
+      {
+        "symbol": "Cr",
+        "charge": "2+",
+        "name": "cation chrome (II)",
+        "wrongNames": [
+          "cation chrome",
+          "chrome",
+          "anion chrome"
+        ]
+      },
+      {
+        "symbol": "Cr",
+        "charge": "3+",
+        "name": "cation chrome (III)",
+        "wrongNames": [
+          "cation chrome",
+          "chrome",
+          "anion chrome"
+        ]
+      },
+      {
+        "symbol": "Mn",
+        "charge": "4+",
+        "name": "cation manganèse (IV)",
+        "wrongNames": [
+          "cation manganèse",
+          "manganèse",
+          "anion manganèse"
+        ]
+      },
+      {
+        "symbol": "Mn",
+        "charge": "7+",
+        "name": "cation manganèse (VII)",
+        "wrongNames": [
+          "cation manganèse",
+          "manganèse",
+          "anion manganèse"
+        ]
+      },
+      {
+        "symbol": "Fe",
+        "charge": "2+",
+        "name": "cation fer (II)",
+        "wrongNames": [
+          "cation fer",
+          "fer",
+          "anion fer"
+        ]
+      },
+      {
+        "symbol": "Fe",
+        "charge": "3+",
+        "name": "cation fer (III)",
+        "wrongNames": [
+          "cation fer",
+          "fer",
+          "anion fer"
+        ]
+      },
+      {
+        "symbol": "Co",
+        "charge": "2+",
+        "name": "cation cobalt (II)",
+        "wrongNames": [
+          "cation cobalt",
+          "cobalt",
+          "anion cobalt"
+        ]
+      },
+      {
+        "symbol": "Co",
+        "charge": "3+",
+        "name": "cation cobalt (III)",
+        "wrongNames": [
+          "cation cobalt",
+          "cobalt",
+          "anion cobalt"
+        ]
+      },
+      {
+        "symbol": "Ni",
+        "charge": "2+",
+        "name": "cation nickel (II)",
+        "wrongNames": [
+          "cation nickel",
+          "nickel",
+          "anion nickel"
+        ]
+      },
+      {
+        "symbol": "Ni",
+        "charge": "3+",
+        "name": "cation nickel (III)",
+        "wrongNames": [
+          "cation nickel",
+          "nickel",
+          "anion nickel"
+        ]
+      },
+      {
+        "symbol": "Cu",
+        "charge": "+",
+        "name": "cation cuivre (I)",
+        "wrongNames": [
+          "cation cuivre",
+          "cuivre",
+          "anion cuivre"
+        ]
+      },
+      {
+        "symbol": "Cu",
+        "charge": "2+",
+        "name": "cation cuivre (II)",
+        "wrongNames": [
+          "cation cuivre",
+          "cuivre",
+          "anion cuivre"
+        ]
+      },
+      {
+        "symbol": "H<sub>3<\/sub>O",
+        "charge": "+",
+        "name": "hydronium",
+        "wrongNames": [
+          "cation hydrogène",
+          "hydrogène",
+          "hydrogénium"
+        ]
+      },
+      {
+        "symbol": "NH<sub>4<\/sub>",
+        "charge": "+",
+        "name": "ammonium",
+        "wrongNames": [
+          "nitrure",
+          "nitrate",
+          "azoture"
+        ]
+      }
+    ],
+    "anions": [
+      {
+        "symbol": "N",
+        "charge": "3-",
+        "name": "nitrure",
+        "wrongNames": [
+          "azoture",
+          "azote",
+          "anion azote"
+        ]
+      },
+      {
+        "symbol": "O",
+        "charge": "2-",
+        "name": "oxyde",
+        "wrongNames": [
+          "oxygènure",
+          "oxygène",
+          "anion oxygène"
+        ]
+      },
+      {
+        "symbol": "F",
+        "charge": "-",
+        "name": "fluorure",
+        "wrongNames": [
+          "cation fluor",
+          "fluor",
+          "anion fluor"
+        ]
+      },
+      {
+        "symbol": "P",
+        "charge": "3-",
+        "name": "phosphure",
+        "wrongNames": [
+          "cation phosphore",
+          "phosphore",
+          "anion phosphore"
+        ]
+      },
+      {
+        "symbol": "S",
+        "charge": "2-",
+        "name": "sulfure",
+        "wrongNames": [
+          "cation soufre",
+          "soufre",
+          "anion soufre"
+        ]
+      },
+      {
+        "symbol": "Cl",
+        "charge": "-",
+        "name": "chlorure",
+        "wrongNames": [
+          "cation chlore",
+          "chlore",
+          "anion chlore"
+        ]
+      },
+      {
+        "symbol": "NO<sub>2<\/sub>",
+        "charge": "-",
+        "name": "nitrite",
+        "wrongNames": [
+          "nitrure",
+          "nitrate",
+          "azoture"
+        ]
+      },
+      {
+        "symbol": "NO<sub>3<\/sub>",
+        "charge": "-",
+        "name": "nitrate",
+        "wrongNames": [
+          "nitrure",
+          "nitrite",
+          "azoture"
+        ]
+      },
+      {
+        "symbol": "SO<sub>3<\/sub>",
+        "charge": "2-",
+        "name": "sulfite",
+        "wrongNames": [
+          "sulfure",
+          "sulfate",
+          "thiosulfate"
+        ]
+      },
+      {
+        "symbol": "SO<sub>4<\/sub>",
+        "charge": "2-",
+        "name": "sulfate",
+        "wrongNames": [
+          "sulfure",
+          "sulfite",
+          "thiosulfate"
+        ]
+      },
+      {
+        "symbol": "S<sub>2<\/sub>O<sub>3<\/sub>",
+        "charge": "2-",
+        "name": "thiosulfate",
+        "wrongNames": [
+          "sulfure",
+          "sulfite",
+          "sulfate"
+        ]
+      },
+      {
+        "symbol": "CO<sub>3<\/sub>",
+        "charge": "2-",
+        "name": "carbonate",
+        "wrongNames": [
+          "carbure",
+          "carbonite",
+          "formiate"
+        ]
+      },
+      {
+        "symbol": "PO<sub>3<\/sub>",
+        "charge": "3-",
+        "name": "phosphite",
+        "wrongNames": [
+          "phosphure",
+          "phosphate",
+          "phosphine"
+        ]
+      },
+      {
+        "symbol": "PO<sub>4<\/sub>",
+        "charge": "3-",
+        "name": "phosphate",
+        "wrongNames": [
+          "phosphure",
+          "phosphite",
+          "phosphine"
+        ]
+      },
+      {
+        "symbol": "BO<sub>3<\/sub>",
+        "charge": "3-",
+        "name": "borate",
+        "wrongNames": [
+          "borure",
+          "borite",
+          "borine"
+        ]
+      },
+      {
+        "symbol": "CN",
+        "charge": "-",
+        "name": "cyanure",
+        "wrongNames": [
+          "cyanate",
+          "cyanite",
+          "nitrure"
+        ]
+      },
+      {
+        "symbol": "ClO",
+        "charge": "-",
+        "name": "hypochlorite",
+        "wrongNames": [
+          "chlorite",
+          "chlorate",
+          "perchlorate"
+        ]
+      },
+      {
+        "symbol": "ClO<sub>2<\/sub>",
+        "charge": "-",
+        "name": "chlorite",
+        "wrongNames": [
+          "chlorate",
+          "perchlorate",
+          "hypochlorite"
+        ]
+      },
+      {
+        "symbol": "ClO<sub>3<\/sub>",
+        "charge": "-",
+        "name": "chlorate",
+        "wrongNames": [
+          "perchlorate",
+          "hypochlorite",
+          "chlorite"
+        ]
+      },
+      {
+        "symbol": "ClO<sub>4<\/sub>",
+        "charge": "-",
+        "name": "perchlorate",
+        "wrongNames": [
+          "hypochlorite",
+          "chlorite",
+          "chlorate"
+        ]
+      },
+      {
+        "symbol": "BrO",
+        "charge": "-",
+        "name": "hypobromite",
+        "wrongNames": [
+          "bromite",
+          "bromate",
+          "perbromate"
+        ]
+      },
+      {
+        "symbol": "BrO<sub>2<\/sub>",
+        "charge": "-",
+        "name": "bromite",
+        "wrongNames": [
+          "bromate",
+          "perbromate",
+          "hypobromite"
+        ]
+      },
+      {
+        "symbol": "BrO<sub>3<\/sub>",
+        "charge": "-",
+        "name": "bromate",
+        "wrongNames": [
+          "perbromate",
+          "hypobromite",
+          "bromite"
+        ]
+      },
+      {
+        "symbol": "BrO<sub>4<\/sub>",
+        "charge": "-",
+        "name": "perbromate",
+        "wrongNames": [
+          "hypobromite",
+          "bromite",
+          "bromate"
+        ]
+      },
+      {
+        "symbol": "IO",
+        "charge": "-",
+        "name": "hypoiodite",
+        "wrongNames": [
+          "iodite",
+          "iodate",
+          "periodate"
+        ]
+      },
+      {
+        "symbol": "IO<sub>2<\/sub>",
+        "charge": "-",
+        "name": "iodite",
+        "wrongNames": [
+          "iodate",
+          "periodate",
+          "hypoiodite"
+        ]
+      },
+      {
+        "symbol": "IO<sub>3<\/sub>",
+        "charge": "-",
+        "name": "iodate",
+        "wrongNames": [
+          "periodate",
+          "hypoiodite",
+          "iodite"
+        ]
+      },
+      {
+        "symbol": "IO<sub>4<\/sub>",
+        "charge": "-",
+        "name": "periodate",
+        "wrongNames": [
+          "hypoiodite",
+          "iodite",
+          "iodate"
+        ]
+      },
+      {
+        "symbol": "CrO<sub>4<\/sub>",
+        "charge": "2-",
+        "name": "chromate",
+        "wrongNames": [
+          "chromite",
+          "chromure",
+          "perchromate"
+        ]
+      },
+      {
+        "symbol": "Cr<sub>2<\/sub>O<sub>7<\/sub>",
+        "charge": "2-",
+        "name": "dichromate",
+        "wrongNames": [
+          "perchromate",
+          "hypochromate",
+          "chromure"
+        ]
+      },
+      {
+        "symbol": "HCOO",
+        "charge": "-",
+        "name": "formiate",
+        "wrongNames": [
+          "carbonate",
+          "carbure",
+          "acétate"
+        ]
+      },
+      {
+        "symbol": "CH<sub>3<\/sub>COO",
+        "charge": "-",
+        "name": "acétate",
+        "wrongNames": [
+          "carbonate",
+          "carbure",
+          "formiate"
+        ]
+      }
+    ]
+  }
+}
