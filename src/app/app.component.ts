@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DataService } from './service/data.service';
 
 @Component({
@@ -6,21 +6,26 @@ import { DataService } from './service/data.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent{
   title = 'isotope';
 
-  showSplashScreen = true;
+  showRouterOutlet = false;
 
   constructor(private dataService: DataService) {
     this.loadData();
   }
 
+  ngAfterViewInit(): void {
+  }
+
   loadData(): void {
     this.dataService.getData()
       .then(() => {
-        this.showSplashScreen = false;
-        // this.showSplashScreen = true;
-        // setTimeout(()=>{this.showSplashScreen = false;}, 3000);
+        const elementToRemove = document.getElementById('elementToRemove');
+        if (elementToRemove) {
+          elementToRemove.parentNode?.removeChild(elementToRemove);
+          this.showRouterOutlet = true;
+        }
       });
   }
 }
