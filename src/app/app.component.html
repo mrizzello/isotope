@@ -1,3 +1,28 @@
 <div *ngIf="showRouterOutlet">
-  <router-outlet></router-outlet>
+    <mat-drawer-container class="drawer-container" autosize>
+        <mat-drawer #drawer class="sidenav" mode="push" position="end">
+            <button type="button" mat-button (click)="drawer.toggle()">
+                Toggle sidenav
+            </button>
+        </mat-drawer>
+
+
+            <div class="container">
+                <mat-toolbar color="primary">
+                    <button mat-icon-button>
+                    </button>
+                    <span class="spacer"></span>
+                    <span class="isotope">isotope</span><span class="ch">.ch</span>
+                    <span class="spacer"></span>
+                    <button mat-icon-button (click)="drawer.toggle()">
+                        <mat-icon>menu</mat-icon>
+                    </button>
+                </mat-toolbar>
+                <div class="content">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+
+
+    </mat-drawer-container>
 </div>

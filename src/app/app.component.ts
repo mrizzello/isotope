@@ -21,11 +21,13 @@ export class AppComponent{
   loadData(): void {
     this.dataService.getData()
       .then(() => {
+        setTimeout(()=>{
         const elementToRemove = document.getElementById('elementToRemove');
         if (elementToRemove) {
           elementToRemove.parentNode?.removeChild(elementToRemove);
           this.showRouterOutlet = true;
         }
+      },1500);
       });
   }
 }
