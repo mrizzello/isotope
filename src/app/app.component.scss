@@ -8,15 +8,20 @@
     flex-grow: 1;
     overflow-y: auto;
     max-width: 420px;
-    margin:0 auto;
+    margin: 0 auto;
 }
 
-.isotope {
-    font-weight: bold;
-}
+.sitename {
+    text-decoration: none;
+    color: #fff;
 
-.ch {
-    font-weight: lighter;
+    .isotope {
+        font-weight: bold;
+    }
+
+    .ch {
+        font-weight: lighter;
+    }
 }
 
 .spacer {
