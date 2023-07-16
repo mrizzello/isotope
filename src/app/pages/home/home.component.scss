@@ -8,16 +8,12 @@
 .introduction {
     padding: 1.2rem;
     text-align: center;
+    font-size: 5vw;
+    line-height: 1.2;
 
     .logo {
         width: 50%;
-    }
-}
-
-@media screen and (max-width: 420px) {
-    .introduction {
-        font-size: 5vw;
-        line-height: 1.2;
+        margin-bottom: 2rem;
     }
 }
 
