@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="introduction" [@slideInFromLeft] *ngIf="showIntroduction">
+        <mat-icon matListItemIcon>grid_on</mat-icon><br />
+        <h2>Associat<u>ions</u></h2>
+        <p>
+            Des ions, des ions, des ions ...
+        </p>
+        <p>
+            Associez la formule avec son nom ou vice versa!
+        </p>
+        <p>
+            <button mat-flat-button color="primary" (click)="start()">Commencer</button>
+        </p>
+    </div>
+
+    <div class="game {{cssWon}}" [@slideInFromRight] *ngIf="showGame">
+        <mat-grid-list cols="3" rowHeight="fit" gutterSize="0.2rem">
+            <mat-grid-tile colspan="1" rowspan="1"><b>Associat<u>ions</u></b></mat-grid-tile>
+            <mat-grid-tile colspan="1" rowspan="1">
+                <app-stopwatch></app-stopwatch>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="1" rowspan="1">
+                <span class="score">{{score}}/6</span>
+            </mat-grid-tile>
+            <mat-grid-tile class="tile-content" *ngFor="let item of draw" rowspan="2"
+                [class]="item.css" (click)="selectTile(item)">
+                <div class="tile" *ngIf="item.show=='formula'; else elseBlock">
+                    <span [innerHTML]="item.symbol"></span><sup>{{item.charge}}</sup>
+                </div>
+                <ng-template #elseBlock>
+                    <div class="tile">
+                        <span>{{item.name}}</span>
+                    </div>
+                </ng-template>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="3" rowspan="1">
+                <button mat-mini-fab color="primary" (click)="introduction()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+    <app-show-results [@slideInFromRight] *ngIf="showResults"></app-show-results>
+</div>

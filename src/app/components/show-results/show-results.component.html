@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="results">
+        <div class="display-time">
+            <span class="time" *ngIf="display.time !== ''">{{ display.time }}</span>
+            <span class="comment" *ngIf="display.comment !== ''">pour résoudre le puzzle!</span>
+        </div>
+        <div class="display-gif">
+            <img src="/assets/gifs/{{ nGif }}.gif" />
+        </div>
+        <div class="display-phrase">
+            <span [innerHTML]="display.phrase"></span>
+        </div>
+        <div class="restart">
+            <button mat-flat-button color="primary" (click)="clickRestart()">Recommencer</button>
+        </div>
+    </div>
+</div>

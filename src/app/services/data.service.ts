@@ -5,13 +5,14 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class DataService {
+
   private data: any;
 
   constructor(private http: HttpClient) { }
 
   getData(): Promise<any> {
-    if (this.data) {
-      return Promise.resolve(this.data);
+    if (this.data) {      
+      return this.data;
     } else {
       return this.http.get('assets/data.json').toPromise()
         .then((data: any) => {
@@ -19,5 +20,9 @@ export class DataService {
           return data;
         });
     }
+  }
+
+  getIons(): any {
+    return this.data.ions;
   }
 }

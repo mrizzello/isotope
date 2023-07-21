@@ -1,39 +1,6 @@
-.container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-}
-
 .introduction {
-    padding: 1.2rem;
-    text-align: center;
-    font-size: 5vw;
-    line-height: 1.2;
-
     .logo {
-        width: 50%;
-        margin-bottom: 2rem;
-    }
-}
-
-@media screen and (min-width: 421px) and (max-width: 767px) {
-    .introduction {
-        font-size: 4vw;
-        line-height: 1.2;
-    }
-}
-
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-    .introduction {
-        font-size: 2.5vw;
-        line-height: 1.2;
-    }    
-}
-
-@media screen and (min-width: 1024px) {
-    .introduction {
-        font-size: 1.2rem;
-        line-height: 120%;
+        width: 67%;
+        margin-bottom: 1rem;
     }
 }

@@ -1,7 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { DataService } from './service/data.service';
 import { Router } from '@angular/router';
 import { MatDrawer } from '@angular/material/sidenav';
+
+import { DataService } from './services/data.service';
 
 @Component({
   selector: 'app-root',

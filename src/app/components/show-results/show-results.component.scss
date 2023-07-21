@@ -1,0 +1,36 @@
+.mat-drawer-container,
+.results {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding: 0.6rem;
+
+    .display-time {
+        margin-bottom: 2rem;
+
+        .time {
+            display: block;
+            font-size: 150%;
+            font-weight: bold;
+            line-height: 150%;
+        }
+
+        .comment {
+            font-size: 120%;
+        }
+    }
+
+    .display-gif {
+        img {
+            width: 100%;
+        }
+    }
+
+    .display-phrase {
+        padding: 2rem 0;
+        font-size: 130%;
+        line-height: 120%;
+        font-weight: bold;
+    }
+
+}

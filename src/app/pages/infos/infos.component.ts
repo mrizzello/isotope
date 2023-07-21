@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  selector: 'app-infos',
+  templateUrl: './infos.component.html',
+  styleUrls: ['./infos.component.scss'],
   animations: [
     trigger('fadeIn', [
       transition(':enter', [
@@ -14,6 +14,6 @@ import { trigger, transition, style, animate } from '@angular/animations';
     ])
   ]
 })
-export class HomeComponent {
+export class InfosComponent {
 
 }

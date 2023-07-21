@@ -225,7 +225,7 @@
     "anions": [
       {
         "symbol": "N",
-        "charge": "3-",
+        "charge": "3–",
         "name": "nitrure",
         "wrongNames": [
           "azoture",
@@ -235,7 +235,7 @@
       },
       {
         "symbol": "O",
-        "charge": "2-",
+        "charge": "2–",
         "name": "oxyde",
         "wrongNames": [
           "oxygènure",
@@ -245,7 +245,7 @@
       },
       {
         "symbol": "F",
-        "charge": "-",
+        "charge": "–",
         "name": "fluorure",
         "wrongNames": [
           "cation fluor",
@@ -255,7 +255,7 @@
       },
       {
         "symbol": "P",
-        "charge": "3-",
+        "charge": "3–",
         "name": "phosphure",
         "wrongNames": [
           "cation phosphore",
@@ -265,7 +265,7 @@
       },
       {
         "symbol": "S",
-        "charge": "2-",
+        "charge": "2–",
         "name": "sulfure",
         "wrongNames": [
           "cation soufre",
@@ -275,7 +275,7 @@
       },
       {
         "symbol": "Cl",
-        "charge": "-",
+        "charge": "–",
         "name": "chlorure",
         "wrongNames": [
           "cation chlore",
@@ -285,7 +285,7 @@
       },
       {
         "symbol": "NO<sub>2<\/sub>",
-        "charge": "-",
+        "charge": "–",
         "name": "nitrite",
         "wrongNames": [
           "nitrure",
@@ -295,7 +295,7 @@
       },
       {
         "symbol": "NO<sub>3<\/sub>",
-        "charge": "-",
+        "charge": "–",
         "name": "nitrate",
         "wrongNames": [
           "nitrure",
@@ -305,7 +305,7 @@
       },
       {
         "symbol": "SO<sub>3<\/sub>",
-        "charge": "2-",
+        "charge": "2–",
         "name": "sulfite",
         "wrongNames": [
           "sulfure",
@@ -315,7 +315,7 @@
       },
       {
         "symbol": "SO<sub>4<\/sub>",
-        "charge": "2-",
+        "charge": "2–",
         "name": "sulfate",
         "wrongNames": [
           "sulfure",
@@ -325,7 +325,7 @@
       },
       {
         "symbol": "S<sub>2<\/sub>O<sub>3<\/sub>",
-        "charge": "2-",
+        "charge": "2–",
         "name": "thiosulfate",
         "wrongNames": [
           "sulfure",
@@ -335,7 +335,7 @@
       },
       {
         "symbol": "CO<sub>3<\/sub>",
-        "charge": "2-",
+        "charge": "2–",
         "name": "carbonate",
         "wrongNames": [
           "carbure",
@@ -345,7 +345,7 @@
       },
       {
         "symbol": "PO<sub>3<\/sub>",
-        "charge": "3-",
+        "charge": "3–",
         "name": "phosphite",
         "wrongNames": [
           "phosphure",
@@ -355,7 +355,7 @@
       },
       {
         "symbol": "PO<sub>4<\/sub>",
-        "charge": "3-",
+        "charge": "3–",
         "name": "phosphate",
         "wrongNames": [
           "phosphure",
@@ -365,7 +365,7 @@
       },
       {
         "symbol": "BO<sub>3<\/sub>",
-        "charge": "3-",
+        "charge": "3–",
         "name": "borate",
         "wrongNames": [
           "borure",
@@ -375,7 +375,7 @@
       },
       {
         "symbol": "CN",
-        "charge": "-",
+        "charge": "–",
         "name": "cyanure",
         "wrongNames": [
           "cyanate",
@@ -385,7 +385,7 @@
       },
       {
         "symbol": "ClO",
-        "charge": "-",
+        "charge": "–",
         "name": "hypochlorite",
         "wrongNames": [
           "chlorite",
@@ -395,7 +395,7 @@
       },
       {
         "symbol": "ClO<sub>2<\/sub>",
-        "charge": "-",
+        "charge": "–",
         "name": "chlorite",
         "wrongNames": [
           "chlorate",
@@ -405,7 +405,7 @@
       },
       {
         "symbol": "ClO<sub>3<\/sub>",
-        "charge": "-",
+        "charge": "–",
         "name": "chlorate",
         "wrongNames": [
           "perchlorate",
@@ -415,7 +415,7 @@
       },
       {
         "symbol": "ClO<sub>4<\/sub>",
-        "charge": "-",
+        "charge": "–",
         "name": "perchlorate",
         "wrongNames": [
           "hypochlorite",
@@ -425,7 +425,7 @@
       },
       {
         "symbol": "BrO",
-        "charge": "-",
+        "charge": "–",
         "name": "hypobromite",
         "wrongNames": [
           "bromite",
@@ -435,7 +435,7 @@
       },
       {
         "symbol": "BrO<sub>2<\/sub>",
-        "charge": "-",
+        "charge": "–",
         "name": "bromite",
         "wrongNames": [
           "bromate",
@@ -445,7 +445,7 @@
       },
       {
         "symbol": "BrO<sub>3<\/sub>",
-        "charge": "-",
+        "charge": "–",
         "name": "bromate",
         "wrongNames": [
           "perbromate",
@@ -455,7 +455,7 @@
       },
       {
         "symbol": "BrO<sub>4<\/sub>",
-        "charge": "-",
+        "charge": "–",
         "name": "perbromate",
         "wrongNames": [
           "hypobromite",
@@ -465,7 +465,7 @@
       },
       {
         "symbol": "IO",
-        "charge": "-",
+        "charge": "–",
         "name": "hypoiodite",
         "wrongNames": [
           "iodite",
@@ -475,7 +475,7 @@
       },
       {
         "symbol": "IO<sub>2<\/sub>",
-        "charge": "-",
+        "charge": "–",
         "name": "iodite",
         "wrongNames": [
           "iodate",
@@ -485,7 +485,7 @@
       },
       {
         "symbol": "IO<sub>3<\/sub>",
-        "charge": "-",
+        "charge": "–",
         "name": "iodate",
         "wrongNames": [
           "periodate",
@@ -495,7 +495,7 @@
       },
       {
         "symbol": "IO<sub>4<\/sub>",
-        "charge": "-",
+        "charge": "–",
         "name": "periodate",
         "wrongNames": [
           "hypoiodite",
@@ -505,7 +505,7 @@
       },
       {
         "symbol": "CrO<sub>4<\/sub>",
-        "charge": "2-",
+        "charge": "2–",
         "name": "chromate",
         "wrongNames": [
           "chromite",
@@ -515,7 +515,7 @@
       },
       {
         "symbol": "Cr<sub>2<\/sub>O<sub>7<\/sub>",
-        "charge": "2-",
+        "charge": "2–",
         "name": "dichromate",
         "wrongNames": [
           "perchromate",
@@ -525,7 +525,7 @@
       },
       {
         "symbol": "HCOO",
-        "charge": "-",
+        "charge": "–",
         "name": "formiate",
         "wrongNames": [
           "carbonate",
@@ -535,7 +535,7 @@
       },
       {
         "symbol": "CH<sub>3<\/sub>COO",
-        "charge": "-",
+        "charge": "–",
         "name": "acétate",
         "wrongNames": [
           "carbonate",
