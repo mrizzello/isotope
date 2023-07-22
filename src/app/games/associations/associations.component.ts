@@ -71,6 +71,7 @@ export class AssociationsComponent implements OnInit, OnDestroy{
 
   initGame(){
     this.score = 0;
+    this.stopwatchService.resetStopwatch();
     this.cssWon = '';
 
     this.cations = this.ions.cations;
@@ -143,7 +144,7 @@ export class AssociationsComponent implements OnInit, OnDestroy{
           this.stopwatchService.stopStopwatch();
           this.disableClick = true;
           this.cssWon = 'won';
-          setTimeout(()=>{this.end()}, 500);
+          setTimeout(()=>{this.end()}, 800);
         }
       }else{
         this.disableClick = true;
