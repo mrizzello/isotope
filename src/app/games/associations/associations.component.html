@@ -1,17 +1,6 @@
 <div class="container">
-    <div class="introduction" [@slideInFromLeft] *ngIf="showIntroduction">
-        <mat-icon matListItemIcon>grid_on</mat-icon><br />
-        <h2>Associat<u>ions</u></h2>
-        <p>
-            Des ions, des ions, des ions ...
-        </p>
-        <p>
-            Associez la formule avec son nom ou vice versa!
-        </p>
-        <p>
-            <button mat-flat-button color="primary" (click)="start()">Commencer</button>
-        </p>
-    </div>
+
+    <app-introduction [@slideInFromLeft] *ngIf="showIntroduction"></app-introduction>
 
     <div class="game {{cssWon}}" [@slideInFromRight] *ngIf="showGame">
         <mat-grid-list cols="3" rowHeight="fit" gutterSize="0.2rem">
@@ -34,11 +23,13 @@
                 </ng-template>
             </mat-grid-tile>
             <mat-grid-tile colspan="3" rowspan="1">
-                <button mat-mini-fab color="primary" (click)="introduction()">
+                <button mat-mini-fab color="primary" (click)="intro()">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
             </mat-grid-tile>
         </mat-grid-list>
     </div>
+
     <app-show-results [@slideInFromRight] *ngIf="showResults"></app-show-results>
+    
 </div>
