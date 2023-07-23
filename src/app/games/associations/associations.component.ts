@@ -43,6 +43,7 @@ export class AssociationsComponent implements OnInit, OnDestroy {
   draw: any;
   selection: any;
   score: number = 0;
+  maxScore: number = 6;
   cssWon: string = '';
 
   @ViewChild(IntroductionComponent) private introduction!: IntroductionComponent;

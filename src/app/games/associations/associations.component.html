@@ -3,15 +3,14 @@
     <app-introduction [@slideInFromLeft] *ngIf="showIntroduction"></app-introduction>
 
     <div class="game {{cssWon}}" [@slideInFromRight] *ngIf="showGame">
-        <mat-grid-list cols="3" rowHeight="fit" gutterSize="0.2rem">
-            <mat-grid-tile colspan="1" rowspan="1"><b>Associat<u>ions</u></b></mat-grid-tile>
-            <mat-grid-tile colspan="1" rowspan="1">
+        <mat-grid-list cols="6" rowHeight="fit" gutterSize="0.2rem">
+            <mat-grid-tile colspan="4" rowspan="1">
+                <app-score-stars [score]="score" [maxScore]="maxScore"></app-score-stars>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="2" rowspan="1">
                 <app-stopwatch></app-stopwatch>
             </mat-grid-tile>
-            <mat-grid-tile colspan="1" rowspan="1">
-                <span class="score">{{score}}/6</span>
-            </mat-grid-tile>
-            <mat-grid-tile class="tile-content" *ngFor="let item of draw" rowspan="2"
+            <mat-grid-tile class="tile-content" *ngFor="let item of draw" rowspan="2" colspan="2"
                 [class]="item.css" (click)="selectTile(item)">
                 <div class="tile" *ngIf="item.show=='formula'; else elseBlock">
                     <span [innerHTML]="item.symbol"></span><sup>{{item.charge}}</sup>
@@ -22,7 +21,7 @@
                     </div>
                 </ng-template>
             </mat-grid-tile>
-            <mat-grid-tile colspan="3" rowspan="1">
+            <mat-grid-tile colspan="6" rowspan="1">
                 <button mat-mini-fab color="primary" (click)="intro()">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
