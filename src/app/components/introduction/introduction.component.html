@@ -1,5 +1,5 @@
 <div class="introduction">
-    <mat-icon matListItemIcon *ngIf="display.icon !== ''">{{display.icon}}</mat-icon><br />
+    <mat-icon *ngIf="display.icon !== ''">{{display.icon}}</mat-icon><br />
     <h2 [innerHTML]="display.title"></h2>
     <p *ngFor="let p of display.p">
         <span [innerHTML]="p"></span>

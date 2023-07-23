@@ -132,6 +132,9 @@ export class TrivionComponent implements OnInit, OnDestroy {
       if( this.score == this.maxScore ){
         this.stopwatchService.stopStopwatch();
         item.css.push('won');
+        if( parent ){
+          parent.classList.add('good');
+        }
         this.disableClick = true;
         setTimeout(() => { this.end() }, 500);
       }else{

@@ -3,29 +3,29 @@
     <app-introduction [@slideInFromLeft] *ngIf="showIntroduction"></app-introduction>
 
     <div class="game" [@slideInFromRight] *ngIf="showGame">
-        <mat-grid-list cols="4" rowHeight="fit" gutterSize="0.2rem">
-            <mat-grid-tile colspan="2" rowspan="1">
-                <span class="score">{{score}}/6</span>
+        <mat-grid-list cols="6" rowHeight="fit" gutterSize="0.2rem">
+            <mat-grid-tile colspan="4" rowspan="1">
+                <app-score-stars [score]="score" [maxScore]="maxScore"></app-score-stars>
             </mat-grid-tile>
             <mat-grid-tile colspan="2" rowspan="1">
                 <app-stopwatch></app-stopwatch>
             </mat-grid-tile>
             <ng-container *ngFor="let item of draw">
                 <div *ngIf="item.visible">
-                    <mat-grid-tile colspan="4" rowspan="5" [ngClass]="item.css">
+                    <mat-grid-tile colspan="6" rowspan="5" [ngClass]="item.css">
                         <div class="symbol">
                             <span [innerHTML]="item.symbol"></span><sup>{{item.charge}}</sup>
                         </div>
                     </mat-grid-tile>
                     <ng-container *ngFor="let proposition of item.propositions">
-                        <mat-grid-tile colspan="2" rowspan="2" class="propositions">
+                        <mat-grid-tile colspan="3" rowspan="2" class="propositions">
                             <span class="toClick" (click)="selectTile($event, proposition, item)"></span>
                             <span class="proposition">{{proposition}}</span>
                         </mat-grid-tile>
                     </ng-container>
                 </div>
             </ng-container>
-            <mat-grid-tile colspan="4" rowspan="2">
+            <mat-grid-tile colspan="6" rowspan="2">
                 <button mat-mini-fab color="primary" (click)="intro()">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
