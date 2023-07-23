@@ -64,7 +64,7 @@ export class AssociationsComponent implements OnInit, OnDestroy {
     });
     this.introductionService.updateDisplay({
       title: 'Associat<u>ions</u>',
-      p:[
+      p: [
         'Des ions, des ions, des ions ... ',
         'Associez la formule avec son nom ou vice versa&nbsp;!'
       ]
@@ -116,10 +116,12 @@ export class AssociationsComponent implements OnInit, OnDestroy {
   }
 
   intro() {
-    this.showIntroduction = true;
-    this.showGame = false;
-    this.showResults = false;
-    this.disableClick = false;
+    if (!this.disableClick) {
+      this.showIntroduction = true;
+      this.showGame = false;
+      this.showResults = false;
+      this.disableClick = false;
+    }
   }
 
   start() {

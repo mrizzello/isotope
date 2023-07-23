@@ -18,23 +18,17 @@ export class AppComponent {
   constructor(
     private dataService: DataService,
     private router: Router) {
-    this.loadData();
   }
 
-  ngAfterViewInit(): void {
-  }
-
-  loadData(): void {
-    this.dataService.getData()
-      .then(() => {
-        setTimeout(() => {
-          const elementToRemove = document.getElementById('elementToRemove');
-          if (elementToRemove) {
-            elementToRemove.parentNode?.removeChild(elementToRemove);
-            this.showRouterOutlet = true;
-          }
-        }, 1500);
-      });
+  async ngOnInit(): Promise<void> {
+    await this.dataService.loadData();
+    setTimeout(() => {
+      const elementToRemove = document.getElementById('elementToRemove');
+      if (elementToRemove) {
+        elementToRemove.parentNode?.removeChild(elementToRemove);
+        this.showRouterOutlet = true;
+      }
+    }, 1000);
   }
 
   navigateAndCloseNav(path:string): void {
