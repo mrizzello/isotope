@@ -12,6 +12,7 @@ export class IntroductionComponent {
 
   constructor(private introductionService: IntroductionService) {
     this.introductionService.display.subscribe((data: any) => {
+      this.display.icon = data.icon !== undefined ? data.icon : '';
       this.display.title = data.title !== undefined ? data.title : '';
       this.display.p = data.p !== undefined ? data.p : [];
       this.display.action = data.action !== undefined ? data.action : 'Commencer';

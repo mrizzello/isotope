@@ -13,9 +13,9 @@ import { ShowResultsService } from '../../services/show-results.service';
 import { ShowResultsComponent } from '../../components/show-results/show-results.component';
 
 @Component({
-  selector: 'app-associations',
-  templateUrl: './associations.component.html',
-  styleUrls: ['./associations.component.scss'],
+  selector: 'app-trivion',
+  templateUrl: './trivion.component.html',
+  styleUrls: ['./trivion.component.scss'],
   animations: [
     trigger('slideInFromLeft', [
       transition(':enter', [
@@ -31,19 +31,16 @@ import { ShowResultsComponent } from '../../components/show-results/show-results
     ])
   ]
 })
-export class AssociationsComponent implements OnInit, OnDestroy {
-
+export class TrivionComponent implements OnInit, OnDestroy {
   showIntroduction: boolean = true;
   showGame: boolean = false;
   showResults: boolean = false;
   disableClick: boolean = false;
   ions: any;
-  cations: any;
-  anions: any;
   draw: any;
-  selection: any;
   score: number = 0;
-  cssWon: string = '';
+  current: number = 0;
+  maxScore: number = 8;
 
   @ViewChild(IntroductionComponent) private introduction!: IntroductionComponent;
   @ViewChild(StopwatchComponent) private stopwatch!: StopwatchComponent;
@@ -62,11 +59,11 @@ export class AssociationsComponent implements OnInit, OnDestroy {
       this.start();
     });
     this.introductionService.updateDisplay({
-      icon: 'grid_on',
-      title: 'Associat<u>ions</u>',
+      icon: 'check_box',
+      title: 'Triv<u>ion</u>',
       p: [
-        '<b>Des ions, des ions, des ions&nbsp;...</b>',
-        'Associez la formule avec son nom ou vice versa&nbsp;!'
+        '<b>C\'est plutôt trivial&nbsp;...<br />ou pas&nbsp;!</b>',
+        'Un ion et quatre propositions,<br />à vous de trouver la bonne réponse&nbsp;!'
       ]
     });
     this.restartSubscription = this.showResultsService.getRestart().subscribe((data: any) => {
@@ -76,7 +73,6 @@ export class AssociationsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.ions = this.dataService.getIons();
-    this.selection = [];
   }
 
   ngOnDestroy(): void {
@@ -86,31 +82,22 @@ export class AssociationsComponent implements OnInit, OnDestroy {
 
   initGame() {
     this.score = 0;
+    this.current = 0;
     this.stopwatchService.resetStopwatch();
-    this.cssWon = '';
 
-    this.cations = this.ions.cations;
+    this.draw = JSON.parse(JSON.stringify(this.ions));
+    this.draw = this.draw.cations.concat(this.draw.anions);
+    this.draw = arrayShuffle(this.draw);
 
-    this.cations = arrayShuffle(this.cations);
-    this.cations = this.cations.slice(0, 3);
-    this.anions = this.ions.anions;
-    this.anions = arrayShuffle(this.anions);
-    this.anions = this.anions.slice(0, 3);
-
-    this.draw = this.cations.concat(this.anions);
     this.draw.forEach((item: any) => {
-      item.show = 'name';
       item.selected = false;
-      item.out = false;
-      item.css = [];
+      item.css = ['symbol-container'];
+      item.visible = false;
+      item.propositions = item.wrongNames;
+      item.propositions.push(item.name);
+      item.propositions = arrayShuffle(item.propositions);
     });
 
-    const clones = JSON.parse(JSON.stringify(this.draw));
-    clones.forEach((item: any) => {
-      item.show = 'formula';
-    });
-
-    this.draw = this.draw.concat(clones);
     this.draw = arrayShuffle(this.draw);
 
   }
@@ -130,51 +117,41 @@ export class AssociationsComponent implements OnInit, OnDestroy {
     this.showGame = true;
     this.showResults = false;
     this.disableClick = false;
+    this.draw[this.current].visible = true;
     this.stopwatchService.startStopwatch();
   }
 
-  selectTile(tile: any) {
-    if (tile.out === true || this.disableClick) {
+  selectTile(event: any, proposition: any, item: any) {    
+    if (this.disableClick) {
       return;
     }
-    tile.css = [];
-    tile.selected = !tile.selected;
-    if (tile.selected) {
-      tile.css.push("selected");
-      this.selection.push(tile);
-    } else {
-      const index = this.selection.findIndex((item: any) => item['name'] === tile.name);
-      if (index !== -1) {
-        tile.css = [];
-        this.selection.splice(index, 1);
-      }
-    }
-    if (this.selection.length == 2) {
-      if (this.selection[0].name == this.selection[1].name) {
-        this.selection[0].out = true;
-        this.selection[0].css = ['done'];
-        this.selection[1].out = true;
-        this.selection[1].css = ['done'];
-        this.selection = [];
-        this.score++;
-        if (this.score == 6) {
-          this.stopwatchService.stopStopwatch();
-          this.disableClick = true;
-          this.cssWon = 'won';
-          setTimeout(() => { this.end() }, 800);
-        }
-      } else {
+    const targetElement = event.target as Element;
+    const parent = targetElement.parentElement?.parentElement;
+    if(proposition == item.name){
+      this.score++;
+      if( this.score == this.maxScore ){
+        this.stopwatchService.stopStopwatch();
+        item.css.push('won');
         this.disableClick = true;
-        this.selection[0].selected = false;
-        this.selection[1].selected = false;
-        this.selection[0].css = ['wrong'];
-        this.selection[1].css = ['wrong'];
+        setTimeout(() => { this.end() }, 500);
+      }else{
+        this.stopwatchService.stopStopwatch();
+        this.disableClick = true;
+        item.css.push('won')
+        if( parent ){
+          parent.classList.add('good');
+        }
         setTimeout(() => {
           this.disableClick = false;
-          this.selection[0].css = [];
-          this.selection[1].css = [];
-          this.selection = [];
+          this.draw[this.current].visible = false;
+          this.current++;
+          this.draw[this.current].visible = true;
+          this.stopwatchService.startStopwatch();
         }, 500);
+      }
+    }else{
+      if( parent ){
+        parent.classList.add('bad');
       }
     }
   }
@@ -194,5 +171,4 @@ export class AssociationsComponent implements OnInit, OnDestroy {
   stopStopwatch(): void {
     this.stopwatchService.stopStopwatch();
   }
-
 }

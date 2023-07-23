@@ -13,6 +13,7 @@ import { StopwatchComponent } from './components/stopwatch/stopwatch.component';
 import { ShowResultsComponent } from './components/show-results/show-results.component';
 
 import { AssociationsComponent } from './games/associations/associations.component';
+import { TrivionComponent } from './games/trivion/trivion.component';
 
 import { HomeComponent } from './pages/home/home.component';
 import { InfosComponent } from './pages/infos/infos.component';
@@ -25,6 +26,7 @@ import { InfosComponent } from './pages/infos/infos.component';
     ShowResultsComponent,
     HomeComponent,
     AssociationsComponent,
+    TrivionComponent,
     InfosComponent,
 
   ],
