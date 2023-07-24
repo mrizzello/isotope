@@ -8,7 +8,8 @@
         "cation hydrogène (I)",
         "hydrogène",
         "anion hydrogène"
-      ]
+      ],
+      "group": "s"
     },
     {
       "symbol": "Li",
@@ -18,7 +19,8 @@
         "cation lithium (I)",
         "lithium",
         "anion lithium"
-      ]
+      ],
+      "group": "s"
     },
     {
       "symbol": "Be",
@@ -28,7 +30,8 @@
         "cation béryllium (II)",
         "béryllium",
         "anion béryllium"
-      ]
+      ],
+      "group": "s"
     },
     {
       "symbol": "Na",
@@ -38,7 +41,8 @@
         "cation sodium (I)",
         "sodium",
         "anion sodium"
-      ]
+      ],
+      "group": "s"
     },
     {
       "symbol": "Mg",
@@ -48,7 +52,8 @@
         "cation magnésium (II)",
         "magnésium",
         "anion magnésium"
-      ]
+      ],
+      "group": "s"
     },
     {
       "symbol": "Al",
@@ -58,7 +63,8 @@
         "cation aliminium (III)",
         "aliminium",
         "anion aliminium"
-      ]
+      ],
+      "group": "p"
     },
     {
       "symbol": "K",
@@ -68,7 +74,8 @@
         "cation potassium (I)",
         "potassium",
         "anion potassium"
-      ]
+      ],
+      "group": "s"
     },
     {
       "symbol": "Ca",
@@ -78,7 +85,8 @@
         "cation calcium (II)",
         "calcium",
         "anion calcium"
-      ]
+      ],
+      "group": "s"
     },
     {
       "symbol": "Cr",
@@ -88,7 +96,8 @@
         "cation chrome",
         "chrome",
         "anion chrome"
-      ]
+      ],
+      "group": "d"
     },
     {
       "symbol": "Cr",
@@ -98,7 +107,8 @@
         "cation chrome",
         "chrome",
         "anion chrome"
-      ]
+      ],
+      "group": "d"
     },
     {
       "symbol": "Mn",
@@ -108,7 +118,8 @@
         "cation manganèse",
         "manganèse",
         "anion manganèse"
-      ]
+      ],
+      "group": "d"
     },
     {
       "symbol": "Mn",
@@ -118,7 +129,8 @@
         "cation manganèse",
         "manganèse",
         "anion manganèse"
-      ]
+      ],
+      "group": "d"
     },
     {
       "symbol": "Fe",
@@ -128,7 +140,8 @@
         "cation fer",
         "fer",
         "anion fer"
-      ]
+      ],
+      "group": "d"
     },
     {
       "symbol": "Fe",
@@ -138,7 +151,8 @@
         "cation fer",
         "fer",
         "anion fer"
-      ]
+      ],
+      "group": "d"
     },
     {
       "symbol": "Co",
@@ -148,7 +162,8 @@
         "cation cobalt",
         "cobalt",
         "anion cobalt"
-      ]
+      ],
+      "group": "d"
     },
     {
       "symbol": "Co",
@@ -158,7 +173,8 @@
         "cation cobalt",
         "cobalt",
         "anion cobalt"
-      ]
+      ],
+      "group": "d"
     },
     {
       "symbol": "Ni",
@@ -168,7 +184,8 @@
         "cation nickel",
         "nickel",
         "anion nickel"
-      ]
+      ],
+      "group": "d"
     },
     {
       "symbol": "Ni",
@@ -178,7 +195,8 @@
         "cation nickel",
         "nickel",
         "anion nickel"
-      ]
+      ],
+      "group": "d"
     },
     {
       "symbol": "Cu",
@@ -188,7 +206,8 @@
         "cation cuivre",
         "cuivre",
         "anion cuivre"
-      ]
+      ],
+      "group": "d"
     },
     {
       "symbol": "Cu",
@@ -198,7 +217,8 @@
         "cation cuivre",
         "cuivre",
         "anion cuivre"
-      ]
+      ],
+      "group": "d"
     },
     {
       "symbol": "H<sub>3<\/sub>O",
@@ -208,7 +228,8 @@
         "cation hydrogène",
         "hydrogène",
         "hydrogénium"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "NH<sub>4<\/sub>",
@@ -218,7 +239,8 @@
         "nitrure",
         "nitrate",
         "azoture"
-      ]
+      ],
+      "group": ""
     }
   ],
   "anions": [
@@ -230,7 +252,8 @@
         "azoture",
         "azote",
         "anion azote"
-      ]
+      ],
+      "group": "p"
     },
     {
       "symbol": "O",
@@ -240,7 +263,8 @@
         "oxygènure",
         "oxygène",
         "anion oxygène"
-      ]
+      ],
+      "group": "p"
     },
     {
       "symbol": "F",
@@ -250,7 +274,8 @@
         "cation fluor",
         "fluor",
         "anion fluor"
-      ]
+      ],
+      "group": "p"
     },
     {
       "symbol": "P",
@@ -260,7 +285,8 @@
         "cation phosphore",
         "phosphore",
         "anion phosphore"
-      ]
+      ],
+      "group": "p"
     },
     {
       "symbol": "S",
@@ -270,7 +296,8 @@
         "cation soufre",
         "soufre",
         "anion soufre"
-      ]
+      ],
+      "group": "p"
     },
     {
       "symbol": "Cl",
@@ -280,7 +307,8 @@
         "cation chlore",
         "chlore",
         "anion chlore"
-      ]
+      ],
+      "group": "p"
     },
     {
       "symbol": "NO<sub>2<\/sub>",
@@ -290,7 +318,8 @@
         "nitrure",
         "nitrate",
         "azoture"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "NO<sub>3<\/sub>",
@@ -300,7 +329,8 @@
         "nitrure",
         "nitrite",
         "azoture"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "SO<sub>3<\/sub>",
@@ -310,7 +340,8 @@
         "sulfure",
         "sulfate",
         "thiosulfate"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "SO<sub>4<\/sub>",
@@ -320,7 +351,8 @@
         "sulfure",
         "sulfite",
         "thiosulfate"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "S<sub>2<\/sub>O<sub>3<\/sub>",
@@ -330,7 +362,8 @@
         "sulfure",
         "sulfite",
         "sulfate"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "CO<sub>3<\/sub>",
@@ -340,7 +373,8 @@
         "carbure",
         "carbonite",
         "formiate"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "PO<sub>3<\/sub>",
@@ -350,7 +384,8 @@
         "phosphure",
         "phosphate",
         "phosphine"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "PO<sub>4<\/sub>",
@@ -360,7 +395,8 @@
         "phosphure",
         "phosphite",
         "phosphine"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "BO<sub>3<\/sub>",
@@ -370,7 +406,8 @@
         "borure",
         "borite",
         "borine"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "CN",
@@ -380,7 +417,8 @@
         "cyanate",
         "cyanite",
         "nitrure"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "ClO",
@@ -390,7 +428,8 @@
         "chlorite",
         "chlorate",
         "perchlorate"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "ClO<sub>2<\/sub>",
@@ -400,7 +439,8 @@
         "chlorate",
         "perchlorate",
         "hypochlorite"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "ClO<sub>3<\/sub>",
@@ -410,7 +450,8 @@
         "perchlorate",
         "hypochlorite",
         "chlorite"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "ClO<sub>4<\/sub>",
@@ -420,7 +461,8 @@
         "hypochlorite",
         "chlorite",
         "chlorate"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "BrO",
@@ -430,7 +472,8 @@
         "bromite",
         "bromate",
         "perbromate"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "BrO<sub>2<\/sub>",
@@ -440,7 +483,8 @@
         "bromate",
         "perbromate",
         "hypobromite"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "BrO<sub>3<\/sub>",
@@ -450,7 +494,8 @@
         "perbromate",
         "hypobromite",
         "bromite"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "BrO<sub>4<\/sub>",
@@ -460,7 +505,8 @@
         "hypobromite",
         "bromite",
         "bromate"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "IO",
@@ -470,7 +516,8 @@
         "iodite",
         "iodate",
         "periodate"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "IO<sub>2<\/sub>",
@@ -480,7 +527,8 @@
         "iodate",
         "periodate",
         "hypoiodite"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "IO<sub>3<\/sub>",
@@ -490,7 +538,8 @@
         "periodate",
         "hypoiodite",
         "iodite"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "IO<sub>4<\/sub>",
@@ -500,7 +549,8 @@
         "hypoiodite",
         "iodite",
         "iodate"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "CrO<sub>4<\/sub>",
@@ -510,7 +560,8 @@
         "chromite",
         "chromure",
         "perchromate"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "Cr<sub>2<\/sub>O<sub>7<\/sub>",
@@ -520,7 +571,8 @@
         "perchromate",
         "hypochromate",
         "chromure"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "HCOO",
@@ -530,7 +582,8 @@
         "carbonate",
         "carbure",
         "acétate"
-      ]
+      ],
+      "group": ""
     },
     {
       "symbol": "CH<sub>3<\/sub>COO",
@@ -540,7 +593,8 @@
         "carbonate",
         "carbure",
         "formiate"
-      ]
+      ],
+      "group": ""
     }
   ]
 }

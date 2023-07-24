@@ -14,7 +14,8 @@
                 <div *ngIf="item.visible">
                     <mat-grid-tile colspan="6" rowspan="5" [ngClass]="item.css">
                         <div class="symbol">
-                            <span [innerHTML]="item.symbol"></span><sup>{{item.charge}}</sup>
+                            <span [innerHTML]="item.symbol"></span><sup>{{item.charge}}</sup><br/>
+                            <span class="group" *ngIf="item.group != ''">groupe&nbsp;:&nbsp;{{item.group}}</span>
                         </div>
                     </mat-grid-tile>
                     <ng-container *ngFor="let proposition of item.propositions">

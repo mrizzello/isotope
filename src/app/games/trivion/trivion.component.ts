@@ -88,6 +88,9 @@ export class TrivionComponent implements OnInit, OnDestroy {
     this.draw = JSON.parse(JSON.stringify(this.ions));
     this.draw = this.draw.cations.concat(this.draw.anions);
     this.draw = arrayShuffle(this.draw);
+    this.draw = this.draw.slice(0, this.maxScore);
+    console.log(this.draw);
+    
 
     this.draw.forEach((item: any) => {
       item.selected = false;
