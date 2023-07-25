@@ -7,12 +7,15 @@ import { StopwatchService } from '../../services/stopwatch.service';
   styleUrls: ['./stopwatch.component.scss']
 })
 export class StopwatchComponent implements OnDestroy {
-  displayTime = '00:00:000';
+  
+  displayTime:string = '00:00:000';
+  running:boolean = false;
 
   constructor(private stopwatchService: StopwatchService) {
     this.stopwatchService.displayTime.subscribe((time: string) => {
       this.displayTime = time;
     });
+    this.running = this.stopwatchService.getIsRunning();
   }
 
   ngOnDestroy(): void {
@@ -29,5 +32,9 @@ export class StopwatchComponent implements OnDestroy {
 
   resetStopwatch(): void {
     this.stopwatchService.resetStopwatch();
+  }
+
+  getIsRunning(): boolean {
+    return this.stopwatchService.getIsRunning();
   }
 }

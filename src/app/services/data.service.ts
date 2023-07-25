@@ -9,6 +9,7 @@ export class DataService {
 
   private data: any = {};
   private fileUrls: string[] = [
+    'assets/data/lewis.json',
     'assets/data/ions.json',
     'assets/data/success.json',
   ];
@@ -22,8 +23,13 @@ export class DataService {
   async loadData(): Promise<void> {
     const promises: Promise<any>[] = this.fileUrls.map(url => this.loadFile(url));
     const responses: any[] = await Promise.all(promises);
-    this.data.ions = responses[0];
-    this.data.success = responses[1];
+    this.data.lewis = responses[0];
+    this.data.ions = responses[1];
+    this.data.success = responses[2];
+  }
+
+  getLewis(): any {
+    return this.data.lewis;
   }
 
   getIons(): any {

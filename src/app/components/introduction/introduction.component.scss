@@ -2,12 +2,16 @@
     width: 100%;
     text-align: center;
 
-    .mat-icon {
-        color: #673ab7;
-    }
+    .introduction-content {
+        padding: 1rem;
 
-    h2 {
-        color: #673ab7;
-        font-weight: bold;
+        .mat-icon {
+            color: #673ab7;
+        }
+
+        h2 {
+            color: #673ab7;
+            font-weight: bold;
+        }
     }
 }

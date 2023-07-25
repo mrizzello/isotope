@@ -2,9 +2,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-}
 
-.display {
-    font-size: 1rem;
-    font-weight: bold;
+    .display {
+        font-size: 150%;
+        color: #666;
+
+        &.running {
+            color: #673ab7;
+        }
+    }
 }

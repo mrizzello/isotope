@@ -1,10 +1,12 @@
 <div class="introduction">
-    <mat-icon *ngIf="display.icon !== ''">{{display.icon}}</mat-icon><br />
-    <h2 [innerHTML]="display.title"></h2>
-    <p *ngFor="let p of display.p">
-        <span [innerHTML]="p"></span>
-    </p>
-    <p>
-        <button mat-flat-button color="primary" (click)="clickStart()">{{display.action}}</button>
-    </p>
+    <div class="introduction-content">
+        <mat-icon *ngIf="display.icon !== ''">{{display.icon}}</mat-icon><br />
+        <h2 [innerHTML]="display.title"></h2>
+        <p *ngFor="let p of display.p">
+            <span [innerHTML]="p"></span>
+        </p>
+        <p>
+            <button mat-flat-button color="primary" (click)="clickStart()">{{display.action}}</button>
+        </p>
+    </div>
 </div>

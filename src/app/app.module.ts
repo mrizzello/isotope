@@ -15,6 +15,8 @@ import { ShowResultsComponent } from './components/show-results/show-results.com
 
 import { AssociationsComponent } from './games/associations/associations.component';
 import { TrivionComponent } from './games/trivion/trivion.component';
+import { LewisComponent } from './games/lewis/lewis.component';
+import { LewisStructureComponent } from './components/lewis-structure/lewis-structure.component';
 
 import { HomeComponent } from './pages/home/home.component';
 import { InfosComponent } from './pages/infos/infos.component';
@@ -27,10 +29,11 @@ import { InfosComponent } from './pages/infos/infos.component';
     ScoreStarsComponent,
     ShowResultsComponent,
     HomeComponent,
+    LewisComponent,
+    LewisStructureComponent,
     AssociationsComponent,
     TrivionComponent,
-    InfosComponent,
-
+    InfosComponent
   ],
   imports: [
     BrowserModule,

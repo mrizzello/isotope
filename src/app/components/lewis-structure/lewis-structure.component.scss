@@ -1,0 +1,28 @@
+circle {
+    fill: #f7931e;
+}
+
+line {
+    stroke: #f7931e;
+    stroke-width: 5;
+}
+
+.wrong{
+    circle {
+        fill: #BE8080;
+    }
+    
+    line {
+        stroke: #BE8080;
+    }
+}
+
+.correct{
+    circle {
+        fill: #2f784a;
+    }
+    
+    line {
+        stroke: #2f784a;
+    }
+}

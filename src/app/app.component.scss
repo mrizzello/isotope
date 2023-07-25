@@ -29,15 +29,18 @@
     flex: 1 1 auto;
 }
 
-.sidenav{
-    .mdc-list{
+.sidenav {
+    .mdc-list {
         padding: 0;
         font-weight: bold;
-        b{
+        margin-right: 2rem;
+
+        b {
             color: #673ab7;
         }
     }
-    .mat-icon{
+
+    .mat-icon {
         margin: 0 0.67rem;
     }
 }

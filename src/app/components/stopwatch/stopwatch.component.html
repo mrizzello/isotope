@@ -1,3 +1,3 @@
 <div class="stopwatch">
-    <div class="display">{{ displayTime }}</div>
+    <div [ngClass]="{'display': true, 'running': getIsRunning()}">{{ displayTime }}</div>
 </div>

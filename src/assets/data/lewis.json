@@ -1,0 +1,200 @@
+[
+    {
+        "number": "1",
+        "symbol": "H",
+        "name": "hydrogène",
+        "col": 1
+    },
+    {
+        "number": "3",
+        "symbol": "Li",
+        "name": "lithium",
+        "col": 1
+    },
+    {
+        "number": "4",
+        "symbol": "Be",
+        "name": "béryllium",
+        "col": 2
+    },
+    {
+        "number": "5",
+        "symbol": "B",
+        "name": "bore",
+        "col": 3
+    },
+    {
+        "number": "6",
+        "symbol": "C",
+        "name": "carbone",
+        "col": 4
+    },
+    {
+        "number": "7",
+        "symbol": "N",
+        "name": "azote",
+        "col": 5
+    },
+    {
+        "number": "8",
+        "symbol": "O",
+        "name": "oxygène",
+        "col": 6
+    },
+    {
+        "number": "9",
+        "symbol": "F",
+        "name": "fluor",
+        "col": 7
+    },
+    {
+        "number": "10",
+        "symbol": "Ne",
+        "name": "néon",
+        "col": 8
+    },
+    {
+        "number": "11",
+        "symbol": "Na",
+        "name": "sodium",
+        "col": 1
+    },
+    {
+        "number": "12",
+        "symbol": "Mg",
+        "name": "magnésium",
+        "col": 2
+    },
+    {
+        "number": "13",
+        "symbol": "Al",
+        "name": "aluminium",
+        "col": 3
+    },
+    {
+        "number": "14",
+        "symbol": "Si",
+        "name": "silicium",
+        "col": 4
+    },
+    {
+        "number": "15",
+        "symbol": "P",
+        "name": "phosphore",
+        "col": 5
+    },
+    {
+        "number": "16",
+        "symbol": "S",
+        "name": "soufre",
+        "col": 6
+    },
+    {
+        "number": "17",
+        "symbol": "Cl",
+        "name": "chlore",
+        "col": 7
+    },
+    {
+        "number": "18",
+        "symbol": "Ar",
+        "name": "argon",
+        "col": 8
+    },
+    {
+        "number": "19",
+        "symbol": "K",
+        "name": "potassium",
+        "col": 1
+    },
+    {
+        "number": "20",
+        "symbol": "Ca",
+        "name": "calcium",
+        "col": 2
+    },
+    {
+        "number": "31",
+        "symbol": "Ga",
+        "name": "gallium",
+        "col": 3
+    },
+    {
+        "number": "32",
+        "symbol": "Ge",
+        "name": "germanium",
+        "col": 4
+    },
+    {
+        "number": "33",
+        "symbol": "As",
+        "name": "arsenic",
+        "col": 5
+    },
+    {
+        "number": "34",
+        "symbol": "Se",
+        "name": "sélénium",
+        "col": 6
+    },
+    {
+        "number": "35",
+        "symbol": "Br",
+        "name": "brome",
+        "col": 7
+    },
+    {
+        "number": "36",
+        "symbol": "Kr",
+        "name": "krypton",
+        "col": 8
+    },
+    {
+        "number": "37",
+        "symbol": "Rb",
+        "name": "rubidium",
+        "col": 1
+    },
+    {
+        "number": "38",
+        "symbol": "Sr",
+        "name": "strontium",
+        "col": 2
+    },
+    {
+        "number": "49",
+        "symbol": "In",
+        "name": "indium",
+        "col": 3
+    },
+    {
+        "number": "50",
+        "symbol": "Sn",
+        "name": "étain",
+        "col": 4
+    },
+    {
+        "number": "51",
+        "symbol": "Sb",
+        "name": "antimoine",
+        "col": 5
+    },
+    {
+        "number": "52",
+        "symbol": "Te",
+        "name": "tellure",
+        "col": 6
+    },
+    {
+        "number": "53",
+        "symbol": "I",
+        "name": "iode",
+        "col": 7
+    },
+    {
+        "number": "54",
+        "symbol": "Xe",
+        "name": "xénon",
+        "col": 8
+    }
+]

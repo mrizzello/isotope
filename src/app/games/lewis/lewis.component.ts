@@ -13,9 +13,9 @@ import { ShowResultsService } from '../../services/show-results.service';
 import { ShowResultsComponent } from '../../components/show-results/show-results.component';
 
 @Component({
-  selector: 'app-associations',
-  templateUrl: './associations.component.html',
-  styleUrls: ['./associations.component.scss'],
+  selector: 'app-lewis',
+  templateUrl: './lewis.component.html',
+  styleUrls: ['./lewis.component.scss'],
   animations: [
     trigger('slideInFromLeft', [
       transition(':enter', [
@@ -31,20 +31,18 @@ import { ShowResultsComponent } from '../../components/show-results/show-results
     ])
   ]
 })
-export class AssociationsComponent implements OnInit, OnDestroy {
-
+export class LewisComponent implements OnInit, OnDestroy {
   showIntroduction: boolean = true;
   showGame: boolean = false;
   showResults: boolean = false;
   disableClick: boolean = false;
-  ions: any;
-  cations: any;
-  anions: any;
+  structures: any;
   draw: any;
-  selection: any;
   score: number = 0;
-  maxScore: number = 6;
-  cssWon: string = '';
+  current: number = 0;
+  maxScore: number = 8;
+  romans: any = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
+  propositionsRadius = 112;
 
   @ViewChild(IntroductionComponent) private introduction!: IntroductionComponent;
   @ViewChild(StopwatchComponent) private stopwatch!: StopwatchComponent;
@@ -63,11 +61,11 @@ export class AssociationsComponent implements OnInit, OnDestroy {
       this.start();
     });
     this.introductionService.updateDisplay({
-      icon: 'grid_on',
-      title: 'Associat<u>ions</u>',
+      icon: 'settings_backup_restore',
+      title: 'Structure de Lewis',
       p: [
-        '<b>Des ions, des ions, des ions&nbsp;...</b>',
-        'Associez la formule avec son nom ou vice versa&nbsp;!'
+        '<b>Les structures de Lewis ne sont pas si compliquées&nbsp!</b>',
+        'Trouvez la bonne structure à l\'aide des informations fournies.'
       ]
     });
     this.restartSubscription = this.showResultsService.getRestart().subscribe((data: any) => {
@@ -76,8 +74,7 @@ export class AssociationsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.ions = this.dataService.getIons();
-    this.selection = [];
+    this.structures = this.dataService.getLewis();
   }
 
   ngOnDestroy(): void {
@@ -87,32 +84,41 @@ export class AssociationsComponent implements OnInit, OnDestroy {
 
   initGame() {
     this.score = 0;
+    this.current = 0;
     this.stopwatchService.resetStopwatch();
-    this.cssWon = '';
 
-    this.cations = this.ions.cations;
-
-    this.cations = arrayShuffle(this.cations);
-    this.cations = this.cations.slice(0, 3);
-    this.anions = this.ions.anions;
-    this.anions = arrayShuffle(this.anions);
-    this.anions = this.anions.slice(0, 3);
-
-    this.draw = this.cations.concat(this.anions);
-    this.draw.forEach((item: any) => {
-      item.show = 'name';
-      item.selected = false;
-      item.out = false;
-      item.css = [];
-    });
-
-    const clones = JSON.parse(JSON.stringify(this.draw));
-    clones.forEach((item: any) => {
-      item.show = 'formula';
-    });
-
-    this.draw = this.draw.concat(clones);
+    this.draw = JSON.parse(JSON.stringify(this.structures));
     this.draw = arrayShuffle(this.draw);
+    this.draw = this.draw.slice(0, this.maxScore);
+
+    this.draw.forEach((item: any) => {
+      item.visible = false;
+
+      let propositions = [];
+      for (let step = 1; step <= 8; step++) {
+        propositions.push({
+          n: step,
+          correct: step == item.col,
+          translate: [],
+          css: ''
+        });
+      }
+
+      propositions = arrayShuffle(propositions);
+
+      let angle = 0;
+      propositions.forEach((proposition, index) => {
+        let radians = angle * (Math.PI / 180);
+        let translate: any = {};
+        translate.x = Math.round(Math.cos(radians) * this.propositionsRadius);
+        translate.y = Math.round(Math.sin(radians) * this.propositionsRadius);
+        proposition.translate = translate;
+        angle += 360 / 8;
+      });
+
+      item.propositions = propositions;
+
+    });
 
   }
 
@@ -131,53 +137,37 @@ export class AssociationsComponent implements OnInit, OnDestroy {
     this.showGame = true;
     this.showResults = false;
     this.disableClick = false;
+    this.draw[this.current].visible = true;
     this.stopwatchService.startStopwatch();
   }
 
-  selectTile(tile: any) {
-    if (tile.out === true || this.disableClick) {
+  selectStructure(proposition: any) {
+    if (this.disableClick) {
       return;
     }
-    tile.css = [];
-    tile.selected = !tile.selected;
-    if (tile.selected) {
-      tile.css.push("selected");
-      this.selection.push(tile);
-    } else {
-      const index = this.selection.findIndex((item: any) => item['name'] === tile.name);
-      if (index !== -1) {
-        tile.css = [];
-        this.selection.splice(index, 1);
-      }
-    }
-    if (this.selection.length == 2) {
-      if (this.selection[0].name == this.selection[1].name) {
-        this.selection[0].out = true;
-        this.selection[0].css = ['done'];
-        this.selection[1].out = true;
-        this.selection[1].css = ['done'];
-        this.selection = [];
-        this.score++;
-        if (this.score == 6) {
-          this.stopwatchService.stopStopwatch();
-          this.disableClick = true;
-          this.cssWon = 'won';
-          setTimeout(() => { this.end() }, 800);
-        }
-      } else {
+    if( proposition.correct ){
+      proposition.css = "correct";
+      this.draw[this.current].css = 'won';
+      this.score++;
+      if( this.score == this.maxScore ){
+        this.stopwatchService.stopStopwatch();
         this.disableClick = true;
-        this.selection[0].selected = false;
-        this.selection[1].selected = false;
-        this.selection[0].css = ['wrong'];
-        this.selection[1].css = ['wrong'];
+        setTimeout(() => { this.end() }, 500);
+      }else{
+        this.stopwatchService.stopStopwatch();
+        this.disableClick = true;
         setTimeout(() => {
           this.disableClick = false;
-          this.selection[0].css = [];
-          this.selection[1].css = [];
-          this.selection = [];
+          this.draw[this.current].visible = false;
+          this.current++;
+          this.draw[this.current].visible = true;
+          this.stopwatchService.startStopwatch();
         }, 500);
       }
+    }else{
+      proposition.css = "wrong";
     }
+    
   }
 
   end() {
@@ -186,6 +176,10 @@ export class AssociationsComponent implements OnInit, OnDestroy {
     let display: any = [];
     display.time = this.stopwatchService.getDisplayString();
     this.showResultsService.updateDisplay(display);
+  }
+
+  getRoman(item: any) {
+    return this.romans[item.col];
   }
 
 }
