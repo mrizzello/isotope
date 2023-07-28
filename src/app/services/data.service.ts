@@ -36,7 +36,7 @@ export class DataService {
     return this.data.ions;
   }
 
-  getSuccessPhrases(): any {
+  getSuccess(): any {
     return this.data.success;
   }
 }

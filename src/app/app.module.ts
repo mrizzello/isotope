@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 
 import { MaterialModule } from './material.module';
 
+import { SafeHtmlPipe } from './pipes/sanitize.pipe';
+
 import { IntroductionComponent } from './components/introduction/introduction.component';
 import { StopwatchComponent } from './components/stopwatch/stopwatch.component';
 import { ScoreStarsComponent } from './components/score-stars/score-stars.component';
@@ -28,6 +30,7 @@ import { InfosComponent } from './pages/infos/infos.component';
     StopwatchComponent,
     ScoreStarsComponent,
     ShowResultsComponent,
+    SafeHtmlPipe,
     HomeComponent,
     LewisComponent,
     LewisStructureComponent,

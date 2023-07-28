@@ -1,6 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ShowResultsService } from '../../services/show-results.service';
 import { DataService } from '../../services/data.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-show-results',
   templateUrl: './show-results.component.html',
@@ -8,20 +10,25 @@ import { DataService } from '../../services/data.service';
 })
 export class ShowResultsComponent {
 
-  display: any = [];
-  phrases: any = [];
-  maxGifs = 19
-  nGif = 0;
+  display: any = {
+    time: '',
+    comment: '',
+    gif: '' as SafeResourceUrl,
+    phrase: ''
+  };
+  success: any = [];
 
   constructor(
     private showResultsService: ShowResultsService,
     private dataService: DataService,
+    private sanitizer: DomSanitizer
   ) {
-    this.phrases = this.dataService.getSuccessPhrases();
+    this.success = this.dataService.getSuccess();
     this.showResultsService.display.subscribe((data: any) => {
       this.display.time = data.time !== undefined ? data.time : '';
-      this.display.phrase = this.phrases[Math.floor(Math.random() * this.phrases.length)];
-      this.nGif = Math.floor(Math.random() * (this.maxGifs - 1 + 1)) + 1;
+      this.display.phrase = this.success.phrases[Math.floor(Math.random() * this.success.phrases.length)];
+      const urlString = this.success.gifs[Math.floor(Math.random() * this.success.gifs.length)];
+      this.display.gif = this.sanitizer.bypassSecurityTrustResourceUrl(urlString);
     });
   }
 
