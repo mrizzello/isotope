@@ -19,6 +19,7 @@ import { AssociationsComponent } from './games/associations/associations.compone
 import { TrivionComponent } from './games/trivion/trivion.component';
 import { LewisComponent } from './games/lewis/lewis.component';
 import { LewisStructureComponent } from './components/lewis-structure/lewis-structure.component';
+import { FamilyComponent } from './games/family/family.component';
 
 import { HomeComponent } from './pages/home/home.component';
 import { InfosComponent } from './pages/infos/infos.component';
@@ -36,6 +37,7 @@ import { InfosComponent } from './pages/infos/infos.component';
     LewisStructureComponent,
     AssociationsComponent,
     TrivionComponent,
+    FamilyComponent,
     InfosComponent
   ],
   imports: [

@@ -12,6 +12,7 @@ export class DataService {
     'assets/data/lewis.json',
     'assets/data/ions.json',
     'assets/data/success.json',
+    'assets/data/family.json',
   ];
 
   constructor(private http: HttpClient) { }
@@ -26,6 +27,7 @@ export class DataService {
     this.data.lewis = responses[0];
     this.data.ions = responses[1];
     this.data.success = responses[2];
+    this.data.family = responses[3];
   }
 
   getLewis(): any {
@@ -38,5 +40,9 @@ export class DataService {
 
   getSuccess(): any {
     return this.data.success;
+  }
+
+  getFamily(): any {
+    return this.data.family;
   }
 }
