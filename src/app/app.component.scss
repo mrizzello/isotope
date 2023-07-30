@@ -12,17 +12,26 @@
     margin: 0 auto;
 }
 
-.sitename {
-    text-decoration: none;
-    color: #fff;
+.toolbar {
+    background-color: #000000;
 
-    .isotope {
-        font-weight: bold;
+    .sitename {
+        text-decoration: none;
+        color: #fff;
+
+        .isotope {
+            font-weight: bold;
+        }
+
+        .ch {
+            font-weight: lighter;
+        }
     }
 
-    .ch {
-        font-weight: lighter;
+    .icon-menu {
+        color: #ffffff;
     }
+
 }
 
 .spacer {

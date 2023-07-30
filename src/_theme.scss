@@ -1,0 +1,15 @@
+@import 'colors';
+
+$isotope-primary: mat.define-palette($isotope-orange, 500);
+$isotope-accent: mat.define-palette(mat.$indigo-palette, A200, A100, A400);
+
+$isotope-theme: mat.define-light-theme((
+ color: (
+   primary: $isotope-primary,
+   accent: $isotope-accent,
+ ),
+ typography: mat.define-typography-config(),
+ density: 0,
+));
+
+@include mat.all-component-themes($isotope-theme);
