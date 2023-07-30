@@ -6,12 +6,15 @@
         padding: 1rem;
 
         .mat-icon {
-            color: #673ab7;
+            color: #f7931e;
+            transform: scale(4);
         }
 
         h2 {
-            color: #673ab7;
+            color: #f7931e;
             font-weight: bold;
+            font-size: 180%;
+            margin-top: 2rem;
         }
     }
 }

@@ -26,6 +26,8 @@ export class ShowResultsComponent {
     this.success = this.dataService.getSuccess();
     this.showResultsService.display.subscribe((data: any) => {
       this.display.time = data.time !== undefined ? data.time : '';
+      this.display.comment = data.comment !== undefined ? data.comment : '';
+      console.log(data.comment,this.display.comment);
       this.display.phrase = this.success.phrases[Math.floor(Math.random() * this.success.phrases.length)];
       const urlString = this.success.gifs[Math.floor(Math.random() * this.success.gifs.length)];
       this.display.gif = this.sanitizer.bypassSecurityTrustResourceUrl(urlString);
