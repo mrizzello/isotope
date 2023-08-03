@@ -15,8 +15,3 @@ jobs:
       run: npm install -g @angular/cli
     - name: Build Angular App
       run: ng build --configuration production --aot
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/gh-pages@v3
-      with:
-        target-branch: gh-pages
-        build-dir: dist/isotope
