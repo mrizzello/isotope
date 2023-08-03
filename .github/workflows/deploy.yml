@@ -11,13 +11,12 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - run: npm install
-    - name: 'Deploy demo app using action'
-      uses: ./
+    - name: Install Angular CLI
+      run: npm install -g @angular/cli
+    - name: Build Angular App
+      run: ng build --configuration production --aot
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/gh-pages@v3
       with:
-        run_lint: true
-        github_access_token: ${{ secrets.ACCESS_TOKEN }}
-        build_configuration: main
-        base_href: https://mrizzello.github.io/isotope/
-        deploy_branch: gh-pages 
-        angular_dist_build_folder: isotope/dist/isotope
-        angular_project_dir: isotope
+        target-branch: gh-pages
+        build-dir: dist/isotope
