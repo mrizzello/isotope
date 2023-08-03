@@ -40,7 +40,3 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
-
-# Custom
-src/assets/gifs/*
-!src/assets/gifs/.gitkeep 

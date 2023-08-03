@@ -4,7 +4,7 @@
             <mat-grid-tile colspan="6" rowspan="1">
                 <mat-icon>schedule</mat-icon>
             </mat-grid-tile>
-            <mat-grid-tile colspan="6" rowspan="3">
+            <mat-grid-tile colspan="6" rowspan="4">
                 <div class="elemental-clock">
                     Il est <br />
                     <span class="element">{{elementHours}}</span> heures
@@ -12,7 +12,7 @@
                     <span class="element">{{elementMinutes}}</span> minutes
                 </div>
             </mat-grid-tile>
-            <mat-grid-tile colspan="6" rowspan="1">
+            <mat-grid-tile colspan="6" rowspan="2">
                 <div class="clock">
                     <span class="hours">{{ currentTime | date: 'hh' }}</span>
                     <span class="colon" [@blink]="colonVisible ? 'visible' : 'hidden'">:</span>
