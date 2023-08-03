@@ -127,3 +127,12 @@ body {
     overflow: hidden;
 }
 
+span.mdc-button__label {
+    font-weight: bold;
+    color: #fff;
+}
+
+.mat-mdc-fab.mat-primary,
+.mat-mdc-mini-fab.mat-primary {
+    color: #fff;
+}

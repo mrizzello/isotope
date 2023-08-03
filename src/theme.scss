@@ -4,9 +4,9 @@
 
 @import 'colors';
 
-$isotope-primary: mat.define-palette($isotope-orange, A200, A100, A400);
-$isotope-accent: mat.define-palette(mat.$indigo-palette, A200, A100, A400);
-$isotope-warn: mat.define-palette(mat.$red-palette, A200, A100, A400);
+$isotope-primary: mat.define-palette($isotope-orange, 500);
+$isotope-accent: mat.define-palette(mat.$indigo-palette, 500);
+$isotope-warn: mat.define-palette(mat.$red-palette, 500);
 
 $isotope-theme: mat.define-light-theme((
  color: (
