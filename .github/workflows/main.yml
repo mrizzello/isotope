@@ -1,0 +1,24 @@
+name: Deploy Angular App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
+      - name: Install Github Pages
+        run: npm install peaceiris/gh-pages@v3
+      - name: Build Angular App
+        run: ng build --configuration production --aot
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/gh-pages@v3
+        with:
+          target-branch: gh-pages
+          build-dir: dist/isotope
