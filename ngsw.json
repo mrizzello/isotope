@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1691085294042,
+  "timestamp": 1691085977524,
   "index": "/isotope/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/isotope/favicon.ico",
         "/isotope/index.html",
-        "/isotope/main.58648cdec084c92c.js",
+        "/isotope/main.4328438d544518f2.js",
         "/isotope/manifest.webmanifest",
         "/isotope/polyfills.927e4c87fe8149d0.js",
         "/isotope/runtime.e7c70b0c15e56fdf.js",
@@ -35,7 +35,6 @@
         "/isotope/assets/data/ions.json",
         "/isotope/assets/data/lewis.json",
         "/isotope/assets/data/success.json",
-        "/isotope/assets/gifs/.gitkeep",
         "/isotope/assets/icons/icon-128x128.png",
         "/isotope/assets/icons/icon-144x144.png",
         "/isotope/assets/icons/icon-152x152.png",
@@ -58,7 +57,6 @@
     "/isotope/assets/data/ions.json": "ece568f07cccd53de292d0c8c16af8e8f54329aa",
     "/isotope/assets/data/lewis.json": "8c0c9203bba05f123ebdd2cbec066501ee807f0c",
     "/isotope/assets/data/success.json": "972cf576b463601fb38ff17bff333c4f4b7e952b",
-    "/isotope/assets/gifs/.gitkeep": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
     "/isotope/assets/icons/icon-128x128.png": "3196a5281ae9fe3829cb0377636b1d3a7b2b2897",
     "/isotope/assets/icons/icon-144x144.png": "b5f5dde041d1186478c9c2c9f83c8201793524b3",
     "/isotope/assets/icons/icon-152x152.png": "753f8278076534c795a30b400a1b5752291ea19b",
@@ -70,8 +68,8 @@
     "/isotope/assets/logo.back.svg": "b5ad3340a4a87516df2fdf3dafe01fd7b3d0c695",
     "/isotope/assets/logo.svg": "e17db9acc0ee225c3bf7a7d422e8fb22bcb2a5b7",
     "/isotope/favicon.ico": "396e17db9cfc5af1726d8b8274017d2cc6b9e5ba",
-    "/isotope/index.html": "bd8eae188da4c47269cd84136d1dcabd6ed54f5f",
-    "/isotope/main.58648cdec084c92c.js": "d1571ce22ffd6044138c35321883e311885bcd12",
+    "/isotope/index.html": "8b51ca28ec56032323eaf8d3835504dbd48925ec",
+    "/isotope/main.4328438d544518f2.js": "24f4efe3783af5230be1248972c36c56a9300e32",
     "/isotope/manifest.webmanifest": "9757af882a884ea46d000bd930ba6b275565dfe8",
     "/isotope/polyfills.927e4c87fe8149d0.js": "10a9e9818d8ee59f0c4f4af6b02c9f4cc3134e76",
     "/isotope/runtime.e7c70b0c15e56fdf.js": "25ff98178725a3ab5f16a49f9d7f8cbd1688e011",
