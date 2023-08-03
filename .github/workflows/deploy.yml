@@ -1,4 +1,4 @@
-name: Deploy Angular App
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -6,12 +6,30 @@ on:
       - main
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v3
-    - run: npm install
-    - name: Install Angular CLI
-      run: npm install -g @angular/cli
-    - name: Build Angular App
-      run: ng build --configuration production --aot
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: ng build --prod --base-href /isotope/
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist/isotope
+          publish_branch: gh-pages
