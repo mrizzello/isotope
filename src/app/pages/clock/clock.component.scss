@@ -1,0 +1,26 @@
+.clock-container {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding: 1.2rem;
+
+    .mat-grid-list {
+        width: 100%;
+        height: 100%;
+
+        .elemental-clock {
+            font-size: 280%;
+            line-height: 120%;
+            font-weight: bold;
+
+            .element {
+                color: #f7931e;
+            }
+        }
+
+        .clock {
+            display: inline-block;
+            font-size: 1rem;
+        }
+    }
+}

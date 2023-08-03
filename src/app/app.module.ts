@@ -22,6 +22,7 @@ import { FamilyComponent } from './games/family/family.component';
 
 import { HomeComponent } from './pages/home/home.component';
 import { InfosComponent } from './pages/infos/infos.component';
+import { ClockComponent } from './pages/clock/clock.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { InfosComponent } from './pages/infos/infos.component';
     AssociationsComponent,
     TrivionComponent,
     FamilyComponent,
+    ClockComponent,
     InfosComponent
   ],
   imports: [
