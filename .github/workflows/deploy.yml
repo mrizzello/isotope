@@ -31,3 +31,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist/isotope
           publish_branch: gh-pages
+    permissions:
+      contents: write
