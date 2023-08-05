@@ -15,6 +15,7 @@ import { ScoreStarsComponent } from './components/score-stars/score-stars.compon
 import { ShowResultsComponent } from './components/show-results/show-results.component';
 
 import { AssociationsComponent } from './games/associations/associations.component';
+import { MemorionComponent } from './games/memorion/memorion.component';
 import { TrivionComponent } from './games/trivion/trivion.component';
 import { LewisComponent } from './games/lewis/lewis.component';
 import { LewisStructureComponent } from './components/lewis-structure/lewis-structure.component';
@@ -36,6 +37,7 @@ import { ClockComponent } from './pages/clock/clock.component';
     LewisComponent,
     LewisStructureComponent,
     AssociationsComponent,
+    MemorionComponent,
     TrivionComponent,
     FamilyComponent,
     ClockComponent,
@@ -49,8 +51,6 @@ import { ClockComponent } from './pages/clock/clock.component';
     MaterialModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     })
   ],
