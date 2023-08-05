@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1691227176869,
+  "timestamp": 1691254155811,
   "index": "/isotope/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/isotope/favicon.ico",
         "/isotope/index.html",
-        "/isotope/main.4328438d544518f2.js",
+        "/isotope/main.d685d5bccf551403.js",
         "/isotope/manifest.webmanifest",
         "/isotope/polyfills.927e4c87fe8149d0.js",
         "/isotope/runtime.e7c70b0c15e56fdf.js",
@@ -43,8 +43,9 @@
         "/isotope/assets/icons/icon-512x512.png",
         "/isotope/assets/icons/icon-72x72.png",
         "/isotope/assets/icons/icon-96x96.png",
-        "/isotope/assets/logo.back.svg",
-        "/isotope/assets/logo.svg"
+        "/isotope/assets/logo.svg",
+        "/isotope/assets/memorion.svg",
+        "/isotope/assets/silhouette.svg"
       ],
       "patterns": []
     }
@@ -65,11 +66,12 @@
     "/isotope/assets/icons/icon-512x512.png": "18f62936644a8d32e79661916081f7fc62264780",
     "/isotope/assets/icons/icon-72x72.png": "1278ffe73f94de73b4cff059894e5e2a8bd7a6cd",
     "/isotope/assets/icons/icon-96x96.png": "4c6dabc2c1dab8db85772e5c5cf491d95c5ca56f",
-    "/isotope/assets/logo.back.svg": "b5ad3340a4a87516df2fdf3dafe01fd7b3d0c695",
     "/isotope/assets/logo.svg": "e17db9acc0ee225c3bf7a7d422e8fb22bcb2a5b7",
+    "/isotope/assets/memorion.svg": "7fd92b334034a9ab846e12b71d242bf4ae6d6526",
+    "/isotope/assets/silhouette.svg": "366f98c326dbce1970f996143c3c9c08e138c696",
     "/isotope/favicon.ico": "396e17db9cfc5af1726d8b8274017d2cc6b9e5ba",
-    "/isotope/index.html": "5f129fbc62982d063b89bbd998f313dc94ee8496",
-    "/isotope/main.4328438d544518f2.js": "24f4efe3783af5230be1248972c36c56a9300e32",
+    "/isotope/index.html": "8dac316853c6a1532a78b11e50e3c053a567fcfa",
+    "/isotope/main.d685d5bccf551403.js": "bdd5b496af48c8c8cae5cc197c1a558643f0418f",
     "/isotope/manifest.webmanifest": "9757af882a884ea46d000bd930ba6b275565dfe8",
     "/isotope/polyfills.927e4c87fe8149d0.js": "10a9e9818d8ee59f0c4f4af6b02c9f4cc3134e76",
     "/isotope/runtime.e7c70b0c15e56fdf.js": "25ff98178725a3ab5f16a49f9d7f8cbd1688e011",
