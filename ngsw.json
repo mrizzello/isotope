@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1691256756051,
+  "timestamp": 1691326499186,
   "index": "/isotope/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/isotope/favicon.ico",
         "/isotope/index.html",
-        "/isotope/main.590875db70242060.js",
+        "/isotope/main.d685d5bccf551403.js",
         "/isotope/manifest.webmanifest",
         "/isotope/polyfills.927e4c87fe8149d0.js",
         "/isotope/runtime.e7c70b0c15e56fdf.js",
@@ -44,8 +44,7 @@
         "/isotope/assets/icons/icon-72x72.png",
         "/isotope/assets/icons/icon-96x96.png",
         "/isotope/assets/logo.svg",
-        "/isotope/assets/silhouette.svg",
-        "/isotope/silhouette.49c153fa173482b3.svg"
+        "/isotope/assets/silhouette.svg"
       ],
       "patterns": []
     }
@@ -69,12 +68,11 @@
     "/isotope/assets/logo.svg": "e17db9acc0ee225c3bf7a7d422e8fb22bcb2a5b7",
     "/isotope/assets/silhouette.svg": "366f98c326dbce1970f996143c3c9c08e138c696",
     "/isotope/favicon.ico": "396e17db9cfc5af1726d8b8274017d2cc6b9e5ba",
-    "/isotope/index.html": "8943d2a533e9241d5ee049dc7055fa8caf6db595",
-    "/isotope/main.590875db70242060.js": "52a461efe9bfbba85c1fd1ae7eca28258530c449",
+    "/isotope/index.html": "8dac316853c6a1532a78b11e50e3c053a567fcfa",
+    "/isotope/main.d685d5bccf551403.js": "bdd5b496af48c8c8cae5cc197c1a558643f0418f",
     "/isotope/manifest.webmanifest": "9757af882a884ea46d000bd930ba6b275565dfe8",
     "/isotope/polyfills.927e4c87fe8149d0.js": "10a9e9818d8ee59f0c4f4af6b02c9f4cc3134e76",
     "/isotope/runtime.e7c70b0c15e56fdf.js": "25ff98178725a3ab5f16a49f9d7f8cbd1688e011",
-    "/isotope/silhouette.49c153fa173482b3.svg": "366f98c326dbce1970f996143c3c9c08e138c696",
     "/isotope/styles.36a6b24a56d656a3.css": "786c68230f1b3c78b30418a59eed4592f3d3b4d3"
   },
   "navigationUrls": [
