@@ -14,7 +14,7 @@
             </mat-grid-tile>
             <mat-grid-tile colspan="6" rowspan="2">
                 <div class="clock">
-                    <span class="hours">{{ currentTime | date: 'hh' }}</span>
+                    <span class="hours">{{ currentTime | date: 'HH' }}</span>
                     <span class="colon" [@blink]="colonVisible ? 'visible' : 'hidden'">:</span>
                     <span class="minutes">{{ currentTime | date: 'mm' }}</span>
                 </div>
