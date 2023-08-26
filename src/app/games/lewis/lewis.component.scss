@@ -12,13 +12,13 @@
 
         .reference {
             circle {
-                fill: #E8EAF6;
-                stroke-width: 2;
+                stroke-width: 1%;
                 stroke: #9FA8DA;
             }
 
             .symbol {
                 font-weight: bold;
+                font-family: 'Raleway', sans-serif;
             }
         }
 
@@ -32,6 +32,7 @@
             .symbol {
                 font-weight: bold;
                 fill: #666;
+                font-family: 'Raleway', sans-serif;
             }
 
             &.correct {

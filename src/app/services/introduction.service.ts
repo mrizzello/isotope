@@ -12,6 +12,7 @@ export class IntroductionService {
   public updateDisplay(display: any): void {
     this.display.next(display);
   }
+  
   public clickStart() {
     this.start.next(true);
   }

@@ -13,9 +13,9 @@ import { ShowResultsService } from '../../services/show-results.service';
 import { ShowResultsComponent } from '../../components/show-results/show-results.component';
 
 @Component({
-  selector: 'app-lewis',
-  templateUrl: './lewis.component.html',
-  styleUrls: ['./lewis.component.scss'],
+  selector: 'app-charges',
+  templateUrl: './charges.component.html',
+  styleUrls: ['./charges.component.scss'],
   animations: [
     trigger('slideInFromLeft', [
       transition(':enter', [
@@ -37,18 +37,23 @@ import { ShowResultsComponent } from '../../components/show-results/show-results
     ])
   ]
 })
-export class LewisComponent implements OnInit, OnDestroy {
+export class ChargesComponent implements OnInit, OnDestroy {
   showIntroduction: boolean = true;
   showGame: boolean = false;
   showResults: boolean = false;
   disableClick: boolean = false;
-  structures: any;
+  ions: any;
   draw: any;
   score: number = 0;
   current: number = 0;
   maxScore: number = 8;
-  romans: any = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
-  propositionsRadius = 112;
+  circlesNumber: number = 65;
+  minR: any = 10;
+  maxR: any = 80;
+  minX: any = - this.maxR;
+  maxX: any = 510 + this.maxR;
+  minY: any = - this.maxR;
+  maxY: any = 350 - this.maxR;
 
   @ViewChild(IntroductionComponent) private introduction!: IntroductionComponent;
   @ViewChild(StopwatchComponent) private stopwatch!: StopwatchComponent;
@@ -67,11 +72,11 @@ export class LewisComponent implements OnInit, OnDestroy {
       this.start();
     });
     this.introductionService.updateDisplay({
-      icon: 'settings_backup_restore',
-      title: 'Structure de Lewis',
+      icon: 'add_circle_outline',
+      title: 'Charges',
       p: [
-        '<b>Les structures de Lewis ne sont pas si compliquées&nbsp!</b>',
-        'Trouvez la bonne structure à l\'aide des informations fournies.'
+        '<b>Rechargez votre batterie&nbsp!</b>',
+        'Trouvez la bonne charge des ions proposés.'
       ]
     });
     this.restartSubscription = this.showResultsService.getRestart().subscribe((data: any) => {
@@ -80,7 +85,9 @@ export class LewisComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.structures = this.dataService.getLewis();
+    this.ions = this.dataService.getIons();
+    const regex = /\([A-Z]+\)/i;
+    this.ions.cations = this.ions.cations.filter((cation: any) => !regex.test(cation.name));
   }
 
   ngOnDestroy(): void {
@@ -93,39 +100,47 @@ export class LewisComponent implements OnInit, OnDestroy {
     this.current = 0;
     this.stopwatchService.resetStopwatch();
 
-    this.draw = JSON.parse(JSON.stringify(this.structures));
+    const clones = JSON.parse(JSON.stringify(this.ions));
+
+    let cations = arrayShuffle(clones.cations);
+    cations = cations.slice(0, 4);
+    let anions = clones.anions;
+    anions = arrayShuffle(anions);
+    anions = anions.slice(0, 4);
+
+    this.draw = cations.concat(anions);
     this.draw = arrayShuffle(this.draw);
-    this.draw = this.draw.slice(0, this.maxScore);
 
     this.draw.forEach((item: any) => {
       item.visible = false;
-
-      let propositions = [];
-      for (let step = 1; step <= 8; step++) {
+      item.css = '';
+      let charges = ['3+', '2+', '+', '–', '2–', '3–'];
+      charges = charges.filter(charge => charge !== item.charge);
+      charges.unshift(item.charge);
+      charges = charges.slice(0, 4);
+      charges = arrayShuffle(charges);
+      let propositions: any = [];
+      charges.forEach((charge) => {
         propositions.push({
-          n: step,
-          correct: step == item.col,
-          translate: [],
+          charge: charge,
           css: ''
         });
-      }
-
-      propositions = arrayShuffle(propositions);
-
-      let angle = 0;
-      propositions.forEach((proposition, index) => {
-        let radians = angle * (Math.PI / 180);
-        let translate: any = {};
-        translate.x = Math.round(Math.cos(radians) * this.propositionsRadius);
-        translate.y = Math.round(Math.sin(radians) * this.propositionsRadius);
-        proposition.translate = translate;
-        angle += 360 / 8;
       });
-
       item.propositions = propositions;
-
+      item.circles = [];
+      for (let i = 0; i < this.circlesNumber; i++) {
+        const rX = Math.floor(Math.random() * (this.maxX - this.minX + 1)) + this.minX;
+        const rY = Math.floor(Math.random() * (this.maxY - this.minY + 1)) + this.minY;
+        const rC = Math.floor(Math.random() * (this.maxR - this.minR + 1)) + this.minR;
+        const rCss = Math.floor(Math.random() * (3 - 0 + 1)) + 0;
+        item.circles.push({
+          cx: rX,
+          cy: rY,
+          r: rC,
+          css: 'move-'+rCss
+        });
+      }
     });
-
   }
 
   intro() {
@@ -147,19 +162,22 @@ export class LewisComponent implements OnInit, OnDestroy {
     this.stopwatchService.startStopwatch();
   }
 
-  selectStructure(proposition: any) {
-    if (this.disableClick) {
+  selectCharge(item: any, index: number) {
+    let prop = item.propositions[index];
+    if (this.disableClick || prop.css !== '') {
       return;
-    }
-    if( proposition.correct ){
-      proposition.css = "correct";
-      this.draw[this.current].css = 'won';
+    }    
+    if (prop.charge == item.charge) {
+      item.css = "correct";
+      item.propositions.forEach((prop:any)=>{
+        prop.css = prop.charge == item.charge ? 'correct' : 'hidden';
+      });
       this.score++;
-      if( this.score == this.maxScore ){
+      if (this.score == this.maxScore) {
         this.stopwatchService.stopStopwatch();
         this.disableClick = true;
         setTimeout(() => { this.end() }, 500);
-      }else{
+      } else {
         this.stopwatchService.stopStopwatch();
         this.disableClick = true;
         setTimeout(() => {
@@ -170,10 +188,9 @@ export class LewisComponent implements OnInit, OnDestroy {
           this.stopwatchService.startStopwatch();
         }, 500);
       }
-    }else{
-      proposition.css = "wrong";
+    } else {
+      prop.css = "wrong";
     }
-    
   }
 
   end() {
@@ -183,10 +200,6 @@ export class LewisComponent implements OnInit, OnDestroy {
     display.time = this.stopwatchService.getDisplayString();
     display.comment = 'pour résoudre le puzzle!';
     this.showResultsService.updateDisplay(display);
-  }
-
-  getRoman(item: any) {
-    return this.romans[item.col];
   }
 
 }

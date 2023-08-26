@@ -20,6 +20,7 @@ import { TrivionComponent } from './games/trivion/trivion.component';
 import { LewisComponent } from './games/lewis/lewis.component';
 import { LewisStructureComponent } from './components/lewis-structure/lewis-structure.component';
 import { FamilyComponent } from './games/family/family.component';
+import { ChargesComponent } from './games/charges/charges.component';
 
 import { HomeComponent } from './pages/home/home.component';
 import { InfosComponent } from './pages/infos/infos.component';
@@ -40,6 +41,7 @@ import { ClockComponent } from './pages/clock/clock.component';
     MemorionComponent,
     TrivionComponent,
     FamilyComponent,
+    ChargesComponent,
     ClockComponent,
     InfosComponent
   ],

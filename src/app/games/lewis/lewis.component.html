@@ -11,9 +11,15 @@
                 <app-stopwatch></app-stopwatch>
             </mat-grid-tile>
             <ng-container *ngFor="let item of draw">
-                <div *ngIf="item.visible">
+                <div *ngIf="item.visible" [@fadeIn]>
                     <mat-grid-tile colspan="6" rowspan="6" [ngClass]="item.css">
                         <svg version="1.0" width="100%" height="100%" viewBox="0 0 310 310" class="svg">
+                            <defs>
+                                <radialGradient id="gradient">
+                                  <stop offset="33%" stop-color="#E8EAF6" />
+                                  <stop offset="95%" stop-color="#D0D9FF" />
+                                </radialGradient>
+                              </defs>
                             <g *ngFor="let prop of item.propositions" [ngClass]="{'proposition':true}"
                             [attr.transform]="'translate(' + prop.translate.x + ',' + prop.translate.y + ')'"
                             (click)="selectStructure(prop)" [class]="prop.css">
@@ -23,7 +29,7 @@
                                 <g lewis-structure [n]="prop.n" [css]="prop.css"></g>
                             </g>
                             <g class="reference">
-                                <circle cx="155" cy="155" r="74"></circle>
+                                <circle cx="155" cy="155" r="74" fill="url('#gradient')"></circle>
                                 <text class="symbol" transform="matrix(1 0 0 1 155 175)" font-family="Arial"
                                     font-size="66" text-anchor="middle">{{item.symbol}}</text>
                                 <text transform="matrix(1 0 0 1 155 112)" font-family="Arial" font-size="18"
