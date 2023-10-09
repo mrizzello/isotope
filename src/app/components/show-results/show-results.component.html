@@ -3,6 +3,7 @@
         <div class="display-time">
             <span class="time" *ngIf="display.time !== ''">{{ display.time }}</span>
             <span class="comment" *ngIf="display.comment !== ''">{{display.comment}}</span>
+            <span *ngIf="bestScore" class="best-score animate-charcter">NOUVEAU MEILLEUR SCORE !</span>
         </div>
         <div class="display-gif">
             <iframe [src]="display.gif" width="100%" height="100%" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>

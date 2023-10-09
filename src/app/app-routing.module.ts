@@ -10,6 +10,7 @@ import { TrivionComponent } from './games/trivion/trivion.component';
 import { FamilyComponent } from './games/family/family.component';
 import { ClockComponent } from './pages/clock/clock.component';
 import { InfosComponent } from './pages/infos/infos.component';
+import { ScoresComponent } from './pages/scores/scores.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'trivion', component: TrivionComponent },
   { path: 'family', component: FamilyComponent },
   { path: 'clock', component: ClockComponent },
-  { path: 'infos', component: InfosComponent }
+  { path: 'infos', component: InfosComponent },
+  { path: 'scores', component: ScoresComponent }
 ];
 
 @NgModule({

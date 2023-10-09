@@ -1,0 +1,16 @@
+<div class="scores" [@fadeIn]>
+    <h3>Meilleurs scores</h3>
+    <mat-list>
+        <mat-divider></mat-divider>
+        <ng-container *ngFor="let item of display">
+            <mat-list-item>
+                <div class="item">
+                    <span class="game"></span>{{item.name}}
+                    <span class="spacer"></span>
+                    <span class="score">{{item.score}}</span>
+                </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+        </ng-container>
+    </mat-list>
+</div>

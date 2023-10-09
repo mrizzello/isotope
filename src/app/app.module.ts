@@ -25,6 +25,7 @@ import { ChargesComponent } from './games/charges/charges.component';
 import { HomeComponent } from './pages/home/home.component';
 import { InfosComponent } from './pages/infos/infos.component';
 import { ClockComponent } from './pages/clock/clock.component';
+import { ScoresComponent } from './pages/scores/scores.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ClockComponent } from './pages/clock/clock.component';
     FamilyComponent,
     ChargesComponent,
     ClockComponent,
-    InfosComponent
+    InfosComponent,
+    ScoresComponent
   ],
   imports: [
     BrowserModule,

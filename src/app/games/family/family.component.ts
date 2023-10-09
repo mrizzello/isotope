@@ -161,6 +161,7 @@ export class FamilyComponent implements OnInit, OnDestroy {
     this.showGame = false;
     this.showResults = true;
     let display: any = [];
+    display.game = 'family';
     display.time = this.stopwatchService.getDisplayString();
     display.comment = 'pour résoudre le puzzle!';
     this.showResultsService.updateDisplay(display);
