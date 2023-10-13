@@ -14,6 +14,7 @@ export class DataService {
     'assets/data/success.json',
     'assets/data/family.json',
     'assets/data/elements.json',
+    'assets/data/pictiochimie.json',
   ];
 
   constructor(private http: HttpClient) { }
@@ -30,6 +31,7 @@ export class DataService {
     this.data.success = responses[2];
     this.data.family = responses[3];
     this.data.elements = responses[4];
+    this.data.pictiochimie = responses[5];
   }
 
   getLewis(): any {
@@ -50,5 +52,9 @@ export class DataService {
 
   getElements(): any {
     return this.data.elements;
+  }
+
+  getPictiochimie(): any {
+    return this.data.pictiochimie;
   }
 }

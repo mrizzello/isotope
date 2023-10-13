@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { SafeHtmlPipe } from './pipes/sanitize.pipe';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { IntroductionComponent } from './components/introduction/introduction.component';
@@ -26,6 +27,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { InfosComponent } from './pages/infos/infos.component';
 import { ClockComponent } from './pages/clock/clock.component';
 import { ScoresComponent } from './pages/scores/scores.component';
+import { PictiochimieComponent } from './pages/pictiochimie/pictiochimie.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import { ScoresComponent } from './pages/scores/scores.component';
     ChargesComponent,
     ClockComponent,
     InfosComponent,
-    ScoresComponent
+    ScoresComponent,
+    PictiochimieComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +59,8 @@ import { ScoresComponent } from './pages/scores/scores.component';
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000'
-    })
+    }),
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

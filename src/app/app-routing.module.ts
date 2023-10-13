@@ -11,6 +11,7 @@ import { FamilyComponent } from './games/family/family.component';
 import { ClockComponent } from './pages/clock/clock.component';
 import { InfosComponent } from './pages/infos/infos.component';
 import { ScoresComponent } from './pages/scores/scores.component';
+import { PictiochimieComponent } from './pages/pictiochimie/pictiochimie.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,7 +23,8 @@ const routes: Routes = [
   { path: 'family', component: FamilyComponent },
   { path: 'clock', component: ClockComponent },
   { path: 'infos', component: InfosComponent },
-  { path: 'scores', component: ScoresComponent }
+  { path: 'scores', component: ScoresComponent },
+  { path: 'pictiochimie', component: PictiochimieComponent }
 ];
 
 @NgModule({
