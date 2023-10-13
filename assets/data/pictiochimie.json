@@ -1,0 +1,271 @@
+[
+  {
+    "n": "1",
+    "chapter": "Introduction",
+    "words": [
+      "chimie",
+      "matière",
+      "transformation chimique"
+    ]
+  },
+  {
+    "n": "2",
+    "chapter": "Les états de la matière",
+    "words": [
+      "solide",
+      "liquide",
+      "gaz",
+      "forces intermoléculaires",
+      "changement d'état",
+      "température de fusion",
+      "température d'ébullition",
+      "solidification",
+      "fusion",
+      "condensation",
+      "vaporisation",
+      "sublimation",
+      "sublimation inverse",
+      "diagramme de phases",
+      "tension superficielle",
+      "capilarité",
+      "solide cristallin",
+      "des allotropes"
+    ]
+  },
+  {
+    "n": "3",
+    "chapter": "Mélanges et corps purs",
+    "words": [
+      "corps pur simple",
+      "corps pur composé",
+      "mélange homogène",
+      "mélange hétérogène",
+      "l'attraction magnétique",
+      "la filtration",
+      "la dissolution sélective",
+      "la distillation",
+      "la chromatographie",
+      "l'extraction"
+    ]
+  },
+  {
+    "n": "4",
+    "chapter": "Historique",
+    "words": [
+      "le Big Bang",
+      "la nucléosynthèse",
+      "le modèle de Bohr",
+      "le modèle standard"
+    ]
+  },
+  {
+    "n": "5",
+    "chapter": "L'atome",
+    "words": [
+      "atome",
+      "proton",
+      "neutron",
+      "électron",
+      "isotopes",
+      "la masse atomique",
+      "la mole",
+      "le nombre d'Avogadro"
+    ]
+  },
+  {
+    "n": "6",
+    "chapter": "Le tableau périodique",
+    "words": [
+      "métal",
+      "non-métal",
+      "métalloïde",
+      "gaz rare",
+      "halogène",
+      "période",
+      "onde électromagnétique",
+      "spectre d'absorption",
+      "spectre d'émission",
+      "orbitale atomique",
+      "électron de valence",
+      "cation",
+      "anion"
+    ]
+  },
+  {
+    "n": "7",
+    "chapter": "Les liaisons chimiques",
+    "words": [
+      "liaison ionique",
+      "liaison polaire",
+      "liaison métallique",
+      "l'électronégativité"
+    ]
+  },
+  {
+    "n": "8",
+    "chapter": "Molécules",
+    "words": [
+      "molécule",
+      "formule brute",
+      "formule développée",
+      "la masse molaire",
+      "la polarité"
+    ]
+  },
+  {
+    "n": "9",
+    "chapter": "Nomenclature minérale",
+    "words": [
+      "acide",
+      "hydroxyde",
+      "oxacide",
+      "sel"
+    ]
+  },
+  {
+    "n": "10",
+    "chapter": "Solutions et électrolytes",
+    "words": [
+      "soluté",
+      "solvant",
+      "solution aqueuse",
+      "dissolution ionique",
+      "solubilité",
+      "saturation",
+      "cristallisation",
+      "précipité",
+      "dissociation",
+      "électrolyte",
+      "concentration",
+      "dilution"
+    ]
+  },
+  {
+    "n": "11",
+    "chapter": "Réactions chimiques",
+    "words": [
+      "réaction",
+      "réactif",
+      "produit",
+      "coefficient stœchiométrique",
+      "équation chimique",
+      "réaction spontanée",
+      "réaction non spontanée",
+      "réaction réversible",
+      "réaction irréversible",
+      "réaction exothermique",
+      "réaction endothermique",
+      "catalyseur",
+      "inhibiteur"
+    ]
+  },
+  {
+    "n": "12",
+    "chapter": "Types de réaction",
+    "words": [
+      "réactions de combinaison",
+      "réactions de décomposition",
+      "réactions de précipitation",
+      "réactions de neutralisation",
+      "réactions de combustion"
+    ]
+  },
+  {
+    "n": "13",
+    "chapter": "Calculs stœchiométriques",
+    "words": [
+      "calculs stœchiométriques",
+      "réactif limitant"
+    ]
+  },
+  {
+    "n": "14",
+    "chapter": "Les gaz parfaits",
+    "words": [
+      "Conditions Normales de Température et Pression",
+      "température",
+      "volume",
+      "pression"
+    ]
+  },
+  {
+    "n": "15",
+    "chapter": "Vitesses de réaction",
+    "words": [
+      "vitesse de réaction",
+      "énergie d'activation"
+    ]
+  },
+  {
+    "n": "16",
+    "chapter": "L'équilibre chimique",
+    "words": [
+      "équilibre chimique",
+      "équilibre dynamique",
+      "constante d'équilibre",
+      "principe de Le Châtelier"
+    ]
+  },
+  {
+    "n": "17",
+    "chapter": "Les acides et les bases",
+    "words": [
+      "acide fort",
+      "acide faible",
+      "base conjuguée",
+      "autoprotolyse",
+      "pH",
+      "acide polyprotique",
+      "solution tampon",
+      "courbe de titrage",
+      "solution tampon"
+    ]
+  },
+  {
+    "n": "19",
+    "chapter": "Les réactions d'oxydoréduction",
+    "words": [
+      "réaction d'oxydoréduction",
+      "nombre d'oxydation",
+      "l'oxydant",
+      "le réducteur",
+      "potentiel standards de réduction",
+      "acide polyprotique",
+      "solution tampon",
+      "courbe de titrage",
+      "solution tampon"
+    ]
+  },
+  {
+    "n": "20",
+    "chapter": "Électrochimie",
+    "words": [
+      "la pile électrochimique",
+      "la cathode",
+      "le pont sallin",
+      "le réducteur",
+      "potentiel standards de réduction",
+      "électrode standard à hydrogène",
+      "potentiel électrochimique",
+      "l'électrolyse",
+      "la loi de Faraday",
+      "l'électrodéposition"
+    ]
+  },
+  {
+    "n": "21",
+    "chapter": "Thermochimie",
+    "words": [
+      "l'énergie",
+      "la calorimétrie",
+      "la capacité thermique",
+      "le calorimètre",
+      "la variation d'enthalpie",
+      "l'énergie de liaison",
+      "la loi de Hess",
+      "l'électrolyse",
+      "la loi de Faraday",
+      "l'électrodéposition"
+    ]
+  }
+]

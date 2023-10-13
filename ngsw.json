@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1696887382633,
+  "timestamp": 1697219894937,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/favicon.ico",
         "/index.html",
-        "/main.8d4a04d7a3120d82.js",
+        "/main.817a6ff586d4fb3d.js",
         "/manifest.webmanifest",
         "/polyfills.5bd0197207d375b5.js",
         "/runtime.e7c70b0c15e56fdf.js",
@@ -34,6 +34,7 @@
         "/assets/data/family.json",
         "/assets/data/ions.json",
         "/assets/data/lewis.json",
+        "/assets/data/pictiochimie.json",
         "/assets/data/success.json",
         "/assets/icons/icon-128x128.png",
         "/assets/icons/icon-144x144.png",
@@ -44,6 +45,7 @@
         "/assets/icons/icon-72x72.png",
         "/assets/icons/icon-96x96.png",
         "/assets/logo.svg",
+        "/assets/pictiochimie.png",
         "/assets/silhouette.svg"
       ],
       "patterns": []
@@ -56,6 +58,7 @@
     "/assets/data/family.json": "92329bdf6c0461d6d44d1b43f2c6b4e4d1ca8261",
     "/assets/data/ions.json": "ece568f07cccd53de292d0c8c16af8e8f54329aa",
     "/assets/data/lewis.json": "8c0c9203bba05f123ebdd2cbec066501ee807f0c",
+    "/assets/data/pictiochimie.json": "8c71ec32eca018619065436d758727159e90ccc5",
     "/assets/data/success.json": "972cf576b463601fb38ff17bff333c4f4b7e952b",
     "/assets/icons/icon-128x128.png": "220abcabb0549956b495db9993c06bc5f118969c",
     "/assets/icons/icon-144x144.png": "359460e48d42dcbee524b8cce3759f1c09a54561",
@@ -66,10 +69,11 @@
     "/assets/icons/icon-72x72.png": "1278ffe73f94de73b4cff059894e5e2a8bd7a6cd",
     "/assets/icons/icon-96x96.png": "4c6dabc2c1dab8db85772e5c5cf491d95c5ca56f",
     "/assets/logo.svg": "e17db9acc0ee225c3bf7a7d422e8fb22bcb2a5b7",
+    "/assets/pictiochimie.png": "cbdf6eba78c65ff4ea6f2915ed7f928defc49e36",
     "/assets/silhouette.svg": "366f98c326dbce1970f996143c3c9c08e138c696",
     "/favicon.ico": "396e17db9cfc5af1726d8b8274017d2cc6b9e5ba",
-    "/index.html": "f059fe2808f645f34ac39dd3da4b227effc7473e",
-    "/main.8d4a04d7a3120d82.js": "cd9caca4348a14cdbc62904f9b34e8ed8ebfba3b",
+    "/index.html": "1c7e5b7b80145a77c9acbcfd87189a9b84c638bf",
+    "/main.817a6ff586d4fb3d.js": "25fb6e9f4a10e6f7a2d8c290268e6f8e015436f8",
     "/manifest.webmanifest": "9757af882a884ea46d000bd930ba6b275565dfe8",
     "/polyfills.5bd0197207d375b5.js": "ad6a749e0d044edb8ebb69d470b99cadc2c496cf",
     "/runtime.e7c70b0c15e56fdf.js": "25ff98178725a3ab5f16a49f9d7f8cbd1688e011",
