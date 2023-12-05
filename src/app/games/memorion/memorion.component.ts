@@ -187,6 +187,7 @@ export class MemorionComponent implements OnInit, OnDestroy{
     this.showGame = false;
     this.showResults = true;
     let display: any = [];
+    display.title = 'Memor<u>ion</u>';
     display.game = 'memorion';
     display.time = this.stopwatchService.getDisplayString();
     display.comment = 'pour résoudre le puzzle!';

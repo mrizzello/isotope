@@ -29,6 +29,7 @@ export class ShowResultsComponent {
   ) {
     this.success = this.dataService.getSuccess();
     this.showResultsService.display.subscribe((data: any) => {
+      this.display.title = data.title;      
       this.display.time = data.time !== undefined ? data.time : '';
       this.display.comment = data.comment !== undefined ? data.comment : '';
       this.display.phrase = this.success.phrases[Math.floor(Math.random() * this.success.phrases.length)];

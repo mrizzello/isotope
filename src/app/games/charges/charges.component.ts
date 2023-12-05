@@ -197,6 +197,7 @@ export class ChargesComponent implements OnInit, OnDestroy {
     this.showGame = false;
     this.showResults = true;
     let display: any = [];
+    display.title = 'Charges';
     display.game = 'charges';
     display.time = this.stopwatchService.getDisplayString();
     display.comment = 'pour résoudre le puzzle!';

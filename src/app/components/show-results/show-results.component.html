@@ -1,6 +1,7 @@
 <div class="container">
     <div class="results">
         <div class="display-time">
+            <span class="title" [innerHTML]="display.title"></span>
             <span class="time" *ngIf="display.time !== ''">{{ display.time }}</span>
             <span class="comment" *ngIf="display.comment !== ''">{{display.comment}}</span>
             <span *ngIf="bestScore" class="best-score animate-charcter">NOUVEAU MEILLEUR SCORE !</span>

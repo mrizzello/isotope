@@ -164,6 +164,7 @@ export class TrivionComponent implements OnInit, OnDestroy {
     this.showGame = false;
     this.showResults = true;
     let display: any = [];
+    display.title = 'Triv<u>ion</u>';
     display.game = 'trivion';
     display.time = this.stopwatchService.getDisplayString();
     display.comment = 'pour résoudre le puzzle!';
