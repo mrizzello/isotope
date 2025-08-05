@@ -34,13 +34,7 @@ export class AppComponent {
 
   async ngOnInit(): Promise<void> {
     await this.dataService.loadData();
-    setTimeout(() => {
-      const elementToRemove = document.getElementById('elementToRemove');
-      if (elementToRemove) {
-        elementToRemove.parentNode?.removeChild(elementToRemove);
-        this.showRouterOutlet = true;
-      }
-    }, 1000);
+    this.showRouterOutlet = true;
   }
 
   ngOnDestroy() {
