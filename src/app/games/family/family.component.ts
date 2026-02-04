@@ -4,6 +4,7 @@ import arrayShuffle from 'array-shuffle';
 import { Subscription } from 'rxjs';
 
 import { DataService } from '../../services/data.service';
+import { Family } from '../../services/data.models';
 
 import { IntroductionService } from '../../services/introduction.service';
 import { IntroductionComponent } from '../../components/introduction/introduction.component';
@@ -37,7 +38,7 @@ export class FamilyComponent implements OnInit, OnDestroy {
   showGame: boolean = false;
   showResults: boolean = false;
   disableClick: boolean = false;
-  compounds: any;
+  compounds: Family[] | null = null;
   draw: any;
   score: number = 0;
   current: number = 0;
@@ -80,7 +81,10 @@ export class FamilyComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.compounds = this.dataService.getFamily();
+    const familyData = this.dataService.getFamily();
+    if (familyData) {
+      this.compounds = familyData;
+    }
   }
 
   ngOnDestroy(): void {
@@ -93,19 +97,20 @@ export class FamilyComponent implements OnInit, OnDestroy {
     this.current = 0;
     this.stopwatchService.resetStopwatch();
 
-    this.draw = JSON.parse(JSON.stringify(this.compounds));
-    this.draw = arrayShuffle(this.draw);
-    this.draw = this.draw.slice(0, this.maxScore);
+    if (this.compounds) {
+      this.draw = JSON.parse(JSON.stringify(this.compounds));
+      this.draw = arrayShuffle(this.draw);
+      this.draw = this.draw.slice(0, this.maxScore);
 
-    this.draw.forEach((item: any) => {
-      item.visible = false;
-      item.css = ['symbol-container'];
-      item.propositions = JSON.parse(JSON.stringify(this.propositions));
-      item.propositions = arrayShuffle(item.propositions);
-    });
+      this.draw.forEach((item: any) => {
+        item.visible = false;
+        item.css = ['symbol-container'];
+        item.propositions = JSON.parse(JSON.stringify(this.propositions));
+        item.propositions = arrayShuffle(item.propositions);
+      });
 
-    this.draw = arrayShuffle(this.draw);
-
+      this.draw = arrayShuffle(this.draw);
+    }
   }
 
   intro() {

@@ -3,6 +3,7 @@ import { ShowResultsService } from '../../services/show-results.service';
 import { DataService } from '../../services/data.service';
 import { ScoresService } from '../../services/scores.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Success } from '../../services/data.models';
 
 @Component({
     selector: 'app-show-results',
@@ -19,7 +20,7 @@ export class ShowResultsComponent {
     gif: '' as SafeResourceUrl,
     phrase: ''
   };
-  success: any = [];
+  success: Success | null = null;
   bestScore?: boolean;
 
   constructor(
@@ -28,15 +29,21 @@ export class ShowResultsComponent {
     private scoresService: ScoresService,
     private sanitizer: DomSanitizer
   ) {
-    this.success = this.dataService.getSuccess();
+    const successData = this.dataService.getSuccess();
+    if (successData) {
+      this.success = successData;
+    }
+
     this.showResultsService.display.subscribe((data: any) => {
-      this.display.title = data.title;      
+      this.display.title = data.title;
       this.display.time = data.time !== undefined ? data.time : '';
       this.display.comment = data.comment !== undefined ? data.comment : '';
-      this.display.phrase = this.success.phrases[Math.floor(Math.random() * this.success.phrases.length)];
-      const urlString = this.success.gifs[Math.floor(Math.random() * this.success.gifs.length)];
-      this.display.gif = this.sanitizer.bypassSecurityTrustResourceUrl(urlString);
-      let scores = this.scoresService.getItem('scores');      
+      if (this.success) {
+        this.display.phrase = this.success.phrases[Math.floor(Math.random() * this.success.phrases.length)];
+        const urlString = this.success.gifs[Math.floor(Math.random() * this.success.gifs.length)];
+        this.display.gif = this.sanitizer.bypassSecurityTrustResourceUrl(urlString);
+      }
+      let scores = this.scoresService.getItem('scores');
       if (!scores) {
         scores = {};
       }

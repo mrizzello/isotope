@@ -2,13 +2,7 @@ import { Component } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { DataService } from '../../services/data.service';
 import arrayShuffle from 'array-shuffle';
-
-export interface Chapter {
-  id: string
-  chapter: string
-  words: string[]
-  selected?: boolean
-}
+import { Pictiochimie } from '../../services/data.models';
 
 @Component({
     selector: 'app-pictiochimie',
@@ -26,7 +20,7 @@ export interface Chapter {
 })
 export class PictiochimieComponent {
 
-  data: Chapter[] = [];
+  data: (Pictiochimie & { selected?: boolean })[] = [];
   words: any[] = [];
   play: boolean = false;
   cursor: number = 0;
@@ -34,10 +28,13 @@ export class PictiochimieComponent {
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.data = this.dataService.getPictiochimie();
+    const pictiochimieData = this.dataService.getPictiochimie();
+    if (pictiochimieData) {
+      this.data = pictiochimieData;
+    }
   }
 
-  toggleSelect(item: Chapter): void {
+  toggleSelect(item: Pictiochimie & { selected?: boolean }): void {
     if (item.selected === undefined) {
       item.selected = false;
     }

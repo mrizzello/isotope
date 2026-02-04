@@ -4,6 +4,7 @@ import arrayShuffle from 'array-shuffle';
 import { Subscription } from 'rxjs';
 
 import { DataService } from '../../services/data.service';
+import { Ions } from '../../services/data.models';
 
 import { IntroductionService } from '../../services/introduction.service';
 import { IntroductionComponent } from '../../components/introduction/introduction.component';
@@ -43,7 +44,7 @@ export class ChargesComponent implements OnInit, OnDestroy {
   showGame: boolean = false;
   showResults: boolean = false;
   disableClick: boolean = false;
-  ions: any;
+  ions: Ions | null = null;
   draw: any;
   score: number = 0;
   current: number = 0;
@@ -86,9 +87,12 @@ export class ChargesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.ions = this.dataService.getIons();
-    const regex = /\([A-Z]+\)/i;
-    this.ions.cations = this.ions.cations.filter((cation: any) => !regex.test(cation.name));
+    const ionsData = this.dataService.getIons();
+    if (ionsData) {
+      this.ions = ionsData;
+      const regex = /\([A-Z]+\)/i;
+      this.ions.cations = this.ions.cations.filter((cation: any) => !regex.test(cation.name));
+    }
   }
 
   ngOnDestroy(): void {
@@ -101,47 +105,49 @@ export class ChargesComponent implements OnInit, OnDestroy {
     this.current = 0;
     this.stopwatchService.resetStopwatch();
 
-    const clones = JSON.parse(JSON.stringify(this.ions));
+    if (this.ions) {
+      const clones = JSON.parse(JSON.stringify(this.ions));
 
-    let cations = arrayShuffle(clones.cations);
-    cations = cations.slice(0, 4);
-    let anions = clones.anions;
-    anions = arrayShuffle(anions);
-    anions = anions.slice(0, 4);
+      let cations = arrayShuffle(clones.cations);
+      cations = cations.slice(0, 4);
+      let anions = clones.anions;
+      anions = arrayShuffle(anions);
+      anions = anions.slice(0, 4);
 
-    this.draw = cations.concat(anions);
-    this.draw = arrayShuffle(this.draw);
+      this.draw = cations.concat(anions);
+      this.draw = arrayShuffle(this.draw);
 
-    this.draw.forEach((item: any) => {
-      item.visible = false;
-      item.css = '';
-      let charges = ['3+', '2+', '+', '–', '2–', '3–'];
-      charges = charges.filter(charge => charge !== item.charge);
-      charges.unshift(item.charge);
-      charges = charges.slice(0, 4);
-      charges = arrayShuffle(charges);
-      let propositions: any = [];
-      charges.forEach((charge) => {
-        propositions.push({
-          charge: charge,
-          css: ''
+      this.draw.forEach((item: any) => {
+        item.visible = false;
+        item.css = '';
+        let charges = ['3+', '2+', '+', '–', '2–', '3–'];
+        charges = charges.filter(charge => charge !== item.charge);
+        charges.unshift(item.charge);
+        charges = charges.slice(0, 4);
+        charges = arrayShuffle(charges);
+        let propositions: any = [];
+        charges.forEach((charge) => {
+          propositions.push({
+            charge: charge,
+            css: ''
+          });
         });
+        item.propositions = propositions;
+        item.circles = [];
+        for (let i = 0; i < this.circlesNumber; i++) {
+          const rX = Math.floor(Math.random() * (this.maxX - this.minX + 1)) + this.minX;
+          const rY = Math.floor(Math.random() * (this.maxY - this.minY + 1)) + this.minY;
+          const rC = Math.floor(Math.random() * (this.maxR - this.minR + 1)) + this.minR;
+          const rCss = Math.floor(Math.random() * (3 - 0 + 1)) + 0;
+          item.circles.push({
+            cx: rX,
+            cy: rY,
+            r: rC,
+            css: 'move-'+rCss
+          });
+        }
       });
-      item.propositions = propositions;
-      item.circles = [];
-      for (let i = 0; i < this.circlesNumber; i++) {
-        const rX = Math.floor(Math.random() * (this.maxX - this.minX + 1)) + this.minX;
-        const rY = Math.floor(Math.random() * (this.maxY - this.minY + 1)) + this.minY;
-        const rC = Math.floor(Math.random() * (this.maxR - this.minR + 1)) + this.minR;
-        const rCss = Math.floor(Math.random() * (3 - 0 + 1)) + 0;
-        item.circles.push({
-          cx: rX,
-          cy: rY,
-          r: rC,
-          css: 'move-'+rCss
-        });
-      }
-    });
+    }
   }
 
   intro() {
@@ -167,7 +173,7 @@ export class ChargesComponent implements OnInit, OnDestroy {
     let prop = item.propositions[index];
     if (this.disableClick || prop.css !== '') {
       return;
-    }    
+    }
     if (prop.charge == item.charge) {
       item.css = "correct";
       item.propositions.forEach((prop:any)=>{

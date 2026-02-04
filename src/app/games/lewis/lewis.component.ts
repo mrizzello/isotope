@@ -4,6 +4,7 @@ import arrayShuffle from 'array-shuffle';
 import { Subscription } from 'rxjs';
 
 import { DataService } from '../../services/data.service';
+import { Lewis } from '../../services/data.models';
 
 import { IntroductionService } from '../../services/introduction.service';
 import { IntroductionComponent } from '../../components/introduction/introduction.component';
@@ -43,7 +44,7 @@ export class LewisComponent implements OnInit, OnDestroy {
   showGame: boolean = false;
   showResults: boolean = false;
   disableClick: boolean = false;
-  structures: any;
+  structures: Lewis[] | null = null;
   draw: any;
   score: number = 0;
   current: number = 0;
@@ -81,7 +82,10 @@ export class LewisComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.structures = this.dataService.getLewis();
+    const lewisData = this.dataService.getLewis();
+    if (lewisData) {
+      this.structures = lewisData;
+    }
   }
 
   ngOnDestroy(): void {
@@ -94,39 +98,40 @@ export class LewisComponent implements OnInit, OnDestroy {
     this.current = 0;
     this.stopwatchService.resetStopwatch();
 
-    this.draw = JSON.parse(JSON.stringify(this.structures));
-    this.draw = arrayShuffle(this.draw);
-    this.draw = this.draw.slice(0, this.maxScore);
+    if (this.structures) {
+      this.draw = JSON.parse(JSON.stringify(this.structures));
+      this.draw = arrayShuffle(this.draw);
+      this.draw = this.draw.slice(0, this.maxScore);
 
-    this.draw.forEach((item: any) => {
-      item.visible = false;
+      this.draw.forEach((item: any) => {
+        item.visible = false;
 
-      let propositions = [];
-      for (let step = 1; step <= 8; step++) {
-        propositions.push({
-          n: step,
-          correct: step == item.col,
-          translate: [],
-          css: ''
+        let propositions = [];
+        for (let step = 1; step <= 8; step++) {
+          propositions.push({
+            n: step,
+            correct: step == item.col,
+            translate: [],
+            css: ''
+          });
+        }
+
+        propositions = arrayShuffle(propositions);
+
+        let angle = 0;
+        propositions.forEach((proposition, index) => {
+          let radians = angle * (Math.PI / 180);
+          let translate: any = {};
+          translate.x = Math.round(Math.cos(radians) * this.propositionsRadius);
+          translate.y = Math.round(Math.sin(radians) * this.propositionsRadius);
+          proposition.translate = translate;
+          angle += 360 / 8;
         });
-      }
 
-      propositions = arrayShuffle(propositions);
+        item.propositions = propositions;
 
-      let angle = 0;
-      propositions.forEach((proposition, index) => {
-        let radians = angle * (Math.PI / 180);
-        let translate: any = {};
-        translate.x = Math.round(Math.cos(radians) * this.propositionsRadius);
-        translate.y = Math.round(Math.sin(radians) * this.propositionsRadius);
-        proposition.translate = translate;
-        angle += 360 / 8;
       });
-
-      item.propositions = propositions;
-
-    });
-
+    }
   }
 
   intro() {

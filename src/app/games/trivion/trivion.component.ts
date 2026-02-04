@@ -4,6 +4,7 @@ import arrayShuffle from 'array-shuffle';
 import { Subscription } from 'rxjs';
 
 import { DataService } from '../../services/data.service';
+import { Ions } from '../../services/data.models';
 
 import { IntroductionService } from '../../services/introduction.service';
 import { IntroductionComponent } from '../../components/introduction/introduction.component';
@@ -37,7 +38,7 @@ export class TrivionComponent implements OnInit, OnDestroy {
   showGame: boolean = false;
   showResults: boolean = false;
   disableClick: boolean = false;
-  ions: any;
+  ions: Ions | null = null;
   draw: any;
   score: number = 0;
   current: number = 0;
@@ -73,7 +74,10 @@ export class TrivionComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.ions = this.dataService.getIons();
+    const ionsData = this.dataService.getIons();
+    if (ionsData) {
+      this.ions = ionsData;
+    }
   }
 
   ngOnDestroy(): void {
@@ -86,22 +90,23 @@ export class TrivionComponent implements OnInit, OnDestroy {
     this.current = 0;
     this.stopwatchService.resetStopwatch();
 
-    this.draw = JSON.parse(JSON.stringify(this.ions));
-    this.draw = this.draw.cations.concat(this.draw.anions);
-    this.draw = arrayShuffle(this.draw);
-    this.draw = this.draw.slice(0, this.maxScore);    
+    if (this.ions) {
+      this.draw = JSON.parse(JSON.stringify(this.ions));
+      this.draw = this.draw.cations.concat(this.draw.anions);
+      this.draw = arrayShuffle(this.draw);
+      this.draw = this.draw.slice(0, this.maxScore);
 
-    this.draw.forEach((item: any) => {
-      item.selected = false;
-      item.css = ['symbol-container'];
-      item.visible = false;
-      item.propositions = item.wrongNames;
-      item.propositions.push(item.name);
-      item.propositions = arrayShuffle(item.propositions);
-    });
+      this.draw.forEach((item: any) => {
+        item.selected = false;
+        item.css = ['symbol-container'];
+        item.visible = false;
+        item.propositions = item.wrongNames;
+        item.propositions.push(item.name);
+        item.propositions = arrayShuffle(item.propositions);
+      });
 
-    this.draw = arrayShuffle(this.draw);
-
+      this.draw = arrayShuffle(this.draw);
+    }
   }
 
   intro() {
@@ -123,7 +128,7 @@ export class TrivionComponent implements OnInit, OnDestroy {
     this.stopwatchService.startStopwatch();
   }
 
-  selectTile(event: any, proposition: any, item: any) {    
+  selectTile(event: any, proposition: any, item: any) {
     if (this.disableClick) {
       return;
     }

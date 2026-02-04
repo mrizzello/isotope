@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { trigger, transition, style, state, animate } from '@angular/animations';
 import { interval, Subscription } from 'rxjs';
 import { DataService } from '../../services/data.service';
+import { Element } from '../../services/data.models';
 
 @Component({
     selector: 'app-clock',
@@ -27,12 +28,15 @@ export class ClockComponent {
   hours: number = 0;
   colonVisible: boolean = true;
   private clockSubscription: Subscription | undefined;
-  elements: any[] = [];
+  elements: Element[] = [];
   elementHours: string = '';
   elementMinutes: string = '';
 
   constructor(private dataService: DataService) {
-    this.elements = this.dataService.getElements();
+    const elements = this.dataService.getElements();
+    if (elements) {
+      this.elements = elements;
+    }
     this.getElementsTime();
   }
 
@@ -49,14 +53,18 @@ export class ClockComponent {
     let currentHours = this.currentTime.getHours();
     this.elementHours = 'Minuit';
     if( currentHours > 0 ){
-      let element = this.elements.find((el) => el.n == currentHours);
-      this.elementHours = element.name;
+      let element = this.elements.find((el) => el.n == currentHours.toString());
+      if (element) {
+        this.elementHours = element.name;
+      }
     }
     let currentMinutes = this.currentTime.getMinutes();
     this.elementMinutes = 'zéro';
     if( currentMinutes > 0 ){
-      let element = this.elements.find((el) => el.n == currentMinutes);
-      this.elementMinutes = element.name;
+      let element = this.elements.find((el) => el.n == currentMinutes.toString());
+      if (element) {
+        this.elementMinutes = element.name;
+      }
     }
   }
 

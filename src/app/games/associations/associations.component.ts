@@ -4,6 +4,7 @@ import arrayShuffle from 'array-shuffle';
 import { Subscription } from 'rxjs';
 
 import { DataService } from '../../services/data.service';
+import { Ions } from '../../services/data.models';
 
 import { IntroductionService } from '../../services/introduction.service';
 import { IntroductionComponent } from '../../components/introduction/introduction.component';
@@ -38,7 +39,7 @@ export class AssociationsComponent implements OnInit, OnDestroy {
   showGame: boolean = false;
   showResults: boolean = false;
   disableClick: boolean = false;
-  ions: any;
+  ions: Ions | null = null;
   cations: any;
   anions: any;
   draw: any;
@@ -77,7 +78,10 @@ export class AssociationsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.ions = this.dataService.getIons();
+    const ionsData = this.dataService.getIons();
+    if (ionsData) {
+      this.ions = ionsData;
+    }
     this.selection = [];
   }
 
@@ -91,30 +95,31 @@ export class AssociationsComponent implements OnInit, OnDestroy {
     this.stopwatchService.resetStopwatch();
     this.cssWon = '';
 
-    this.cations = this.ions.cations;
+    if (this.ions) {
+      this.cations = this.ions.cations;
 
-    this.cations = arrayShuffle(this.cations);
-    this.cations = this.cations.slice(0, 3);
-    this.anions = this.ions.anions;
-    this.anions = arrayShuffle(this.anions);
-    this.anions = this.anions.slice(0, 3);
+      this.cations = arrayShuffle(this.cations);
+      this.cations = this.cations.slice(0, 3);
+      this.anions = this.ions.anions;
+      this.anions = arrayShuffle(this.anions);
+      this.anions = this.anions.slice(0, 3);
 
-    this.draw = this.cations.concat(this.anions);
-    this.draw.forEach((item: any) => {
-      item.show = 'name';
-      item.selected = false;
-      item.out = false;
-      item.css = [];
-    });
+      this.draw = this.cations.concat(this.anions);
+      this.draw.forEach((item: any) => {
+        item.show = 'name';
+        item.selected = false;
+        item.out = false;
+        item.css = [];
+      });
 
-    const clones = JSON.parse(JSON.stringify(this.draw));
-    clones.forEach((item: any) => {
-      item.show = 'formula';
-    });
+      const clones = JSON.parse(JSON.stringify(this.draw));
+      clones.forEach((item: any) => {
+        item.show = 'formula';
+      });
 
-    this.draw = this.draw.concat(clones);
-    this.draw = arrayShuffle(this.draw);
-
+      this.draw = this.draw.concat(clones);
+      this.draw = arrayShuffle(this.draw);
+    }
   }
 
   intro() {
