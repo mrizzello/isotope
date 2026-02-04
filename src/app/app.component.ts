@@ -1,5 +1,5 @@
-import { Component, ViewChild, Inject, Renderer2 } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Component, ViewChild, Inject, Renderer2, DOCUMENT } from '@angular/core';
+
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MatDrawer } from '@angular/material/sidenav';
