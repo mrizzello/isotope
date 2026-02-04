@@ -1,7 +1,7 @@
 import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material.module';
@@ -30,41 +30,34 @@ import { ScoresComponent } from './pages/scores/scores.component';
 import { PictiochimieComponent } from './pages/pictiochimie/pictiochimie.component';
 import { PictiochimieScoreComponent } from './pages/pictiochimie-score/pictiochimie-score.component';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    IntroductionComponent,
-    StopwatchComponent,
-    ScoreStarsComponent,
-    ShowResultsComponent,
-    SafeHtmlPipe,
-    HomeComponent,
-    LewisComponent,
-    LewisStructureComponent,
-    AssociationsComponent,
-    MemorionComponent,
-    TrivionComponent,
-    FamilyComponent,
-    ChargesComponent,
-    ClockComponent,
-    InfosComponent,
-    ScoresComponent,
-    PictiochimieComponent,
-    PictiochimieScoreComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    MaterialModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: !isDevMode(),
-      registrationStrategy: 'registerWhenStable:30000'
-    }),
-    ReactiveFormsModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        IntroductionComponent,
+        StopwatchComponent,
+        ScoreStarsComponent,
+        ShowResultsComponent,
+        SafeHtmlPipe,
+        HomeComponent,
+        LewisComponent,
+        LewisStructureComponent,
+        AssociationsComponent,
+        MemorionComponent,
+        TrivionComponent,
+        FamilyComponent,
+        ChargesComponent,
+        ClockComponent,
+        InfosComponent,
+        ScoresComponent,
+        PictiochimieComponent,
+        PictiochimieScoreComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        MaterialModule,
+        ServiceWorkerModule.register('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+        }),
+        ReactiveFormsModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
