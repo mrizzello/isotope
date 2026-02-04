@@ -23,9 +23,13 @@
   gap: 10px;
 
   .timer-display {
-    font-size: 4em;
+    font-size: 2.5em;
     font-weight: bold;
     color: #f7931e; /* Using the accent color from the app */
+  }
+
+  .timer-finished {
+    color: #f44336 !important; /* Material Design red for warning */
   }
 
   .buttons {
@@ -49,4 +53,8 @@
     display: flex;
     gap: 10px;
   }
+}
+
+mat-progress-bar {
+  width: 100%;
 }

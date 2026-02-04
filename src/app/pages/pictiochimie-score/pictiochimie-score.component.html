@@ -7,18 +7,19 @@
         </mat-form-field>
         <div class="score">{{ team1Score }}</div>
         <div class="buttons">
-          <button mat-button color="primary" (click)="addPoint(1)">+1</button>
-          <button mat-button color="warn" (click)="removePoint(1)">-1</button>
+          <button matButton="tonal" color="primary" (click)="addPoint(1)">+1</button>
+          <button matButton="tonal" color="warn" (click)="removePoint(1)">-1</button>
         </div>
       </div>
       <div class="team-spacer">
         <div class="buttons">
-          <button mat-button color="primary" (click)="startTimer()" [disabled]="timerRunning">Start</button>
-          <button mat-button color="warn" (click)="stopTimer()" [disabled]="!timerRunning">Stop</button>
-          <button mat-button color="accent" (click)="resetTimer()">Reset timer</button>
-          <button mat-button color="accent" (click)="resetAll()">Reset all</button>
+          <button matButton="tonal" color="primary" (click)="startTimer()" [disabled]="timerRunning">Start</button>
+          <button matButton="tonal" color="warn" (click)="stopTimer()" [disabled]="!timerRunning">Stop</button>
+          <button matButton="tonal" color="accent" (click)="resetTimer()">Reset timer</button>
+          <button matButton="tonal" color="accent" (click)="resetAll()">Reset all</button>
         </div>
-        <div class="timer-display">{{ formatTime(timer) }}</div>
+        <div class="timer-display" [ngClass]="{'timer-finished': timer === 0}">{{ formatTime(timer) }}</div>
+        <mat-progress-bar [color]="timer === 0 ? 'warn' : 'primary'" mode="determinate" [value]="((60 - timer) / 60) * 100"></mat-progress-bar>
       </div>
       <div class="team">
         <mat-form-field appearance="fill">
@@ -26,8 +27,8 @@
         </mat-form-field>
         <div class="score">{{ team2Score }}</div>
         <div class="buttons">
-          <button mat-button color="primary" (click)="addPoint(2)">+1</button>
-          <button mat-button color="warn" (click)="removePoint(2)">-1</button>
+          <button matButton="tonal" color="primary" (click)="addPoint(2)">+1</button>
+          <button matButton="tonal" color="warn" (click)="removePoint(2)">-1</button>
         </div>
       </div>
     </div>

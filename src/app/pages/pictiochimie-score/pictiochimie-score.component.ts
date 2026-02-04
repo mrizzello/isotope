@@ -16,8 +16,8 @@ export class PictiochimieScoreComponent implements OnInit {
   timerRunning: boolean = false;
 
   teamNamesForm = new FormGroup({
-    team1Name: new FormControl('Équipe 1'),
-    team2Name: new FormControl('Équipe 2')
+    team1Name: new FormControl(''),
+    team2Name: new FormControl('')
   });
 
   constructor() { }
