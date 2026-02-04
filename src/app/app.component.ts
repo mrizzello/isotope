@@ -1,4 +1,5 @@
 import { Component, ViewChild, Inject, Renderer2 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MatDrawer } from '@angular/material/sidenav';
@@ -20,7 +21,9 @@ export class AppComponent {
 
   constructor(
     private dataService: DataService,
-    private router: Router
+    private router: Router,
+    @Inject(DOCUMENT) private document: Document,
+    private renderer: Renderer2
   ) {
     this.routerEventsSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -35,6 +38,10 @@ export class AppComponent {
   async ngOnInit(): Promise<void> {
     await this.dataService.loadData();
     this.showRouterOutlet = true;
+    const element = this.document.getElementById('elementToRemove');
+    if (element) {
+      this.renderer.removeChild(this.document.body, element);
+    }
   }
 
   ngOnDestroy() {
