@@ -12,6 +12,7 @@ import { ClockComponent } from './pages/clock/clock.component';
 import { InfosComponent } from './pages/infos/infos.component';
 import { ScoresComponent } from './pages/scores/scores.component';
 import { PictiochimieComponent } from './pages/pictiochimie/pictiochimie.component';
+import { PictiochimieScoreComponent } from './pages/pictiochimie-score/pictiochimie-score.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,7 +25,8 @@ const routes: Routes = [
   { path: 'clock', component: ClockComponent },
   { path: 'infos', component: InfosComponent },
   { path: 'scores', component: ScoresComponent },
-  { path: 'pictiochimie', component: PictiochimieComponent }
+  { path: 'pictiochimie', component: PictiochimieComponent },
+  { path: 'pictiochimie-score', component: PictiochimieScoreComponent }
 ];
 
 @NgModule({

@@ -1,0 +1,35 @@
+<div class="score-container">
+  <form [formGroup]="teamNamesForm">
+    <div class="teams-score">
+      <div class="team">
+        <mat-form-field appearance="fill">
+          <input matInput formControlName="team1Name">
+        </mat-form-field>
+        <div class="score">{{ team1Score }}</div>
+        <div class="buttons">
+          <button mat-button color="primary" (click)="addPoint(1)">+1</button>
+          <button mat-button color="warn" (click)="removePoint(1)">-1</button>
+        </div>
+      </div>
+      <div class="team-spacer">
+        <div class="buttons">
+          <button mat-button color="primary" (click)="startTimer()" [disabled]="timerRunning">Start</button>
+          <button mat-button color="warn" (click)="stopTimer()" [disabled]="!timerRunning">Stop</button>
+          <button mat-button color="accent" (click)="resetTimer()">Reset timer</button>
+          <button mat-button color="accent" (click)="resetAll()">Reset all</button>
+        </div>
+        <div class="timer-display">{{ formatTime(timer) }}</div>
+      </div>
+      <div class="team">
+        <mat-form-field appearance="fill">
+          <input matInput formControlName="team2Name">
+        </mat-form-field>
+        <div class="score">{{ team2Score }}</div>
+        <div class="buttons">
+          <button mat-button color="primary" (click)="addPoint(2)">+1</button>
+          <button mat-button color="warn" (click)="removePoint(2)">-1</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

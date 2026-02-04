@@ -28,6 +28,7 @@ import { InfosComponent } from './pages/infos/infos.component';
 import { ClockComponent } from './pages/clock/clock.component';
 import { ScoresComponent } from './pages/scores/scores.component';
 import { PictiochimieComponent } from './pages/pictiochimie/pictiochimie.component';
+import { PictiochimieScoreComponent } from './pages/pictiochimie-score/pictiochimie-score.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { PictiochimieComponent } from './pages/pictiochimie/pictiochimie.compone
     ClockComponent,
     InfosComponent,
     ScoresComponent,
-    PictiochimieComponent
+    PictiochimieComponent,
+    PictiochimieScoreComponent
   ],
   imports: [
     BrowserModule,

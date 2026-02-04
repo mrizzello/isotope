@@ -83,4 +83,8 @@ export class PictiochimieComponent {
     this.words[this.cursor].visible = true;
   }
 
+  openScoreWindow(): void {
+    window.open('/pictiochimie-score', '_blank');
+  }
+
 }
