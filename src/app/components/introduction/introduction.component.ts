@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { IntroductionService } from '../../services/introduction.service';
 
 @Component({
-  selector: 'app-introduction',
-  templateUrl: './introduction.component.html',
-  styleUrls: ['./introduction.component.scss']
+    selector: 'app-introduction',
+    templateUrl: './introduction.component.html',
+    styleUrls: ['./introduction.component.scss'],
+    standalone: false
 })
 export class IntroductionComponent {
 

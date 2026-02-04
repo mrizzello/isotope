@@ -18,17 +18,18 @@ const SCORE_DATA: ScoreElement[] = [
 ];
 
 @Component({
-  selector: 'app-scores',
-  templateUrl: './scores.component.html',
-  styleUrls: ['./scores.component.scss'],
-  animations: [
-    trigger('fadeIn', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('300ms ease-in', style({ opacity: 1 }))
-      ])
-    ])
-  ]
+    selector: 'app-scores',
+    templateUrl: './scores.component.html',
+    styleUrls: ['./scores.component.scss'],
+    animations: [
+        trigger('fadeIn', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate('300ms ease-in', style({ opacity: 1 }))
+            ])
+        ])
+    ],
+    standalone: false
 })
 export class ScoresComponent {
 

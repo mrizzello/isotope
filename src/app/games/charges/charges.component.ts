@@ -13,29 +13,30 @@ import { ShowResultsService } from '../../services/show-results.service';
 import { ShowResultsComponent } from '../../components/show-results/show-results.component';
 
 @Component({
-  selector: 'app-charges',
-  templateUrl: './charges.component.html',
-  styleUrls: ['./charges.component.scss'],
-  animations: [
-    trigger('slideInFromLeft', [
-      transition(':enter', [
-        style({ transform: 'translateX(-100%)' }),
-        animate('300ms ease-out', style({ transform: 'translateX(0)' }))
-      ])
-    ]),
-    trigger('slideInFromRight', [
-      transition(':enter', [
-        style({ transform: 'translateX(100%)' }),
-        animate('300ms ease-out', style({ transform: 'translateX(0)' }))
-      ])
-    ]),
-    trigger('fadeIn', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('300ms ease-in', style({ opacity: 1 }))
-      ])
-    ])
-  ]
+    selector: 'app-charges',
+    templateUrl: './charges.component.html',
+    styleUrls: ['./charges.component.scss'],
+    animations: [
+        trigger('slideInFromLeft', [
+            transition(':enter', [
+                style({ transform: 'translateX(-100%)' }),
+                animate('300ms ease-out', style({ transform: 'translateX(0)' }))
+            ])
+        ]),
+        trigger('slideInFromRight', [
+            transition(':enter', [
+                style({ transform: 'translateX(100%)' }),
+                animate('300ms ease-out', style({ transform: 'translateX(0)' }))
+            ])
+        ]),
+        trigger('fadeIn', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate('300ms ease-in', style({ opacity: 1 }))
+            ])
+        ])
+    ],
+    standalone: false
 })
 export class ChargesComponent implements OnInit, OnDestroy {
   showIntroduction: boolean = true;

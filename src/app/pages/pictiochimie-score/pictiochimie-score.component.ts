@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-pictiochimie-score',
-  templateUrl: './pictiochimie-score.component.html',
-  styleUrls: ['./pictiochimie-score.component.scss']
+    selector: 'app-pictiochimie-score',
+    templateUrl: './pictiochimie-score.component.html',
+    styleUrls: ['./pictiochimie-score.component.scss'],
+    standalone: false
 })
 export class PictiochimieScoreComponent implements OnInit {
 

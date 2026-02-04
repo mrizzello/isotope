@@ -13,23 +13,24 @@ import { ShowResultsService } from '../../services/show-results.service';
 import { ShowResultsComponent } from '../../components/show-results/show-results.component';
 
 @Component({
-  selector: 'app-memorion',
-  templateUrl: './memorion.component.html',
-  styleUrls: ['./memorion.component.scss'],
-  animations: [
-    trigger('slideInFromLeft', [
-      transition(':enter', [
-        style({ transform: 'translateX(-100%)' }),
-        animate('300ms ease-out', style({ transform: 'translateX(0)' }))
-      ])
-    ]),
-    trigger('slideInFromRight', [
-      transition(':enter', [
-        style({ transform: 'translateX(100%)' }),
-        animate('300ms ease-out', style({ transform: 'translateX(0)' }))
-      ])
-    ])
-  ]
+    selector: 'app-memorion',
+    templateUrl: './memorion.component.html',
+    styleUrls: ['./memorion.component.scss'],
+    animations: [
+        trigger('slideInFromLeft', [
+            transition(':enter', [
+                style({ transform: 'translateX(-100%)' }),
+                animate('300ms ease-out', style({ transform: 'translateX(0)' }))
+            ])
+        ]),
+        trigger('slideInFromRight', [
+            transition(':enter', [
+                style({ transform: 'translateX(100%)' }),
+                animate('300ms ease-out', style({ transform: 'translateX(0)' }))
+            ])
+        ])
+    ],
+    standalone: false
 })
 export class MemorionComponent implements OnInit, OnDestroy{
 

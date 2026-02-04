@@ -1,9 +1,10 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
-  selector: 'app-score-stars',
-  templateUrl: './score-stars.component.html',
-  styleUrls: ['./score-stars.component.scss']
+    selector: 'app-score-stars',
+    templateUrl: './score-stars.component.html',
+    styleUrls: ['./score-stars.component.scss'],
+    standalone: false
 })
 export class ScoreStarsComponent implements OnChanges {
 

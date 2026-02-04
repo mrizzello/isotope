@@ -11,17 +11,18 @@ export interface Chapter {
 }
 
 @Component({
-  selector: 'app-pictiochimie',
-  templateUrl: './pictiochimie.component.html',
-  styleUrls: ['./pictiochimie.component.scss'],
-  animations: [
-    trigger('fadeIn', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('300ms ease-in', style({ opacity: 1 }))
-      ])
-    ])
-  ]
+    selector: 'app-pictiochimie',
+    templateUrl: './pictiochimie.component.html',
+    styleUrls: ['./pictiochimie.component.scss'],
+    animations: [
+        trigger('fadeIn', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate('300ms ease-in', style({ opacity: 1 }))
+            ])
+        ])
+    ],
+    standalone: false
 })
 export class PictiochimieComponent {
 

@@ -4,22 +4,23 @@ import { interval, Subscription } from 'rxjs';
 import { DataService } from '../../services/data.service';
 
 @Component({
-  selector: 'app-clock',
-  templateUrl: './clock.component.html',
-  styleUrls: ['./clock.component.scss'],
-  animations: [
-    trigger('fadeIn', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('300ms ease-in', style({ opacity: 1 }))
-      ])
-    ]),
-    trigger('blink', [
-      state('visible', style({ opacity: 1 })),
-      state('hidden', style({ opacity: 0 })),
-      transition('visible <=> hidden', animate('0ms')),
-    ]),
-  ]
+    selector: 'app-clock',
+    templateUrl: './clock.component.html',
+    styleUrls: ['./clock.component.scss'],
+    animations: [
+        trigger('fadeIn', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate('300ms ease-in', style({ opacity: 1 }))
+            ])
+        ]),
+        trigger('blink', [
+            state('visible', style({ opacity: 1 })),
+            state('hidden', style({ opacity: 0 })),
+            transition('visible <=> hidden', animate('0ms')),
+        ]),
+    ],
+    standalone: false
 })
 export class ClockComponent {
   currentTime: Date = new Date();

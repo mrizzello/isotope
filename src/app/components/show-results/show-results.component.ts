@@ -5,9 +5,10 @@ import { ScoresService } from '../../services/scores.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-show-results',
-  templateUrl: './show-results.component.html',
-  styleUrls: ['./show-results.component.scss']
+    selector: 'app-show-results',
+    templateUrl: './show-results.component.html',
+    styleUrls: ['./show-results.component.scss'],
+    standalone: false
 })
 export class ShowResultsComponent {
 
