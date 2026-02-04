@@ -1,34 +1,43 @@
 <div class="container">
 
-    <app-introduction [@slideInFromLeft] *ngIf="showIntroduction"></app-introduction>
+  @if (showIntroduction) {
+    <app-introduction [@slideInFromLeft]></app-introduction>
+  }
 
-    <div class="game {{cssWon}}" [@slideInFromRight] *ngIf="showGame">
-        <mat-grid-list cols="6" rowHeight="fit" gutterSize="0.2rem">
-            <mat-grid-tile colspan="4" rowspan="1">
-                <app-score-stars [score]="score" [maxScore]="maxScore"></app-score-stars>
-            </mat-grid-tile>
-            <mat-grid-tile colspan="2" rowspan="1">
-                <app-stopwatch></app-stopwatch>
-            </mat-grid-tile>
-            <mat-grid-tile class="tile-content" *ngFor="let item of draw" rowspan="2" colspan="2"
-                [class]="item.css" (click)="selectTile(item)">
-                <div class="tile" *ngIf="item.show=='formula'; else elseBlock">
-                    <span [innerHTML]="item.symbol"></span><sup>{{item.charge}}</sup>
-                </div>
-                <ng-template #elseBlock>
-                    <div class="tile">
-                        <span>{{item.name}}</span>
-                    </div>
-                </ng-template>
-            </mat-grid-tile>
-            <mat-grid-tile colspan="6" rowspan="1">
-                <button mat-mini-fab color="primary" (click)="intro()">
-                    <mat-icon>arrow_back</mat-icon>
-                </button>
-            </mat-grid-tile>
-        </mat-grid-list>
+  @if (showGame) {
+    <div class="game {{cssWon}}" [@slideInFromRight]>
+      <mat-grid-list cols="6" rowHeight="fit" gutterSize="0.2rem">
+        <mat-grid-tile colspan="4" rowspan="1">
+          <app-score-stars [score]="score" [maxScore]="maxScore"></app-score-stars>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2" rowspan="1">
+          <app-stopwatch></app-stopwatch>
+        </mat-grid-tile>
+        @for (item of draw; track item) {
+          <mat-grid-tile class="tile-content" rowspan="2" colspan="2"
+            [class]="item.css" (click)="selectTile(item)">
+            @if (item.show=='formula') {
+              <div class="tile">
+                <span [innerHTML]="item.symbol"></span><sup>{{item.charge}}</sup>
+              </div>
+            } @else {
+              <div class="tile">
+                <span>{{item.name}}</span>
+              </div>
+            }
+          </mat-grid-tile>
+        }
+        <mat-grid-tile colspan="6" rowspan="1">
+          <button mat-mini-fab color="primary" (click)="intro()">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+        </mat-grid-tile>
+      </mat-grid-list>
     </div>
+  }
 
-    <app-show-results [@slideInFromRight] *ngIf="showResults"></app-show-results>
-    
+  @if (showResults) {
+    <app-show-results [@slideInFromRight]></app-show-results>
+  }
+
 </div>

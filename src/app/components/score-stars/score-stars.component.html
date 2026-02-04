@@ -1,2 +1,3 @@
-<mat-icon *ngFor="let star of stars" [ngClass]="star.css">star</mat-icon>
-  
+@for (star of stars; track star) {
+  <mat-icon [ngClass]="star.css">star</mat-icon>
+}

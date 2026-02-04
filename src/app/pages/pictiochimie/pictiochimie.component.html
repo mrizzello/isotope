@@ -1,65 +1,73 @@
-<div class="selection" *ngIf="!play" [@fadeIn]>
+@if (!play) {
+  <div class="selection" [@fadeIn]>
     <p>
-        <img class="logo" src="./assets/pictiochimie.png" alt="pictiochimie" />
+      <img class="logo" src="./assets/pictiochimie.png" alt="pictiochimie" />
     </p>
     <h4>
-        Choisir les chapitres :
+      Choisir les chapitres :
     </h4>
     <mat-divider></mat-divider>
     <mat-selection-list #chapters>
-        <mat-list-option *ngFor="let item of data" (click)="toggleSelect(item)" [selected]="item.selected">
-            {{ item.chapter }}
+      @for (item of data; track item) {
+        <mat-list-option (click)="toggleSelect(item)" [selected]="item.selected">
+          {{ item.chapter }}
         </mat-list-option>
+      }
     </mat-selection-list>
     <mat-divider></mat-divider>
     <div class="button-row">
-        <button mat-raised-button color="primary" (click)="start()">Commencer</button>
+      <button mat-raised-button color="primary" (click)="start()">Commencer</button>
     </div>
-</div>
-<div *ngIf="play" class="game">
+  </div>
+}
+@if (play) {
+  <div class="game">
     <mat-grid-list cols="1" rowHeight="fit">
-        <mat-grid-tile rowspan="2">
-            <section>
-                <div class="button-row">
-                    <div class="flex-container">
-                        <div class="button-container">
-                            <button mat-mini-fab color="primary" (click)="navigate('-')">
-                                <mat-icon>chevron_left</mat-icon>
-                            </button>
-                        </div>
-                        <div class="button-container">
-                            <button mat-mini-fab color="primary" (click)="navigate('0')">
-                                <mat-icon>home</mat-icon>
-                            </button>
-                        </div>
-                        <div class="button-container">
-                            <button mat-mini-fab color="primary" (click)="navigate('+')">
-                                <mat-icon>chevron_right</mat-icon>
-                            </button>
-                        </div>
-                        <div class="button-container">
-                            <button mat-mini-fab color="accent" (click)="openScoreWindow()">
-                                <mat-icon>scoreboard</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </mat-grid-tile>
-        <mat-grid-tile rowspan="1">
-            <div class="cursor">
-                {{cursor + 1}} / {{words.length}}
+      <mat-grid-tile rowspan="2">
+        <section>
+          <div class="button-row">
+            <div class="flex-container">
+              <div class="button-container">
+                <button mat-mini-fab color="primary" (click)="navigate('-')">
+                  <mat-icon>chevron_left</mat-icon>
+                </button>
+              </div>
+              <div class="button-container">
+                <button mat-mini-fab color="primary" (click)="navigate('0')">
+                  <mat-icon>home</mat-icon>
+                </button>
+              </div>
+              <div class="button-container">
+                <button mat-mini-fab color="primary" (click)="navigate('+')">
+                  <mat-icon>chevron_right</mat-icon>
+                </button>
+              </div>
+              <div class="button-container">
+                <button mat-mini-fab color="accent" (click)="openScoreWindow()">
+                  <mat-icon>scoreboard</mat-icon>
+                </button>
+              </div>
             </div>
-        </mat-grid-tile>
-        <mat-grid-tile rowspan="15" colspan="1">
-            <ng-container *ngFor="let w of words">
-                <div class="word" *ngIf="w.visible">
-                    {{w.word}}
-                </div>
-            </ng-container>
-        </mat-grid-tile>
-        <mat-grid-tile rowspan="1" colspan="1">
-            <div class="warning">&#9888; Pas de chiffres, ni de lettres &#9888;</div>
-        </mat-grid-tile>
+          </div>
+        </section>
+      </mat-grid-tile>
+      <mat-grid-tile rowspan="1">
+        <div class="cursor">
+          {{cursor + 1}} / {{words.length}}
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile rowspan="15" colspan="1">
+        @for (w of words; track w) {
+          @if (w.visible) {
+            <div class="word">
+              {{w.word}}
+            </div>
+          }
+        }
+      </mat-grid-tile>
+      <mat-grid-tile rowspan="1" colspan="1">
+        <div class="warning">&#9888; Pas de chiffres, ni de lettres &#9888;</div>
+      </mat-grid-tile>
     </mat-grid-list>
-</div>
+  </div>
+}

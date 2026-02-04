@@ -1,54 +1,64 @@
 <div class="container">
 
-    <app-introduction [@slideInFromLeft] *ngIf="showIntroduction"></app-introduction>
+  @if (showIntroduction) {
+    <app-introduction [@slideInFromLeft]></app-introduction>
+  }
 
-    <div class="game" [@slideInFromRight] *ngIf="showGame">
-        <mat-grid-list cols="6" rowHeight="fit" gutterSize="0.2rem">
-            <mat-grid-tile colspan="4" rowspan="1">
-                <app-score-stars [score]="score" [maxScore]="maxScore"></app-score-stars>
-            </mat-grid-tile>
-            <mat-grid-tile colspan="2" rowspan="1">
-                <app-stopwatch></app-stopwatch>
-            </mat-grid-tile>
-            <ng-container *ngFor="let item of draw">
-                <div *ngIf="item.visible" [@fadeIn]>
-                    <mat-grid-tile colspan="6" rowspan="6" [ngClass]="item.css">
-                        <svg version="1.0" width="100%" height="100%" viewBox="0 0 310 310" class="svg">
-                            <defs>
-                                <radialGradient id="gradient">
-                                  <stop offset="33%" stop-color="#E8EAF6" />
-                                  <stop offset="95%" stop-color="#D0D9FF" />
-                                </radialGradient>
-                              </defs>
-                            <g *ngFor="let prop of item.propositions" [ngClass]="{'proposition':true}"
-                            [attr.transform]="'translate(' + prop.translate.x + ',' + prop.translate.y + ')'"
-                            (click)="selectStructure(prop)" [class]="prop.css">
-                                <circle stroke-width="2" cx="155" cy="155" r="42"></circle>
-                                <text class="symbol" x="155" y="164" font-family="Arial"
-                                    font-size="28" text-anchor="middle">{{item.symbol}}</text>
-                                <g lewis-structure [n]="prop.n" [css]="prop.css"></g>
-                            </g>
-                            <g class="reference">
-                                <circle cx="155" cy="155" r="74" fill="url('#gradient')"></circle>
-                                <text class="symbol" transform="matrix(1 0 0 1 155 175)" font-family="Arial"
-                                    font-size="66" text-anchor="middle">{{item.symbol}}</text>
-                                <text transform="matrix(1 0 0 1 155 112)" font-family="Arial" font-size="18"
-                                    text-anchor="middle" class="ng-binding">{{getRoman(item)}}</text>
-                                <text transform="matrix(1 0 0 1 155 202)" font-family="Arial" font-size="16"
-                                    text-anchor="middle" class="ng-binding">{{item.name}}</text>
-                            </g>
-                        </svg>
-                    </mat-grid-tile>
-                </div>
-            </ng-container>
-            <mat-grid-tile colspan="6" rowspan="2">
-                <button mat-mini-fab color="primary" (click)="intro()">
-                    <mat-icon>arrow_back</mat-icon>
-                </button>
-            </mat-grid-tile>
-        </mat-grid-list>
+  @if (showGame) {
+    <div class="game" [@slideInFromRight]>
+      <mat-grid-list cols="6" rowHeight="fit" gutterSize="0.2rem">
+        <mat-grid-tile colspan="4" rowspan="1">
+          <app-score-stars [score]="score" [maxScore]="maxScore"></app-score-stars>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2" rowspan="1">
+          <app-stopwatch></app-stopwatch>
+        </mat-grid-tile>
+        @for (item of draw; track item) {
+          @if (item.visible) {
+            <div [@fadeIn]>
+              <mat-grid-tile colspan="6" rowspan="6" [ngClass]="item.css">
+                <svg version="1.0" width="100%" height="100%" viewBox="0 0 310 310" class="svg">
+                  <defs>
+                    <radialGradient id="gradient">
+                      <stop offset="33%" stop-color="#E8EAF6" />
+                      <stop offset="95%" stop-color="#D0D9FF" />
+                    </radialGradient>
+                  </defs>
+                  @for (prop of item.propositions; track prop) {
+                    <g [ngClass]="{'proposition':true}"
+                      [attr.transform]="'translate(' + prop.translate.x + ',' + prop.translate.y + ')'"
+                      (click)="selectStructure(prop)" [class]="prop.css">
+                      <circle stroke-width="2" cx="155" cy="155" r="42"></circle>
+                      <text class="symbol" x="155" y="164" font-family="Arial"
+                      font-size="28" text-anchor="middle">{{item.symbol}}</text>
+                      <g lewis-structure [n]="prop.n" [css]="prop.css"></g>
+                    </g>
+                  }
+                  <g class="reference">
+                    <circle cx="155" cy="155" r="74" fill="url('#gradient')"></circle>
+                    <text class="symbol" transform="matrix(1 0 0 1 155 175)" font-family="Arial"
+                    font-size="66" text-anchor="middle">{{item.symbol}}</text>
+                    <text transform="matrix(1 0 0 1 155 112)" font-family="Arial" font-size="18"
+                    text-anchor="middle" class="ng-binding">{{getRoman(item)}}</text>
+                    <text transform="matrix(1 0 0 1 155 202)" font-family="Arial" font-size="16"
+                    text-anchor="middle" class="ng-binding">{{item.name}}</text>
+                  </g>
+                </svg>
+              </mat-grid-tile>
+            </div>
+          }
+        }
+        <mat-grid-tile colspan="6" rowspan="2">
+          <button mat-mini-fab color="primary" (click)="intro()">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+        </mat-grid-tile>
+      </mat-grid-list>
     </div>
+  }
 
-    <app-show-results [@slideInFromRight] *ngIf="showResults"></app-show-results>
+  @if (showResults) {
+    <app-show-results [@slideInFromRight]></app-show-results>
+  }
 
 </div>
