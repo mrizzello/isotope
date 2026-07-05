@@ -159,8 +159,8 @@ const ACID_SALT_SIGNATURES = new Set(
   ACID_SALTS.map((species) => [...species].sort().join(' '))
 );
 
-// Former un sel acide rapporte deux points de plus que le nombre d'ions
-export const ACID_SALT_BONUS = 2;
+// Former un sel acide rapporte trois points de plus
+export const ACID_SALT_BONUS = 3;
 
 export function isAcidSalt(cells: HexCell[], subset: number[]): boolean {
   const signature = subset.map((i) => cells[i].tile!.species).sort().join(' ');
@@ -168,7 +168,14 @@ export function isAcidSalt(cells: HexCell[], subset: number[]): boolean {
 }
 
 export function moleculePoints(cells: HexCell[], molecule: number[]): number {
-  return molecule.length + (isAcidSalt(cells, molecule) ? ACID_SALT_BONUS : 0);
+  let points = molecule.length;
+  if (isAcidSalt(cells, molecule)) {
+    points += ACID_SALT_BONUS;
+  }
+  if (molecule.length >= 3) {
+    points += 2;
+  }
+  return points;
 }
 
 // Molécule chimiquement sensée : charge totale nulle et une seule espèce

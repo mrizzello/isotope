@@ -91,6 +91,8 @@ export class HexaionsComponent implements OnInit, OnDestroy {
         'À tour de rôle, posez l\'ion tiré au sort sur la grille. Quand des ions voisins '
         + 's\'assemblent en une molécule neutre, ils sont capturés et rapportent '
         + 'autant de points que d\'ions assemblés.',
+        '<b>Bonus&nbsp;:</b> la formation d\'un sel acide rapporte 3 points supplémentaires, et '
+        + 'une molécule formée de 3 ions ou plus rapporte 2 points supplémentaires.',
         'La partie se termine quand la grille est pleine. Le plus grand total de points gagne&nbsp;!'
       ],
       action: 'Commencer',
@@ -223,7 +225,7 @@ export class HexaionsComponent implements OnInit, OnDestroy {
 
     let display: any = [];
     display.title = human > algo ? 'Victoire&nbsp;!' : human < algo ? 'Petite défaite…' : 'Égalité&nbsp;!';
-    display.bestScoreText = human > algo ? 'Une victoire supplémentaire&nbsp;!' : human < algo ? 'Tu ne pers riend de ton charme&nbsp;!' : '';
+    display.bestScoreText = human > algo ? 'Une victoire supplémentaire&nbsp;!' : human < algo ? 'Vous ne perdez rien de votre charme&nbsp;!' : '';
     if (human !== algo) {
       display.forceBestScore = true;
     }

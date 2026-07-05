@@ -186,22 +186,29 @@ describe('hexaions.logic', () => {
       expect(findMolecule(cells, placed)).toBeNull();
     });
 
-    it('awards +2 bonus points for acid salts', () => {
-      // sel acide : nombre d'ions + 2
+    it('awards bonus points for acid salts and molecules with 3+ ions', () => {
+      // sel acide (3 ions) : 3 ions + 3 (sel acide) + 2 (3+ ions) = 8 points
       let placed = placeAt(cells, [[0, 0, CO3], [1, 0, NA], [0, 1, H]]);
       let molecule = findMolecule(cells, placed)!;
-      expect(moleculePoints(cells, molecule)).toBe(5); // NaHCO3 : 3 ions + 2
+      expect(moleculePoints(cells, molecule)).toBe(8); // NaHCO3 : 8
 
+      // sel acide (4 ions) : 4 ions + 3 (sel acide) + 2 (3+ ions) = 9 points
       cells.forEach((c) => { c.tile = null; });
       placed = placeAt(cells, [[0, 0, PO4], [1, 0, NA], [0, 1, NA], [-1, 0, H]]);
       molecule = findMolecule(cells, placed)!;
-      expect(moleculePoints(cells, molecule)).toBe(6); // Na2HPO4 : 4 ions + 2
+      expect(moleculePoints(cells, molecule)).toBe(9); // Na2HPO4 : 9
 
-      // molécule ordinaire : pas de bonus
+      // molécule ordinaire (2 ions) : pas de bonus = 2 points
       cells.forEach((c) => { c.tile = null; });
       placed = placeAt(cells, [[0, 0, NA], [1, 0, CL]]);
       molecule = findMolecule(cells, placed)!;
-      expect(moleculePoints(cells, molecule)).toBe(2); // NaCl : 2 ions
+      expect(moleculePoints(cells, molecule)).toBe(2); // NaCl : 2
+
+      // molécule ordinaire (3 ions) : 3 ions + 2 (3+ ions) = 5 points
+      cells.forEach((c) => { c.tile = null; });
+      placed = placeAt(cells, [[0, 0, BA], [1, 0, OH], [0, 1, OH]]);
+      molecule = findMolecule(cells, placed)!;
+      expect(moleculePoints(cells, molecule)).toBe(5); // Ba(OH)2 : 5
     });
 
     it('rejects CuHBO3 (bug rapporté : BO3^3- + Cu2+ + H+)', () => {
