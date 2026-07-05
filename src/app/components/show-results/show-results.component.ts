@@ -16,7 +16,8 @@ export class ShowResultsComponent {
     game: '',
     time: '',
     comment: '',
-    phrase: ''
+    phrase: '',
+    bestScoreText: ''
   };
   success: Success | null = null;
   bestScore?: boolean;
@@ -48,6 +49,7 @@ export class ShowResultsComponent {
       this.display.time = data.time !== undefined ? data.time : '';
       this.display.comment = data.comment !== undefined ? data.comment : '';
       this.display.scores = data.scores; // rappel de score optionnel [{label, value, css}]
+      this.display.bestScoreText = data.bestScoreText !== undefined ? data.bestScoreText : '';
       if (this.success) {
         this.display.phrase = this.success.phrases[Math.floor(Math.random() * this.success.phrases.length)];
         const urlString = this.success.gifs[Math.floor(Math.random() * this.success.gifs.length)];
@@ -73,6 +75,9 @@ export class ShowResultsComponent {
         // temps : plus bas = meilleur
         scores[data.game] = data.time;
         this.scoresService.setItem('scores', scores);
+        this.bestScore = true;
+      }
+      if (data.forceBestScore) {
         this.bestScore = true;
       }
     });

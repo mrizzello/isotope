@@ -222,7 +222,11 @@ export class HexaionsComponent implements OnInit, OnDestroy {
     this.scoresService.setItem('hexaionsRecord', record);
 
     let display: any = [];
-    display.title = human > algo ? 'Victoire&nbsp;!' : human < algo ? 'Défaite…' : 'Égalité&nbsp;!';
+    display.title = human > algo ? 'Victoire&nbsp;!' : human < algo ? 'Petite défaite…' : 'Égalité&nbsp;!';
+    display.bestScoreText = human > algo ? 'Une victoire supplémentaire&nbsp;!' : human < algo ? 'Tu ne pers riend de ton charme&nbsp;!' : '';
+    if (human !== algo) {
+      display.forceBestScore = true;
+    }
     display.game = 'hexaions';
     display.points = human;
     display.scores = [

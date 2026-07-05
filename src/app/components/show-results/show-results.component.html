@@ -16,7 +16,7 @@
         </span>
       }
       @if (bestScore) {
-        <span class="best-score animate-charcter">NOUVEAU MEILLEUR SCORE !</span>
+        <span class="best-score animate-charcter" [innerHTML]="display.bestScoreText || 'NOUVEAU MEILLEUR SCORE !'"></span>
       }
     </div>
     <div class="display-gif">
