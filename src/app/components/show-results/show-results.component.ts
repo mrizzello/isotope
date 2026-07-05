@@ -1,8 +1,7 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { ShowResultsService } from '../../services/show-results.service';
 import { DataService } from '../../services/data.service';
 import { ScoresService } from '../../services/scores.service';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Success } from '../../services/data.models';
 
 @Component({
@@ -17,17 +16,27 @@ export class ShowResultsComponent {
     game: '',
     time: '',
     comment: '',
-    gif: '' as SafeResourceUrl,
     phrase: ''
   };
   success: Success | null = null;
   bestScore?: boolean;
 
+  private _gifUrl: string = '';
+  private _iframeEl?: HTMLIFrameElement;
+
+  @ViewChild('giphyIframe') set giphyIframe(content: ElementRef<HTMLIFrameElement> | undefined) {
+    if (content) {
+      this._iframeEl = content.nativeElement;
+      this._iframeEl.src = this._gifUrl;
+    } else {
+      this._iframeEl = undefined;
+    }
+  }
+
   constructor(
     private showResultsService: ShowResultsService,
     private dataService: DataService,
-    private scoresService: ScoresService,
-    private sanitizer: DomSanitizer
+    private scoresService: ScoresService
   ) {
     const successData = this.dataService.getSuccess();
     if (successData) {
@@ -42,7 +51,10 @@ export class ShowResultsComponent {
       if (this.success) {
         this.display.phrase = this.success.phrases[Math.floor(Math.random() * this.success.phrases.length)];
         const urlString = this.success.gifs[Math.floor(Math.random() * this.success.gifs.length)];
-        this.display.gif = this.sanitizer.bypassSecurityTrustResourceUrl(urlString);
+        this._gifUrl = urlString;
+        if (this._iframeEl) {
+          this._iframeEl.src = urlString;
+        }
       }
       let scores = this.scoresService.getItem('scores');
       if (!scores) {
@@ -69,6 +81,6 @@ export class ShowResultsComponent {
   public clickRestart() {
     this.showResultsService.clickRestart();
     this.bestScore = false;
-  };
+  }
 
 }
