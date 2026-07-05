@@ -3,6 +3,7 @@ import { Component, ViewChild, Inject, Renderer2, DOCUMENT } from '@angular/core
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MatDrawer } from '@angular/material/sidenav';
+import { SwUpdate } from '@angular/service-worker';
 
 import { DataService } from './services/data.service';
 
@@ -24,7 +25,8 @@ export class AppComponent {
     private dataService: DataService,
     private router: Router,
     @Inject(DOCUMENT) private document: Document,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private swUpdate: SwUpdate
   ) {
     this.routerEventsSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -34,6 +36,16 @@ export class AppComponent {
         }
       }
     });
+
+    if (this.swUpdate.isEnabled) {
+      this.swUpdate.versionUpdates.subscribe((event) => {
+        if (event.type === 'VERSION_READY') {
+          if (confirm('Une nouvelle version de l\'application est disponible. Souhaitez-vous recharger pour mettre à jour ?')) {
+            this.swUpdate.activateUpdate().then(() => this.document.location.reload());
+          }
+        }
+      });
+    }
   }
 
   async ngOnInit(): Promise<void> {
