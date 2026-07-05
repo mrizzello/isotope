@@ -25,6 +25,16 @@ export interface Ions {
   anions: Ion[];
 }
 
+export interface HexaIon {
+  symbol: string;
+  charge: string;
+}
+
+export interface HexaIons {
+  cations: HexaIon[];
+  anions: HexaIon[];
+}
+
 export interface Lewis {
   number: string;
   symbol: string;
@@ -46,6 +56,7 @@ export interface Success {
 export interface AppData {
   lewis: Lewis[];
   ions: Ions;
+  hexaions: HexaIons;
   success: Success;
   family: Family[];
   elements: Element[];

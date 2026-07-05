@@ -1,0 +1,162 @@
+.container {
+  height: 100%;
+}
+
+// la route /hexaions est en pleine largeur (cf. app.component.scss) pour que
+// la grille profite de tout l'écran ; l'introduction et les résultats sont
+// re-contraints ici à la largeur standard des autres pages
+app-introduction,
+app-show-results {
+  width: 100%;
+  max-width: 420px; // même valeur que .content dans app.component.scss
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem 1rem; // marge de 1rem aux bords gauche et droit
+  box-sizing: border-box;
+}
+
+.scores {
+  display: flex;
+  justify-content: space-between;
+
+  .chip {
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    color: #ffffff;
+    font-weight: bold;
+
+    &.algo {
+      background-color: #3949ab;
+    }
+
+    &.human {
+      background-color: #f7931e;
+    }
+  }
+}
+
+.drawn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+
+  .turn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .preview {
+    width: 6.5rem;
+    height: 6.5rem;
+    flex-shrink: 0;
+  }
+
+  // l'hexagone et l'ion prennent la couleur du joueur dont c'est le tour
+  .drawn-cell {
+    polygon {
+      fill: #ffffff;
+      stroke-width: 3.5;
+    }
+
+    &.human {
+      polygon {
+        stroke: #f7931e;
+      }
+
+      text {
+        fill: #f7931e;
+      }
+    }
+
+    &.algo {
+      polygon {
+        stroke: #3949ab;
+      }
+
+      text {
+        fill: #3949ab;
+      }
+    }
+  }
+}
+
+.board {
+  // occupe l'espace restant et y centre la grille verticalement
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  min-height: 0;
+
+  svg {
+    display: block;
+    width: 100%;
+    // garde-fou grands écrans : le plateau reste entièrement visible en hauteur
+    max-height: 100%;
+  }
+}
+
+.cell {
+  // ions posés mais pas encore capturés dans une molécule : fond blanc
+  polygon {
+    fill: #ffffff;
+    stroke: #9fa8da;
+    stroke-width: 1.5;
+  }
+
+  text {
+    fill: #1a1a2e;
+    font-family: Arial, sans-serif;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  &.empty polygon {
+    cursor: pointer;
+    fill: #e8eaf6;
+  }
+
+  // pions capturés, « grisés » à la couleur du joueur
+  // (joueur = orange, robot = bleu, comme les pastilles de score)
+  &.frozen-human {
+    polygon {
+      fill: #f5d9b0;
+      stroke: #f7931e;
+    }
+
+    text {
+      fill: #a97b3a;
+    }
+  }
+
+  &.frozen-algo {
+    polygon {
+      fill: #b9c0e3;
+      stroke: #3949ab;
+    }
+
+    text {
+      fill: #5c6391;
+    }
+  }
+}
+
+.status {
+  min-height: 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.restart {
+  margin-top: auto;
+  text-align: center;
+  padding-bottom: 0.5rem;
+}

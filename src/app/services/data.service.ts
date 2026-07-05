@@ -5,6 +5,7 @@ import {
   AppData,
   Element,
   Family,
+  HexaIons,
   Ions,
   Lewis,
   Pictiochimie,
@@ -20,6 +21,7 @@ export class DataService {
   private fileUrls: { key: keyof AppData; url: string }[] = [
     { key: 'lewis', url: 'assets/data/lewis.json' },
     { key: 'ions', url: 'assets/data/ions.json' },
+    { key: 'hexaions', url: 'assets/data/hexaions.json' },
     { key: 'success', url: 'assets/data/success.json' },
     { key: 'family', url: 'assets/data/family.json' },
     { key: 'elements', url: 'assets/data/elements.json' },
@@ -53,6 +55,10 @@ export class DataService {
 
   getIons(): Ions | undefined {
     return this.data?.ions;
+  }
+
+  getHexaions(): HexaIons | undefined {
+    return this.data?.hexaions;
   }
 
   getSuccess(): Success | undefined {

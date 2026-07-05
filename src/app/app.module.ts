@@ -22,6 +22,7 @@ import { LewisComponent } from './games/lewis/lewis.component';
 import { LewisStructureComponent } from './components/lewis-structure/lewis-structure.component';
 import { FamilyComponent } from './games/family/family.component';
 import { ChargesComponent } from './games/charges/charges.component';
+import { HexaionsComponent } from './games/hexaions/hexaions.component';
 
 import { HomeComponent } from './pages/home/home.component';
 import { InfosComponent } from './pages/infos/infos.component';
@@ -45,6 +46,7 @@ import { PictiochimieScoreComponent } from './pages/pictiochimie-score/pictiochi
         TrivionComponent,
         FamilyComponent,
         ChargesComponent,
+        HexaionsComponent,
         ClockComponent,
         InfosComponent,
         ScoresComponent,

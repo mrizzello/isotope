@@ -1,8 +1,11 @@
-import { SanitizePipe } from './sanitize.pipe';
+import { TestBed } from '@angular/core/testing';
+import { DomSanitizer } from '@angular/platform-browser';
+import { SafeHtmlPipe } from './sanitize.pipe';
 
-describe('SanitizePipe', () => {
+describe('SafeHtmlPipe', () => {
   it('create an instance', () => {
-    const pipe = new SanitizePipe();
+    const sanitizer = TestBed.inject(DomSanitizer);
+    const pipe = new SafeHtmlPipe(sanitizer);
     expect(pipe).toBeTruthy();
   });
 });

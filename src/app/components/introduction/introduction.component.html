@@ -9,8 +9,17 @@
           <span [innerHTML]="p"></span>
         </p>
       }
-      <p>
-        <button mat-flat-button color="primary" (click)="clickStart()">{{display.action}}</button>
-      </p>
+      @if (display.choices) {
+        <p class="action-text">{{display.action}}</p>
+        <p class="choices">
+          @for (choice of display.choices; track $index) {
+            <button mat-flat-button color="primary" (click)="clickStart(choice.value)">{{choice.label}}</button>
+          }
+        </p>
+      } @else {
+        <p>
+          <button mat-flat-button color="primary" (click)="clickStart()">{{display.action}}</button>
+        </p>
+      }
     </div>
   </div>

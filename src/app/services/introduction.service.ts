@@ -13,8 +13,8 @@ export class IntroductionService {
     this.display.next(display);
   }
   
-  public clickStart() {
-    this.start.next(true);
+  public clickStart(value?: any) {
+    this.start.next(value !== undefined ? value : true);
   }
 
   public getStart() {

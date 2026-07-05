@@ -8,6 +8,7 @@ import { AssociationsComponent } from './games/associations/associations.compone
 import { MemorionComponent } from './games/memorion/memorion.component';
 import { TrivionComponent } from './games/trivion/trivion.component';
 import { FamilyComponent } from './games/family/family.component';
+import { HexaionsComponent } from './games/hexaions/hexaions.component';
 import { ClockComponent } from './pages/clock/clock.component';
 import { InfosComponent } from './pages/infos/infos.component';
 import { ScoresComponent } from './pages/scores/scores.component';
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'memorion', component: MemorionComponent },
   { path: 'trivion', component: TrivionComponent },
   { path: 'family', component: FamilyComponent },
+  { path: 'hexaions', component: HexaionsComponent },
   { path: 'clock', component: ClockComponent },
   { path: 'infos', component: InfosComponent },
   { path: 'scores', component: ScoresComponent },

@@ -1,0 +1,69 @@
+<div class="container">
+
+  @if (showIntroduction) {
+    <app-introduction [@slideInFromLeft]></app-introduction>
+  }
+
+  @if (showGame) {
+    <div class="game" [@slideInFromRight]>
+
+      <div class="scores">
+        <span class="chip algo">Robot&nbsp;: {{ points.algo }}</span>
+        <span class="chip human">Joueur&nbsp;: {{ points.human }}</span>
+      </div>
+
+      <div class="drawn">
+        <span class="turn">
+          {{ currentPlayer === 'human' ? 'À toi de jouer !' : 'Le robot joue…' }}
+        </span>
+        <svg [attr.viewBox]="previewViewBox" class="preview">
+          <g class="cell drawn-cell" [ngClass]="currentPlayer">
+            <polygon [attr.points]="previewCell.corners"></polygon>
+            @if (drawnTile) {
+              <text x="0" [attr.y]="drawnTile.fontSize * 0.35" text-anchor="middle">
+                @for (seg of drawnTile.segments; track $index) {
+                  <tspan [attr.dy]="seg.dy" [attr.font-size]="seg.fontSize">{{ seg.text }}</tspan>
+                }
+              </text>
+            }
+          </g>
+        </svg>
+      </div>
+
+      <div class="board">
+        <svg [attr.viewBox]="viewBox">
+          @for (cell of cells; track $index) {
+            <g class="cell"
+              [class.empty]="cell.tile === null"
+              [class.frozen-human]="cell.frozenBy === 'human'"
+              [class.frozen-algo]="cell.frozenBy === 'algo'"
+              (click)="selectCell($index)">
+              <polygon [attr.points]="cell.corners"></polygon>
+              @if (cell.tile) {
+                <text [attr.x]="cell.x" [attr.y]="cell.y + cell.tile.fontSize * 0.35" text-anchor="middle">
+                  @for (seg of cell.tile.segments; track $index) {
+                    <tspan [attr.dy]="seg.dy" [attr.font-size]="seg.fontSize">{{ seg.text }}</tspan>
+                  }
+                </text>
+              }
+            </g>
+          }
+        </svg>
+      </div>
+
+      <div class="status">{{ statusText }}</div>
+
+      <div class="restart">
+        <button mat-mini-fab color="primary" (click)="intro()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </div>
+
+    </div>
+  }
+
+  @if (showResults) {
+    <app-show-results [@slideInFromRight]></app-show-results>
+  }
+
+</div>

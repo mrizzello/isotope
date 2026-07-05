@@ -17,11 +17,12 @@ export class IntroductionComponent {
       this.display.title = data.title !== undefined ? data.title : '';
       this.display.p = data.p !== undefined ? data.p : [];
       this.display.action = data.action !== undefined ? data.action : 'Commencer';
+      this.display.choices = data.choices; // choix optionnels [{label, value}]
     });
   }
 
-  public clickStart() {
-    this.introductionService.clickStart();
+  public clickStart(value?: any) {
+    this.introductionService.clickStart(value);
   };
 
 }

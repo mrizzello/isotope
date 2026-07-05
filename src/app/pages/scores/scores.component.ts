@@ -15,6 +15,7 @@ const SCORE_DATA: ScoreElement[] = [
   { id: 'memorion', name: 'Memorion', score: '' },
   { id: 'trivion', name: 'Trivion', score: '' },
   { id: 'family', name: 'Family', score: '' },
+  { id: 'hexaions', name: 'HexaIons', score: '' },
 ];
 
 @Component({
@@ -38,9 +39,16 @@ export class ScoresComponent {
   constructor(private scoresService: ScoresService) { }
 
   ngOnInit() {
-    this.scores = this.scoresService.getItem('scores');
+    this.scores = this.scoresService.getItem('scores') || {};
+    const hexaionsRecord = this.scoresService.getItem('hexaionsRecord');
     SCORE_DATA.forEach((item)=>{
-      item.score = this.scores[item.id] !== undefined ? this.scores[item.id] : '-';
+      if (item.id === 'hexaions') {
+        item.score = hexaionsRecord
+          ? hexaionsRecord.won + ' gagnées / ' + hexaionsRecord.lost + ' perdues'
+          : '-';
+      } else {
+        item.score = this.scores[item.id] !== undefined ? this.scores[item.id] : '-';
+      }
       this.display.push(item);
     });
   }

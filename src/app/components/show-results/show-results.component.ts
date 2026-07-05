@@ -38,6 +38,7 @@ export class ShowResultsComponent {
       this.display.title = data.title;
       this.display.time = data.time !== undefined ? data.time : '';
       this.display.comment = data.comment !== undefined ? data.comment : '';
+      this.display.scores = data.scores; // rappel de score optionnel [{label, value, css}]
       if (this.success) {
         this.display.phrase = this.success.phrases[Math.floor(Math.random() * this.success.phrases.length)];
         const urlString = this.success.gifs[Math.floor(Math.random() * this.success.gifs.length)];
@@ -49,7 +50,15 @@ export class ShowResultsComponent {
       }
       let gameScore = scores[data.game];
       this.bestScore = false;
-      if (data.time <= gameScore || gameScore == undefined) {
+      if (data.points !== undefined) {
+        // score en points : plus haut = meilleur
+        if (gameScore == undefined || data.points >= gameScore) {
+          scores[data.game] = data.points;
+          this.scoresService.setItem('scores', scores);
+          this.bestScore = true;
+        }
+      } else if (data.time <= gameScore || gameScore == undefined) {
+        // temps : plus bas = meilleur
         scores[data.game] = data.time;
         this.scoresService.setItem('scores', scores);
         this.bestScore = true;

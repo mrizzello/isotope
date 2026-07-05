@@ -16,5 +16,16 @@
             font-size: 180%;
             margin-top: 2rem;
         }
+
+        .action-text {
+            font-weight: bold;
+            font-size: 120%;
+        }
+
+        .choices {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
     }
 }

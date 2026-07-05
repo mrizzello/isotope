@@ -32,6 +32,28 @@
             margin-top: 1rem;
             font-size: 140%;
         }
+
+        .scores {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 0.75rem;
+
+            .chip {
+                padding: 0.25rem 0.75rem;
+                border-radius: 1rem;
+                color: #ffffff;
+                font-weight: bold;
+
+                &.algo {
+                    background-color: #3949ab;
+                }
+
+                &.human {
+                    background-color: #f7931e;
+                }
+            }
+        }
     }
 
     .display-gif {

@@ -8,6 +8,13 @@
       @if (display.comment !== '') {
         <span class="comment">{{display.comment}}</span>
       }
+      @if (display.scores) {
+        <span class="scores">
+          @for (score of display.scores; track $index) {
+            <span class="chip {{score.css}}">{{ score.label }}&nbsp;: {{ score.value }}</span>
+          }
+        </span>
+      }
       @if (bestScore) {
         <span class="best-score animate-charcter">NOUVEAU MEILLEUR SCORE !</span>
       }
