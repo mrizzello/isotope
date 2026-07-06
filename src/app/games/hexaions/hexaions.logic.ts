@@ -55,11 +55,18 @@ export function parseSymbol(symbol: string): SymbolSegment[] {
   return segments;
 }
 
-export function makeTile(ion: HexaIon): HexTile {
+// Facteur de grossissement du texte selon le rayon de la grille : le viewBox
+// englobe toute la grille, donc plus elle est grande, plus les hexagones sont
+// petits à l'écran — on compense partiellement sans déborder de l'hexagone.
+export function fontScale(radius: number): number {
+  return 1 + Math.max(0, radius - 2) * 0.15;
+}
+
+export function makeTile(ion: HexaIon, scale: number = 1): HexTile {
   const segments = parseSymbol(ion.symbol);
   segments.push({ text: ion.charge, kind: 'sup' });
   const length = segments.reduce((sum, s) => sum + s.text.length, 0);
-  const fontSize = length <= 3 ? 15 : length <= 6 ? 12 : 9;
+  const fontSize = (length <= 3 ? 15 : length <= 6 ? 12 : 9) * scale;
 
   // dy est cumulatif d'un tspan au suivant : chaque segment compense le
   // décalage du précédent pour atteindre sa propre ligne de base.

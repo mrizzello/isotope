@@ -3,6 +3,7 @@ import {
   buildGrid,
   drawRandomIon,
   findMolecule,
+  fontScale,
   makeTile,
   moleculeFormula,
   moleculePoints,
@@ -85,6 +86,26 @@ describe('hexaions.logic', () => {
         { text: 'SO', kind: 'normal' },
         { text: '4', kind: 'sub' }
       ]);
+    });
+  });
+
+  describe('fontScale', () => {
+    it('grows with the grid radius, from 1 for Grille M', () => {
+      expect(fontScale(2)).toBe(1);
+      expect(fontScale(3)).toBeCloseTo(1.15);
+      expect(fontScale(4)).toBeCloseTo(1.3);
+    });
+  });
+
+  describe('makeTile', () => {
+    it('scales the font size and keeps offsets proportional', () => {
+      const plain = makeTile(SO4);
+      const scaled = makeTile(SO4, 1.3);
+      expect(scaled.fontSize).toBeCloseTo(plain.fontSize * 1.3);
+      scaled.segments.forEach((seg, i) => {
+        expect(seg.fontSize).toBeCloseTo(plain.segments[i].fontSize! * 1.3);
+        expect(seg.dy).toBeCloseTo(plain.segments[i].dy! * 1.3);
+      });
     });
   });
 

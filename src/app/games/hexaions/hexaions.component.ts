@@ -19,6 +19,7 @@ import {
   buildGrid,
   drawRandomIon,
   findMolecule,
+  fontScale,
   isAcidSalt,
   makeTile,
   moleculeFormula,
@@ -134,7 +135,7 @@ export class HexaionsComponent implements OnInit, OnDestroy {
     this.statusText = '';
     this.currentPlayer = 'human';
     this.disableClick = false;
-    this.drawnTile = this.ions ? makeTile(drawRandomIon(this.ions)) : null;
+    this.drawnTile = this.ions ? makeTile(drawRandomIon(this.ions), fontScale(this.gridRadius)) : null;
   }
 
   intro() {
@@ -187,7 +188,7 @@ export class HexaionsComponent implements OnInit, OnDestroy {
       return;
     }
     this.currentPlayer = player;
-    this.drawnTile = this.ions ? makeTile(drawRandomIon(this.ions)) : null;
+    this.drawnTile = this.ions ? makeTile(drawRandomIon(this.ions), fontScale(this.gridRadius)) : null;
     if (player === 'algo') {
       this.disableClick = true;
       setTimeout(() => this.algoPlay(), this.algoDelay);
