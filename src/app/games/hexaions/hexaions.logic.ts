@@ -146,13 +146,37 @@ export function neighborIndexes(cells: HexCell[], index: number): number[] {
 // Liste blanche des sels acides autorisés, exprimés en composition exacte
 // d'ions (les clés d'espèce sont `symbol|charge`, cf. makeTile).
 const ACID_SALTS: string[][] = [
+  // sels de sodium
   ['Na|+', 'Na|+', 'H|+', 'PO<sub>4</sub>|3–'], // Na2HPO4
   ['Na|+', 'H|+', 'H|+', 'PO<sub>4</sub>|3–'], // NaH2PO4
   ['Na|+', 'Na|+', 'H|+', 'PO<sub>3</sub>|3–'], // Na2HPO3
   ['Na|+', 'H|+', 'H|+', 'PO<sub>3</sub>|3–'], // NaH2PO3
   ['Na|+', 'H|+', 'CO<sub>3</sub>|2–'], // NaHCO3
   ['Na|+', 'H|+', 'SO<sub>4</sub>|2–'], // NaHSO4
-  ['Na|+', 'H|+', 'SO<sub>3</sub>|2–'] // NaHSO3
+  ['Na|+', 'H|+', 'SO<sub>3</sub>|2–'], // NaHSO3
+  ['Na|+', 'H|+', 'S|2–'], // NaHS
+  // sels de potassium
+  ['K|+', 'K|+', 'H|+', 'PO<sub>4</sub>|3–'], // K2HPO4
+  ['K|+', 'H|+', 'H|+', 'PO<sub>4</sub>|3–'], // KH2PO4
+  ['K|+', 'K|+', 'H|+', 'PO<sub>3</sub>|3–'], // K2HPO3
+  ['K|+', 'H|+', 'H|+', 'PO<sub>3</sub>|3–'], // KH2PO3
+  ['K|+', 'H|+', 'CO<sub>3</sub>|2–'], // KHCO3
+  ['K|+', 'H|+', 'SO<sub>4</sub>|2–'], // KHSO4
+  ['K|+', 'H|+', 'SO<sub>3</sub>|2–'], // KHSO3
+  ['K|+', 'H|+', 'S|2–'], // KHS
+  // sels d'ammonium
+  ['NH<sub>4</sub>|+', 'NH<sub>4</sub>|+', 'H|+', 'PO<sub>4</sub>|3–'], // (NH4)2HPO4
+  ['NH<sub>4</sub>|+', 'H|+', 'H|+', 'PO<sub>4</sub>|3–'], // NH4H2PO4
+  ['NH<sub>4</sub>|+', 'NH<sub>4</sub>|+', 'H|+', 'PO<sub>3</sub>|3–'], // (NH4)2HPO3
+  ['NH<sub>4</sub>|+', 'H|+', 'H|+', 'PO<sub>3</sub>|3–'], // NH4H2PO3
+  ['NH<sub>4</sub>|+', 'H|+', 'CO<sub>3</sub>|2–'], // NH4HCO3
+  ['NH<sub>4</sub>|+', 'H|+', 'SO<sub>4</sub>|2–'], // NH4HSO4
+  ['NH<sub>4</sub>|+', 'H|+', 'SO<sub>3</sub>|2–'], // NH4HSO3
+  ['NH<sub>4</sub>|+', 'H|+', 'S|2–'], // NH4HS
+  // phosphates acides de calcium
+  ['Ca|2+', 'H|+', 'PO<sub>4</sub>|3–'], // CaHPO4
+  ['Ca|2+', 'H|+', 'H|+', 'H|+', 'H|+',
+    'PO<sub>4</sub>|3–', 'PO<sub>4</sub>|3–'] // Ca(H2PO4)2
 ];
 
 const ACID_SALT_SIGNATURES = new Set(
@@ -165,6 +189,36 @@ export const ACID_SALT_BONUS = 3;
 export function isAcidSalt(cells: HexCell[], subset: number[]): boolean {
   const signature = subset.map((i) => cells[i].tile!.species).sort().join(' ');
   return ACID_SALT_SIGNATURES.has(signature);
+}
+
+// Formule brute de la molécule en HTML, p. ex. "Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>".
+// Cations d'abord (H en dernier parmi eux, cf. NaHCO3), indices en <sub>,
+// parenthèses autour des ions polyatomiques répétés.
+export function moleculeFormula(cells: HexCell[], molecule: number[]): string {
+  const counts = new Map<string, { tile: HexTile; count: number }>();
+  molecule.forEach((i) => {
+    const tile = cells[i].tile!;
+    const entry = counts.get(tile.species);
+    if (entry) {
+      entry.count++;
+    } else {
+      counts.set(tile.species, { tile, count: 1 });
+    }
+  });
+  const entries = [...counts.values()].sort((a, b) => {
+    if ((a.tile.charge > 0) !== (b.tile.charge > 0)) {
+      return a.tile.charge > 0 ? -1 : 1;
+    }
+    return (a.tile.ion.symbol === 'H' ? 1 : 0) - (b.tile.ion.symbol === 'H' ? 1 : 0);
+  });
+  return entries.map(({ tile, count }) => {
+    const symbol = tile.ion.symbol;
+    if (count === 1) {
+      return symbol;
+    }
+    const polyatomic = symbol.replace(/<sub>.*?<\/sub>/g, '').replace(/[^A-Z]/g, '').length > 1;
+    return (polyatomic ? '(' + symbol + ')' : symbol) + '<sub>' + count + '</sub>';
+  }).join('');
 }
 
 export function moleculePoints(cells: HexCell[], molecule: number[]): number {

@@ -4,6 +4,7 @@ import {
   drawRandomIon,
   findMolecule,
   makeTile,
+  moleculeFormula,
   moleculePoints,
   parseCharge,
   parseSymbol,
@@ -18,6 +19,9 @@ function ion(symbol: string, charge: string): HexaIon {
 
 const NA = ion('Na', '+');
 const K = ion('K', '+');
+const LI = ion('Li', '+');
+const NH4 = ion('NH<sub>4</sub>', '+');
+const CA = ion('Ca', '2+');
 const H = ion('H', '+');
 const CU1 = ion('Cu', '+');
 const CU2 = ion('Cu', '2+');
@@ -121,6 +125,60 @@ describe('hexaions.logic', () => {
     });
   });
 
+  describe('moleculeFormula', () => {
+    let cells: HexCell[];
+
+    beforeEach(() => {
+      cells = buildGrid(GRID_RADIUS, HEX_SIZE);
+    });
+
+    it('writes the cation first (NaCl)', () => {
+      const placed = placeChain(cells, [CL, NA]);
+      const molecule = findMolecule(cells, placed)!;
+      expect(moleculeFormula(cells, molecule)).toBe('NaCl');
+    });
+
+    it('adds indices as <sub> (Fe2O3)', () => {
+      const placed = placeChain(cells, [FE3, O, FE3, O, O]);
+      const molecule = findMolecule(cells, placed)!;
+      expect(moleculeFormula(cells, molecule)).toBe('Fe<sub>2</sub>O<sub>3</sub>');
+    });
+
+    it('wraps repeated polyatomic ions in parentheses (Ba(OH)2)', () => {
+      const placed = placeChain(cells, [OH, BA, OH]);
+      const molecule = findMolecule(cells, placed)!;
+      expect(moleculeFormula(cells, molecule)).toBe('Ba(OH)<sub>2</sub>');
+    });
+
+    it('keeps inner subscripts and parenthesizes (Mg3(PO4)2)', () => {
+      const placed = placeAt(cells, [
+        [0, 0, PO4], [1, 0, MG], [0, 1, MG], [-1, 0, MG], [-1, 1, PO4]
+      ]);
+      const molecule = findMolecule(cells, placed)!;
+      expect(moleculeFormula(cells, molecule))
+        .toBe('Mg<sub>3</sub>(PO<sub>4</sub>)<sub>2</sub>');
+    });
+
+    it('puts H after the other cations in acid salts (Na2HPO4)', () => {
+      const placed = placeAt(cells, [[0, 0, PO4], [1, 0, NA], [0, 1, NA], [-1, 0, H]]);
+      const molecule = findMolecule(cells, placed)!;
+      expect(moleculeFormula(cells, molecule)).toBe('Na<sub>2</sub>HPO<sub>4</sub>');
+    });
+
+    it('parenthesizes repeated NH4 and puts H last ((NH4)2HPO4)', () => {
+      const placed = placeAt(cells, [[0, 0, PO4], [1, 0, NH4], [0, 1, NH4], [-1, 0, H]]);
+      const molecule = findMolecule(cells, placed)!;
+      expect(moleculeFormula(cells, molecule))
+        .toBe('(NH<sub>4</sub>)<sub>2</sub>HPO<sub>4</sub>');
+    });
+
+    it('indexes repeated H in acid salts (NaH2PO4)', () => {
+      const placed = placeAt(cells, [[0, 0, PO4], [1, 0, NA], [0, 1, H], [-1, 0, H]]);
+      const molecule = findMolecule(cells, placed)!;
+      expect(moleculeFormula(cells, molecule)).toBe('NaH<sub>2</sub>PO<sub>4</sub>');
+    });
+  });
+
   describe('findMolecule', () => {
     let cells: HexCell[];
 
@@ -181,8 +239,42 @@ describe('hexaions.logic', () => {
       expect(findMolecule(cells, placed)?.length).toBe(4);
     });
 
-    it('rejects KHCO3 (sel acide hors liste blanche)', () => {
-      const placed = placeAt(cells, [[0, 0, CO3], [1, 0, K], [0, 1, H]]);
+    it('forms the K+ analogues (KHCO3, KH2PO4)', () => {
+      let placed = placeAt(cells, [[0, 0, CO3], [1, 0, K], [0, 1, H]]);
+      expect(findMolecule(cells, placed)?.length).toBe(3);
+
+      cells.forEach((c) => { c.tile = null; });
+      placed = placeAt(cells, [[0, 0, PO4], [1, 0, K], [0, 1, H], [-1, 0, H]]);
+      expect(findMolecule(cells, placed)?.length).toBe(4);
+    });
+
+    it('forms the NH4+ analogues (NH4HSO4, (NH4)2HPO4)', () => {
+      let placed = placeAt(cells, [[0, 0, SO4], [1, 0, NH4], [0, 1, H]]);
+      expect(findMolecule(cells, placed)?.length).toBe(3);
+
+      cells.forEach((c) => { c.tile = null; });
+      placed = placeAt(cells, [[0, 0, PO4], [1, 0, NH4], [0, 1, NH4], [-1, 0, H]]);
+      expect(findMolecule(cells, placed)?.length).toBe(4);
+    });
+
+    it('forms the hydrogen sulfides (NaHS)', () => {
+      const placed = placeAt(cells, [[0, 0, S], [1, 0, NA], [0, 1, H]]);
+      expect(findMolecule(cells, placed)?.length).toBe(3);
+    });
+
+    it('forms the calcium acid phosphates (CaHPO4, Ca(H2PO4)2)', () => {
+      let placed = placeAt(cells, [[0, 0, PO4], [1, 0, CA], [0, 1, H]]);
+      expect(findMolecule(cells, placed)?.length).toBe(3);
+
+      cells.forEach((c) => { c.tile = null; });
+      placed = placeAt(cells, [
+        [0, 0, PO4], [2, 0, PO4], [-1, 0, H], [0, -1, H], [2, -1, H], [2, 1, H], [1, 0, CA]
+      ]);
+      expect(findMolecule(cells, placed)?.length).toBe(7);
+    });
+
+    it('rejects LiHCO3 (sel acide hors liste blanche)', () => {
+      const placed = placeAt(cells, [[0, 0, CO3], [1, 0, LI], [0, 1, H]]);
       expect(findMolecule(cells, placed)).toBeNull();
     });
 

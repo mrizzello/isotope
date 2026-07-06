@@ -51,7 +51,7 @@
         </svg>
       </div>
 
-      <div class="status">{{ statusText }}</div>
+      <div class="status" [innerHTML]="statusText"></div>
 
       <div class="restart">
         <button mat-mini-fab color="primary" (click)="intro()">
