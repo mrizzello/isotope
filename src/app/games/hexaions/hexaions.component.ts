@@ -97,8 +97,9 @@ export class HexaionsComponent implements OnInit, OnDestroy {
       ],
       action: 'Commencer',
       choices: [
-        { label: 'Grille L', value: 2 },
-        { label: 'Grille XL', value: 3 }
+        { label: 'Grille M', value: 2 },
+        { label: 'Grille L', value: 3 },
+        { label: 'Grille XL', value: 4 }
       ]
     });
     this.restartSubscription = this.showResultsService.getRestart().subscribe((data: any) => {
