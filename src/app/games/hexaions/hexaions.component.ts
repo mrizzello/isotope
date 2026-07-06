@@ -173,8 +173,8 @@ export class HexaionsComponent implements OnInit, OnDestroy {
       const acidSalt = isAcidSalt(this.cells, molecule);
       molecule.forEach((i) => this.cells[i].frozenBy = player);
       this.points[player] += points;
-      this.statusText = 'Molécule ' + moleculeFormula(this.cells, molecule)
-        + ' de ' + molecule.length + ' ions'
+      this.statusText = moleculeFormula(this.cells, molecule)
+        + ' - ' + molecule.length + ' ions'
         + (acidSalt ? ' (sel acide, bonus +3)' : '') + ' : +' + points
         + (player === 'human' ? ' points pour toi !' : ' points pour le robot.');
     }
