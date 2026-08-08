@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { MatDialog } from '@angular/material/dialog';
 import { ScoresService } from '../../services/scores.service';
+import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog.component';
 
 export interface ScoreElement {
   id: string;
@@ -36,11 +38,33 @@ export class ScoresComponent {
 
   scores: any = [];
   display: any = [];
-  constructor(private scoresService: ScoresService) { }
+  constructor(private scoresService: ScoresService, private dialog: MatDialog) { }
 
   ngOnInit() {
+    this.buildDisplay();
+  }
+
+  resetScores(): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Réinitialiser les scores',
+        message: 'Voulez-vous vraiment réinitialiser tous les scores ?'
+      }
+    });
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (!confirmed) {
+        return;
+      }
+      this.scoresService.removeItem('scores');
+      this.scoresService.removeItem('hexaionsRecord');
+      this.buildDisplay();
+    });
+  }
+
+  private buildDisplay(): void {
     this.scores = this.scoresService.getItem('scores') || {};
     const hexaionsRecord = this.scoresService.getItem('hexaionsRecord');
+    this.display = [];
     SCORE_DATA.forEach((item)=>{
       if (item.id === 'hexaions') {
         item.score = hexaionsRecord

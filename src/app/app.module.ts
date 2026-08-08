@@ -14,6 +14,7 @@ import { IntroductionComponent } from './components/introduction/introduction.co
 import { StopwatchComponent } from './components/stopwatch/stopwatch.component';
 import { ScoreStarsComponent } from './components/score-stars/score-stars.component';
 import { ShowResultsComponent } from './components/show-results/show-results.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 import { AssociationsComponent } from './games/associations/associations.component';
 import { MemorionComponent } from './games/memorion/memorion.component';
@@ -37,6 +38,7 @@ import { PictiochimieScoreComponent } from './pages/pictiochimie-score/pictiochi
         StopwatchComponent,
         ScoreStarsComponent,
         ShowResultsComponent,
+        ConfirmDialogComponent,
         SafeHtmlPipe,
         HomeComponent,
         LewisComponent,
