@@ -10,7 +10,7 @@
     <mat-selection-list #chapters>
       @for (item of data; track item) {
         <mat-list-option (click)="toggleSelect(item)" [selected]="item.selected">
-          {{ item.chapter }}
+          {{ item.n }}. {{ item.chapter }}
         </mat-list-option>
       }
     </mat-selection-list>

@@ -30,7 +30,7 @@ export class PictiochimieComponent {
   ngOnInit(): void {
     const pictiochimieData = this.dataService.getPictiochimie();
     if (pictiochimieData) {
-      this.data = pictiochimieData;
+      this.data = pictiochimieData.filter((item) => item.words.length > 0);
     }
   }
 

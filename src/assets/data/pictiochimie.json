@@ -4,7 +4,13 @@
     "chapter": "Introduction",
     "words": [
       "chimie",
+      "composition",
       "matière",
+      "propriété",
+      "transformation",
+      "propriété physique",
+      "propriété chimique",
+      "transformation physique",
       "transformation chimique"
     ]
   },
@@ -12,24 +18,15 @@
     "n": "2",
     "chapter": "Les états de la matière",
     "words": [
-      "solide",
-      "liquide",
-      "gaz",
-      "forces intermoléculaires",
-      "changement d'état",
-      "température de fusion",
-      "température d'ébullition",
-      "solidification",
-      "fusion",
-      "condensation",
-      "vaporisation",
       "sublimation",
-      "sublimation inverse",
-      "diagramme de phases",
       "tension superficielle",
-      "capilarité",
-      "solide cristallin",
-      "des allotropes"
+      "capillarité",
+      "point d'ébullition",
+      "point de fusion",
+      "diagramme de phases",
+      "réseau cristallin",
+      "allotropes",
+      "CO₂"
     ]
   },
   {
@@ -40,87 +37,94 @@
       "corps pur composé",
       "mélange homogène",
       "mélange hétérogène",
-      "l'attraction magnétique",
-      "la filtration",
-      "la dissolution sélective",
-      "la distillation",
-      "la chromatographie",
-      "l'extraction"
-    ]
+      "attraction magnétique",
+      "filtration",
+      "dissolution sélective",
+      "distillation",
+      "chromatographie",
+      "extraction",
+      "sédimentation",
+      "décantation"    ]
   },
   {
     "n": "4",
     "chapter": "Historique",
     "words": [
-      "le Big Bang",
-      "la nucléosynthèse",
-      "le modèle de Bohr",
-      "le modèle standard"
+      "Big Bang",
+      "nucléosynthèse",
+      "modèle atomique",
+      "nuage électronique",
+      "feuille d'or",
+      "pain de raisin",
+      "Schrödinger"
     ]
   },
   {
     "n": "5",
     "chapter": "L'atome",
     "words": [
-      "atome",
       "proton",
       "neutron",
       "électron",
-      "isotopes",
-      "la masse atomique",
-      "la mole",
-      "le nombre d'Avogadro"
+      "noyau",
+      "isotope",
+      "défaut de masse",
+      "nombre d'Avogadro",
+      "atome",
+      "vide",
+      "numéro atomique"
     ]
   },
   {
     "n": "6",
     "chapter": "Le tableau périodique",
     "words": [
-      "métal",
-      "non-métal",
-      "métalloïde",
-      "gaz rare",
-      "halogène",
+      "tableau périodique",
       "période",
-      "onde électromagnétique",
-      "spectre d'absorption",
-      "spectre d'émission",
-      "orbitale atomique",
-      "électron de valence",
+      "famille",
+      "métaux alcalins",
+      "gaz rares",
+      "halogènes",
+      "orbitale",
+      "structure de Lewis",
+      "règle de l'octet",
       "cation",
       "anion"
     ]
   },
   {
     "n": "7",
-    "chapter": "Les liaisons chimiques",
+    "chapter": "Molécules et liaisons chimiques",
     "words": [
       "liaison ionique",
-      "liaison polaire",
+      "liaison covalente",
       "liaison métallique",
-      "l'électronégativité"
+      "électronégativité",
+      "alliage",
+      "bronze",
+      "acier",
+      "laiton",
+      "NaCl",
+      "H₂O"
     ]
   },
   {
     "n": "8",
-    "chapter": "Molécules",
+    "chapter": "Géométrie moléculaire et polarité",
     "words": [
-      "molécule",
-      "formule brute",
-      "formule développée",
-      "la masse molaire",
-      "la polarité"
+      "tétraèdre",
+      "moment dipolaire",
+      "molécule polaire",
+      "molécule non polaire",
+      "liaison hydrogène",
+      "ADN",
+      "acide chlorhydrique"
     ]
   },
   {
     "n": "9",
-    "chapter": "Nomenclature minérale",
-    "words": [
-      "acide",
-      "hydroxyde",
-      "oxacide",
-      "sel"
-    ]
+    "chapter": "Nomenclature",
+    "words": []
   },
   {
     "n": "10",
@@ -128,16 +132,14 @@
     "words": [
       "soluté",
       "solvant",
-      "solution aqueuse",
-      "dissolution ionique",
       "solubilité",
-      "saturation",
       "cristallisation",
       "précipité",
-      "dissociation",
       "électrolyte",
-      "concentration",
-      "dilution"
+      "molarité",
+      "fiole jaugée",
+      "dilution",
+      "dissolution"
     ]
   },
   {
@@ -147,53 +149,67 @@
       "réaction",
       "réactif",
       "produit",
-      "coefficient stœchiométrique",
-      "équation chimique",
+      "collision",
+      "conservation de la masse",
+      "nombres stoechiométriques",
       "réaction spontanée",
       "réaction non spontanée",
+      "réaction endothermique",
+      "réaction exothermique",
       "réaction réversible",
       "réaction irréversible",
-      "réaction exothermique",
-      "réaction endothermique",
       "catalyseur",
       "inhibiteur"
     ]
   },
   {
     "n": "12",
-    "chapter": "Types de réaction",
+    "chapter": "Types de réactions",
     "words": [
-      "réactions de combinaison",
-      "réactions de décomposition",
-      "réactions de précipitation",
-      "réactions de neutralisation",
-      "réactions de combustion"
+      "réaction de combinaison",
+      "réaction de décomposition",
+      "réaction de précipitation",
+      "réaction de neutralisation",
+      "équation ionique",
+      "ion spectateur",
+      "réaction de dissociation"
     ]
   },
   {
     "n": "13",
     "chapter": "Calculs stœchiométriques",
     "words": [
-      "calculs stœchiométriques",
-      "réactif limitant"
+      "stœchiométrie",
+      "masse molaire",
+      "réactif limitant",
+      "réactif en excès",
+      "rendement",
+      "équation chimique",
+      "nombres stoechiométriques"
     ]
   },
   {
     "n": "14",
     "chapter": "Les gaz parfaits",
     "words": [
-      "Conditions Normales de Température et Pression",
-      "température",
+      "gaz parfait",
+      "théorie cinétique",
+      "pression",
       "volume",
-      "pression"
+      "température",
+      "loi des gaz parfaits",
+      "pression partielle"
     ]
   },
   {
     "n": "15",
-    "chapter": "Vitesses de réaction",
+    "chapter": "Cinétique chimique",
     "words": [
       "vitesse de réaction",
-      "énergie d'activation"
+      "énergie d'activation",
+      "concentration",
+      "vitesse de consommation",
+      "vitesse de formation"
     ]
   },
   {
@@ -202,70 +218,89 @@
     "words": [
       "équilibre chimique",
       "équilibre dynamique",
+      "réaction réversible",
       "constante d'équilibre",
-      "principe de Le Châtelier"
+      "Le Châtelier",
+      "équilibre homogène",
+      "équilibre hétérogène"
     ]
   },
   {
     "n": "17",
     "chapter": "Les acides et les bases",
     "words": [
-      "acide fort",
-      "acide faible",
+      "acide",
+      "base",
+      "acide conjugué",
       "base conjuguée",
-      "autoprotolyse",
+      "ampholyte",
+      "autoprotolyse de l'eau"
+    ]
+  },
+  {
+    "n": "18",
+    "chapter": "Le pH ou potentiel hydrogène",
+    "words": [
       "pH",
-      "acide polyprotique",
       "solution tampon",
-      "courbe de titrage",
-      "solution tampon"
+      "point d'équivalence",
+      "indicateur coloré",
+      "neutralisation",
+      "courbe de titrage"
     ]
   },
   {
     "n": "19",
-    "chapter": "Les réactions d'oxydoréduction",
+    "chapter": "Le produit de solubilité",
     "words": [
-      "réaction d'oxydoréduction",
-      "nombre d'oxydation",
-      "l'oxydant",
-      "le réducteur",
-      "potentiel standards de réduction",
-      "acide polyprotique",
-      "solution tampon",
-      "courbe de titrage",
-      "solution tampon"
+      "produit de solubilité",
+      "solubilité",
+      "solution saturée",
+      "précipitation",
+      "ions"
     ]
   },
   {
     "n": "20",
-    "chapter": "Électrochimie",
+    "chapter": "Les réactions d'oxydoréduction",
     "words": [
-      "la pile électrochimique",
-      "la cathode",
-      "le pont sallin",
-      "le réducteur",
-      "potentiel standards de réduction",
-      "électrode standard à hydrogène",
-      "potentiel électrochimique",
-      "l'électrolyse",
-      "la loi de Faraday",
-      "l'électrodéposition"
+      "nombre d'oxydation",
+      "oxydation",
+      "réduction",
+      "oxydant",
+      "réducteur",
+      "règle du gamma",
+      "transfert d'électrons"
     ]
   },
   {
     "n": "21",
+    "chapter": "Électrochimie",
+    "words": [
+      "pile électrochimique",
+      "demi-pile",
+      "anode",
+      "cathode",
+      "pont salin",
+      "force électromotrice",
+      "potentiel standard de réduction"
+    ]
+  },
+  {
+    "n": "22",
     "chapter": "Thermochimie",
     "words": [
-      "l'énergie",
-      "la calorimétrie",
-      "la capacité thermique",
-      "le calorimètre",
-      "la variation d'enthalpie",
-      "l'énergie de liaison",
-      "la loi de Hess",
-      "l'électrolyse",
-      "la loi de Faraday",
-      "l'électrodéposition"
+      "enthalpie",
+      "réaction exothermique",
+      "réaction endothermique",
+      "capacité thermique",
+      "énergie de liaison",
+      "chaleur"
     ]
+  },
+  {
+    "n": "23",
+    "chapter": "Thermodynamique",
+    "words": []
   }
 ]
