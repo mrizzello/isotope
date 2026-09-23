@@ -1,0 +1,96 @@
+<div class="container">
+
+  @if (showIntroduction) {
+    <app-introduction [@slideInFromLeft]></app-introduction>
+  }
+
+  @if (showGame) {
+    <div class="game" [class.multiplier-2]="state.multiplier === 2" [class.multiplier-3]="state.multiplier >= 3" [@slideInFromRight]>
+
+      <div class="dashboard">
+        <div class="stat">
+          <span class="label">Score</span>
+          <span class="value">{{ state.score }}</span>
+        </div>
+        <div class="stat">
+          <span class="label">Multiplicateur</span>
+          <span class="value">×{{ state.multiplier }}</span>
+        </div>
+        <div class="stat" [class.hurry]="seconds <= 10">
+          <span class="label">Temps</span>
+          <span class="value">{{ seconds }}&nbsp;s</span>
+        </div>
+      </div>
+
+      <div class="play-zone">
+        @for (molecule of molecules; track molecule.id) {
+          <div class="molecule"
+            [class.special]="molecule.special"
+            [class.selected]="molecule.id === selectedId"
+            [style.left.%]="moleculeLeft(molecule.lane)"
+            [style.top]="moleculeTop(molecule.y)"
+            (click)="selectMolecule(molecule)">
+            @if (molecule.special) {
+              <mat-icon class="bolt">bolt</mat-icon>
+            }
+            <span [innerHTML]="molecule.compound.formule"></span>
+          </div>
+        }
+
+        @for (effect of effects; track effect.id) {
+          @switch (effect.kind) {
+            @case ('flash') {
+              <div class="effect flash" (animationend)="removeEffect(effect)"></div>
+            }
+            @case ('points') {
+              <div class="effect points" [style.left.%]="effect.left" (animationend)="removeEffect(effect)">{{ effect.html }}</div>
+            }
+            @default {
+              <div class="effect molecule {{ effect.kind }}"
+                [class.special]="effect.special"
+                [style.left.%]="effect.left"
+                [style.top]="moleculeTop(effect.y)"
+                [style.--dx]="effect.dx + 'rem'"
+                [style.--dy]="effect.dy + 'rem'"
+                (animationend)="removeEffect(effect)">
+                <span [innerHTML]="effect.html"></span>
+              </div>
+            }
+          }
+        }
+
+        @if (gameOver) {
+          <div class="game-over" [@fadeIn]>
+            <span class="title">Temps écoulé&nbsp;!</span>
+            <span class="final-score">{{ state.score }}&nbsp;pts</span>
+            <button mat-flat-button color="primary" (click)="end()">Suite</button>
+          </div>
+        }
+      </div>
+
+      <div class="bins">
+        @for (bin of bins; track bin.value) {
+          <div class="bin"
+            [class.disabled]="bin.disabled"
+            [class.hint]="bin.hint"
+            [class.good]="bin.good"
+            [class.armed]="selectedId !== null && !bin.disabled"
+            (click)="selectBin(bin)">
+            {{ bin.label }}
+          </div>
+        }
+      </div>
+
+      <div class="back">
+        <button mat-mini-fab color="primary" (click)="intro()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </div>
+    </div>
+  }
+
+  @if (showResults) {
+    <app-show-results [@slideInFromRight]></app-show-results>
+  }
+
+</div>
