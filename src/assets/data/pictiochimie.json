@@ -1,5 +1,34 @@
 [
   {
+    "n": "0",
+    "chapter": "Laboratoire",
+    "words": [
+      "bécher",
+      "erlenmeyer",
+      "tube à essai",
+      "cylindre graduée",
+      "burette",
+      "pipette jaugée",
+      "entonnoir",
+      "verre de montre",
+      "spatule",
+      "pince",
+      "bec Bunsen",
+      "balance",
+      "agitateur magnétique",
+      "barreau aimanté",
+      "thermomètre",
+      "lunettes de protection",
+      "blouse",
+      "hotte",
+      "ampoule à décanter",
+      "cristallisoir",
+      "pissette",
+      "pH-mètre",
+      "papier pH"
+    ]
+  },
+  {
     "n": "1",
     "chapter": "Introduction",
     "words": [
@@ -44,7 +73,8 @@
       "chromatographie",
       "extraction",
       "sédimentation",
-      "décantation"    ]
+      "décantation"
+    ]
   },
   {
     "n": "4",
