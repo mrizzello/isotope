@@ -1,34 +1,34 @@
-<div class="score-container">
+<div class="score-container" [class.time-up]="timer === 0">
   <form [formGroup]="teamNamesForm">
     <div class="teams-score">
-      <div class="team">
-        <mat-form-field appearance="fill">
-          <input matInput formControlName="team1Name">
-        </mat-form-field>
-        <div class="score">{{ team1Score }}</div>
+      <div class="team team-1">
+        <input class="team-name" formControlName="team1Name" placeholder="Équipe 1" aria-label="Nom de l'équipe 1">
+        @for (s of [team1Score]; track s) {
+          <div class="score">{{ s }}</div>
+        }
         <div class="buttons">
-          <button matButton="tonal" color="primary" (click)="addPoint(1)">+1</button>
-          <button matButton="tonal" color="warn" (click)="removePoint(1)">-1</button>
+          <button type="button" matButton="tonal" class="plus" (click)="addPoint(1)">+1</button>
+          <button type="button" matButton="tonal" class="minus" (click)="removePoint(1)" [disabled]="team1Score === 0">-1</button>
         </div>
       </div>
       <div class="team-spacer">
         <div class="buttons">
-          <button matButton="tonal" color="primary" (click)="startTimer()" [disabled]="timerRunning">Start</button>
-          <button matButton="tonal" color="warn" (click)="stopTimer()" [disabled]="!timerRunning">Stop</button>
-          <button matButton="tonal" color="accent" (click)="resetTimer()">Reset timer</button>
-          <button matButton="tonal" color="accent" (click)="resetAll()">Reset all</button>
+          <button type="button" matButton="tonal" class="btn-start" (click)="startTimer()" [disabled]="timerRunning">Start</button>
+          <button type="button" matButton="tonal" color="warn" (click)="stopTimer()" [disabled]="!timerRunning">Stop</button>
+          <button type="button" matButton="tonal" class="btn-grey" (click)="resetTimer()">Reset timer</button>
+          <button type="button" matButton="tonal" class="btn-grey" (click)="resetAll()">Reset all</button>
         </div>
-        <div class="timer-display" [ngClass]="{'timer-finished': timer === 0}">{{ formatTime(timer) }}</div>
-        <mat-progress-bar [color]="timer === 0 ? 'warn' : 'primary'" mode="determinate" [value]="((60 - timer) / 60) * 100"></mat-progress-bar>
+        <div class="timer-display" [style.color]="barColor">{{ formatTime(timer) }}</div>
+        <mat-progress-bar [style.--mat-progress-bar-active-indicator-color]="barColor" [style.--mat-progress-bar-track-color]="barTrackColor" mode="determinate" [value]="((60 - timer) / 60) * 100"></mat-progress-bar>
       </div>
-      <div class="team">
-        <mat-form-field appearance="fill">
-          <input matInput formControlName="team2Name">
-        </mat-form-field>
-        <div class="score">{{ team2Score }}</div>
+      <div class="team team-2">
+        <input class="team-name" formControlName="team2Name" placeholder="Équipe 2" aria-label="Nom de l'équipe 2">
+        @for (s of [team2Score]; track s) {
+          <div class="score">{{ s }}</div>
+        }
         <div class="buttons">
-          <button matButton="tonal" color="primary" (click)="addPoint(2)">+1</button>
-          <button matButton="tonal" color="warn" (click)="removePoint(2)">-1</button>
+          <button type="button" matButton="tonal" class="plus" (click)="addPoint(2)">+1</button>
+          <button type="button" matButton="tonal" class="minus" (click)="removePoint(2)" [disabled]="team2Score === 0">-1</button>
         </div>
       </div>
     </div>

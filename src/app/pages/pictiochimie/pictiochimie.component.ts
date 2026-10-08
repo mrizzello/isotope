@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { DataService } from '../../services/data.service';
 import arrayShuffle from 'array-shuffle';
@@ -14,6 +14,12 @@ import { Pictiochimie } from '../../services/data.models';
                 style({ opacity: 0 }),
                 animate('300ms ease-in', style({ opacity: 1 }))
             ])
+        ]),
+        trigger('wordSwap', [
+            transition('* => *', [
+                style({ opacity: 0, transform: 'translateY(24px)' }),
+                animate('200ms ease-out', style({ opacity: 1, transform: 'none' }))
+            ])
         ])
     ],
     standalone: false
@@ -21,8 +27,9 @@ import { Pictiochimie } from '../../services/data.models';
 export class PictiochimieComponent {
 
   data: (Pictiochimie & { selected?: boolean })[] = [];
-  words: any[] = [];
+  words: string[] = [];
   play: boolean = false;
+  finished: boolean = false;
   cursor: number = 0;
 
   constructor(private dataService: DataService) { }
@@ -34,6 +41,10 @@ export class PictiochimieComponent {
     }
   }
 
+  get hasSelection(): boolean {
+    return this.data.some((item) => item.selected);
+  }
+
   toggleSelect(item: Pictiochimie & { selected?: boolean }): void {
     if (item.selected === undefined) {
       item.selected = false;
@@ -42,43 +53,59 @@ export class PictiochimieComponent {
   }
 
   start(): void {
-    let tmp: any[] = [];
-    this.data.forEach((item) => {
-      if (item.selected) {
-        tmp = [...tmp, ...item.words]
-      }
-    });
-    this.words = [];
-    tmp.forEach((word, index) => {
-      this.words.push({
-        word: word,
-        visible: false,
-      });
-    });
-    this.words = arrayShuffle(this.words);
+    if (!this.hasSelection) {
+      return;
+    }
+    const tmp = this.data
+      .filter((item) => item.selected)
+      .flatMap((item) => item.words);
+    this.words = arrayShuffle(tmp);
     this.cursor = 0;
-    this.words[this.cursor].visible = true;
+    this.finished = false;
     this.play = true;
   }
 
-  navigate(dir: string) {
-    this.words[this.cursor].visible = false;
-    switch (dir) {
-      case '0':
-        this.play = false;
+  prev(): void {
+    if (this.finished) {
+      this.finished = false;
+    } else if (this.cursor > 0) {
+      this.cursor--;
+    }
+  }
+
+  next(): void {
+    if (this.cursor < this.words.length - 1) {
+      this.cursor++;
+    } else {
+      this.finished = true;
+    }
+  }
+
+  home(): void {
+    if (this.cursor > 0 && !this.finished && !confirm('Quitter la partie en cours ?')) {
+      return;
+    }
+    this.play = false;
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  onKeydown(event: KeyboardEvent): void {
+    if (!this.play) {
+      return;
+    }
+    switch (event.key) {
+      case 'ArrowLeft':
+        this.prev();
         break;
-      case '+':
-        if( this.cursor < this.words.length - 1 ){
-          this.cursor++;
+      case 'ArrowRight':
+        if (!this.finished) {
+          this.next();
         }
         break;
-      case '-':
-        if (this.cursor > 0) {
-          this.cursor--;
-        }
+      case 'Escape':
+        this.home();
         break;
     }
-    this.words[this.cursor].visible = true;
   }
 
   openScoreWindow(): void {

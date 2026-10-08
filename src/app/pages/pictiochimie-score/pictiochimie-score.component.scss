@@ -1,60 +1,167 @@
+@use '../pictiochimie/palette' as pc;
+
+:host {
+  display: block;
+  height: 100%;
+}
+
 .score-container {
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  gap: 20px;
+  box-sizing: border-box;
 
-  form{
+  form {
     width: 100%;
+  }
+
+  // Fin du temps : le fond clignote en rouge, 2 fois
+  &.time-up {
+    animation: time-up-blink 600ms ease-in-out 2;
+  }
+}
+
+@keyframes time-up-blink {
+  50% {
+    background-color: rgba(pc.$warn, 0.35);
   }
 }
 
 .teams-score {
-  display: flex;
-  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(180px, 16vw) minmax(0, 1fr) minmax(180px, 16vw);
+  grid-template-areas: "team1 timer team2";
+  gap: 20px;
+  align-items: start;
 }
 
 .team-spacer {
+  grid-area: timer;
   display: flex;
-  flex-grow: 1;
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  min-width: 0;
 
   .timer-display {
     font-size: 2.5em;
     font-weight: bold;
-    color: #f7931e; /* Using the accent color from the app */
+    font-variant-numeric: tabular-nums;
   }
 
-  .timer-finished {
-    color: #f44336 !important; /* Material Design red for warning */
+  .btn-start:not([disabled]) {
+    background-color: #43a047;
+  }
+
+  .btn-grey {
+    background-color: #757575;
   }
 
   .buttons {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 10px;
   }
 }
 
 .team {
+  --team-color: #{pc.$magenta};
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  min-width: 0;
+  padding: 16px 12px 20px;
+  border-top: 6px solid var(--team-color);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--team-color) 8%, transparent);
+
+  &.team-1 {
+    grid-area: team1;
+    --team-color: #{pc.$magenta};
+  }
+
+  &.team-2 {
+    grid-area: team2;
+    --team-color: #{pc.$blue};
+  }
+
+  .team-name {
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 2px dashed transparent;
+    background: transparent;
+    outline: none;
+    padding: 4px 0;
+    text-align: center;
+    font-family: "Raleway", sans-serif;
+    font-weight: bold;
+    font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+    color: var(--team-color);
+    text-overflow: ellipsis;
+
+    &::placeholder {
+      color: var(--team-color);
+      opacity: 0.45;
+    }
+
+    &:hover,
+    &:focus {
+      border-bottom-color: color-mix(in srgb, var(--team-color) 50%, transparent);
+    }
+  }
 
   .score {
-    font-size: 3em;
+    font-size: clamp(4rem, 8vw, 8rem);
+    line-height: 1;
     font-weight: bold;
+    font-variant-numeric: tabular-nums;
+    color: var(--team-color);
+    animation: bump 250ms ease-out;
   }
 
   .buttons {
     display: flex;
     gap: 10px;
+
+    .plus {
+      background-color: var(--team-color);
+      color: #fff;
+    }
+
+    // Toujours le même gris, même désactivé à 0
+    .minus,
+    .minus[disabled] {
+      background-color: #757575;
+      opacity: 1;
+    }
+  }
+}
+
+@keyframes bump {
+  50% {
+    transform: scale(1.15);
   }
 }
 
 mat-progress-bar {
   width: 100%;
+}
+
+@media (max-width: 767px) {
+  .score-container {
+    padding: 12px;
+  }
+
+  .teams-score {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "team1 team2"
+      "timer timer";
+    gap: 12px;
+  }
 }

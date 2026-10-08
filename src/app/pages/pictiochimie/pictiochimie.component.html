@@ -16,58 +16,60 @@
     </mat-selection-list>
     <mat-divider></mat-divider>
     <div class="button-row">
-      <button mat-raised-button color="primary" (click)="start()">Commencer</button>
+      <button mat-raised-button color="primary" (click)="start()" [disabled]="!hasSelection">Commencer</button>
     </div>
   </div>
 }
 @if (play) {
-  <div class="game">
-    <mat-grid-list cols="1" rowHeight="fit">
-      <mat-grid-tile rowspan="2">
-        <section>
-          <div class="button-row">
-            <div class="flex-container">
-              <div class="button-container">
-                <button mat-mini-fab color="primary" (click)="navigate('-')">
-                  <mat-icon>chevron_left</mat-icon>
-                </button>
-              </div>
-              <div class="button-container">
-                <button mat-mini-fab color="primary" (click)="navigate('0')">
-                  <mat-icon>home</mat-icon>
-                </button>
-              </div>
-              <div class="button-container">
-                <button mat-mini-fab color="primary" (click)="navigate('+')">
-                  <mat-icon>chevron_right</mat-icon>
-                </button>
-              </div>
-              <div class="button-container">
-                <button mat-mini-fab color="accent" (click)="openScoreWindow()">
-                  <mat-icon>scoreboard</mat-icon>
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-      </mat-grid-tile>
-      <mat-grid-tile rowspan="1">
-        <div class="cursor">
-          {{cursor + 1}} / {{words.length}}
+  <div class="game" [@fadeIn]>
+    <div class="game-bar">
+      <button mat-icon-button (click)="home()" aria-label="Retour aux chapitres">
+        <mat-icon>home</mat-icon>
+      </button>
+      <div class="progress">
+        <div class="counter">{{ cursor + 1 }} / {{ words.length }}</div>
+        <div class="track">
+          <div class="fill" [style.width.%]="((cursor + 1) / words.length) * 100"
+               [style.background-size]="(words.length / (cursor + 1)) * 100 + '% 100%'"></div>
         </div>
-      </mat-grid-tile>
-      <mat-grid-tile rowspan="15" colspan="1">
-        @for (w of words; track w) {
-          @if (w.visible) {
-            <div class="word">
-              {{w.word}}
-            </div>
-          }
-        }
-      </mat-grid-tile>
-      <mat-grid-tile rowspan="1" colspan="1">
-        <div class="warning">&#9888; Pas de chiffres, ni de lettres &#9888;</div>
-      </mat-grid-tile>
-    </mat-grid-list>
+      </div>
+      <button mat-icon-button (click)="openScoreWindow()" aria-label="Ouvrir le tableau de score">
+        <mat-icon>scoreboard</mat-icon>
+      </button>
+    </div>
+
+    <div class="warning-row">
+      <div class="warning">
+        <mat-icon>block</mat-icon>
+        Pas de chiffres, ni de lettres
+      </div>
+    </div>
+
+    <div class="word-stage">
+      @if (!finished) {
+        <div class="word" [@wordSwap]="cursor">{{ words[cursor] }}</div>
+      } @else {
+        <div class="end" [@fadeIn]>
+          <div class="end-title">Tous les mots ont été joués</div>
+          <div class="end-actions">
+            <button mat-raised-button class="violet" (click)="start()">
+              <mat-icon>shuffle</mat-icon> Remélanger
+            </button>
+            <button mat-stroked-button class="outline" (click)="play = false">
+              <mat-icon>list</mat-icon> Chapitres
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="game-nav">
+      <button mat-fab class="violet" (click)="prev()" [disabled]="cursor === 0 && !finished" aria-label="Mot précédent">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <button mat-fab class="violet" (click)="next()" [disabled]="finished" aria-label="Mot suivant">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
   </div>
 }
