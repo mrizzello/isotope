@@ -15,7 +15,7 @@ const SCORE_DATA: ScoreElement[] = [
   { id: 'charges-v2', name: 'Charges', score: '' },
   { id: 'associations', name: 'Associations', score: '' },
   { id: 'memorion', name: 'Memorion', score: '' },
-  { id: 'trivion', name: 'Trivion', score: '' },
+  { id: 'trivion-v2', name: 'Trivion', score: '' },
   { id: 'family', name: 'Family', score: '' },
   { id: 'hexaions', name: 'HexaIons', score: '' },
   { id: 'family-rush', name: 'Family Rush', score: '' },
