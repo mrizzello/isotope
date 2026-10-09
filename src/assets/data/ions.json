@@ -58,11 +58,11 @@
     {
       "symbol": "Al",
       "charge": "3+",
-      "name": "cation aliminium",
+      "name": "cation aluminium",
       "wrongNames": [
-        "cation aliminium (III)",
-        "aliminium",
-        "anion aliminium"
+        "cation aluminium (III)",
+        "aluminium",
+        "anion aluminium"
       ],
       "group": "p"
     },
