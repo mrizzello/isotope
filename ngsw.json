@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1791534049983,
+  "timestamp": 1791549706030,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/favicon.ico",
         "/index.html",
-        "/main.9e4fac572aaa7947.js",
+        "/main.63d7e3afcea870af.js",
         "/manifest.webmanifest",
         "/polyfills.e1076dbd6fe0bb6d.js",
         "/runtime.b9a824d318728425.js",
@@ -58,7 +58,7 @@
     "/assets/data/elements.json": "c5b39b2722c0030d7ca6bfc762eb0e4a9146b99a",
     "/assets/data/family.json": "92329bdf6c0461d6d44d1b43f2c6b4e4d1ca8261",
     "/assets/data/hexaions.json": "031d85bf7f6715440cbbfb81aac8c7f08d13d6f0",
-    "/assets/data/ions.json": "ece568f07cccd53de292d0c8c16af8e8f54329aa",
+    "/assets/data/ions.json": "56172f1457d4c2f2c9c986d5a99b5e2e23903d05",
     "/assets/data/lewis.json": "8c0c9203bba05f123ebdd2cbec066501ee807f0c",
     "/assets/data/pictiochimie.json": "d6260663c676426cf00be1090f24befc9d2358c2",
     "/assets/data/success.json": "a5bc9b0b22011ecbcd3d282625ce89c83d52bc8c",
@@ -74,8 +74,8 @@
     "/assets/pictiochimie.png": "cbdf6eba78c65ff4ea6f2915ed7f928defc49e36",
     "/assets/silhouette.svg": "366f98c326dbce1970f996143c3c9c08e138c696",
     "/favicon.ico": "396e17db9cfc5af1726d8b8274017d2cc6b9e5ba",
-    "/index.html": "8ad26aba87ebd8ff5cface66b82faa2238109d6a",
-    "/main.9e4fac572aaa7947.js": "d1df82202ff993219611588301e30d4788bc09bf",
+    "/index.html": "4232f23f486637970bf95a939d4601f236d4eedf",
+    "/main.63d7e3afcea870af.js": "c7cfa0a6202c729dc474b6b475b4939cc95860eb",
     "/manifest.webmanifest": "9757af882a884ea46d000bd930ba6b275565dfe8",
     "/polyfills.e1076dbd6fe0bb6d.js": "5d9262fe975dee08915a239f2cc991f40bfb071b",
     "/runtime.b9a824d318728425.js": "bf8cd442e8592ef98c6ad6b43738f51a3ccd54e2",
