@@ -5,62 +5,176 @@
     .mat-grid-list {
         width: 100%;
         height: 100%;
-        
-        .symbol-container {
-            .symbol {
-                font-size: 320%;
-                text-align: center;
-                font-weight: bold;
-                font-family: 'Raleway', sans-serif;
+    }
+
+    // 10 étoiles sur une ligne, même sur un écran de 360 px
+    ::ng-deep app-score-stars .mat-icon {
+        font-size: min(24px, 6vw);
+        width: min(24px, 6vw);
+        height: min(24px, 6vw);
+    }
+
+    .table {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        border-radius: 16px;
+        background: radial-gradient(circle at 50% 50%, #f7f8fc 0%, #eceff1 75%);
+    }
+
+    // liaisons
+    .bonds {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+
+        line {
+            stroke: #b0bec5;
+            stroke-width: 3;
+            stroke-linecap: round;
+            vector-effect: non-scaling-stroke;
+            animation: bond 400ms ease-out both;
+            transition: stroke 250ms ease-out, stroke-width 250ms ease-out, opacity 250ms ease-out;
+
+            &.correct {
+                stroke: #2f784a;
+                stroke-width: 6;
             }
 
-            .group {
-                font-size: 33%;
-                position: absolute;
-                left: 0;
-                right: 0;
-                bottom: 12%;
-                font-weight: normal;
+            &.wrong {
+                stroke: #E0B3B3;
             }
 
-            &.won {
-                background-color: #C1D7C9;
-
-                .symbol {
-                    color: #2f784a;
-                }
-            }
-        }
-
-        .propositions {
-
-            background-color: #E8EAF6;
-
-            .toClick {
-                position: absolute;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-            }
-
-            .proposition {
-                font-size: 150%;
-                line-height: 120%;
-                font-weight: bold;
-                text-align: center;
-                padding: 1rem;
-            }
-
-            &.good {
-                background-color: #C1D7C9;
-                color: #2f784a;
-            }
-
-            &.bad {
-                background-color: #E0B3B3;
-                color: #7C0000;
+            &.hidden {
+                animation: none;
+                opacity: 0;
             }
         }
     }
+
+    .slot {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        display: flex;
+        justify-content: center;
+    }
+
+    .card {
+        background: #ffffff;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+        color: #555;
+        transition: background-color 250ms ease-out, border-color 250ms ease-out, color 250ms ease-out, opacity 250ms ease-out;
+    }
+
+    .ion {
+        min-width: 7.5rem;
+        padding: 0.4rem 1.2rem 0.5rem;
+        text-align: center;
+        color: #37474f;
+        border-color: #9FA8DA;
+        background: radial-gradient(circle, #ffffff 30%, #E8EAF6 100%);
+
+        .symbol {
+            font-family: 'Raleway', sans-serif;
+            font-weight: bold;
+            font-size: 3rem;
+            line-height: 1.1;
+            white-space: nowrap;
+
+            sup {
+                font-family: 'Roboto', sans-serif;
+                font-size: 50%;
+            }
+        }
+
+        .group {
+            font-size: 0.85rem;
+            color: #78909c;
+        }
+
+        &.correct {
+            background: #C1D7C9;
+            border-color: #2f784a;
+            color: #2f784a;
+
+            .group {
+                color: #2f784a;
+            }
+        }
+    }
+
+    .name {
+        width: max-content;
+        max-width: 56vw;
+        min-height: 48px;
+        padding: 0.5rem 1rem;
+        font-family: 'Raleway', sans-serif;
+        font-weight: bold;
+        font-size: 1.1rem;
+        line-height: 1.2;
+        text-align: center;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        transform: rotate(var(--tilt, 0deg));
+        animation: deal 350ms ease-out both;
+
+        &.correct {
+            background: #C1D7C9;
+            border-color: #2f784a;
+            color: #2f784a;
+            cursor: default;
+            animation: flip 450ms ease-in-out;
+            animation-delay: 0s !important;
+        }
+
+        &.wrong {
+            background: #E0B3B3;
+            border-color: #BE8080;
+            color: #BE8080;
+            cursor: default;
+            animation: shake 300ms ease-in-out;
+            animation-delay: 0s !important;
+        }
+
+        &.hidden {
+            animation: none;
+            opacity: 0;
+            pointer-events: none;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .bonds line,
+        .name {
+            animation: none !important;
+        }
+    }
+}
+
+@keyframes bond {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes deal {
+    from { opacity: 0; transform: translateY(40px) rotate(var(--tilt, 0deg)); }
+    to { opacity: 1; transform: translateY(0) rotate(var(--tilt, 0deg)); }
+}
+
+// retournement : la carte passe par la tranche et revient face verte
+@keyframes flip {
+    0% { transform: rotate(var(--tilt, 0deg)) rotateY(0); background: #ffffff; color: #555; }
+    49% { background: #ffffff; color: #555; }
+    50% { transform: rotate(var(--tilt, 0deg)) rotateY(90deg); background: #C1D7C9; color: #2f784a; }
+    100% { transform: rotate(var(--tilt, 0deg)) rotateY(0); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: rotate(var(--tilt, 0deg)) translateX(0); }
+    20%, 60% { transform: rotate(var(--tilt, 0deg)) translateX(-6px); }
+    40%, 80% { transform: rotate(var(--tilt, 0deg)) translateX(6px); }
 }
