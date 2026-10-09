@@ -12,7 +12,7 @@ export interface ScoreElement {
 
 const SCORE_DATA: ScoreElement[] = [
   { id: 'lewis', name: 'Lewis', score: '' },
-  { id: 'charges', name: 'Charges', score: '' },
+  { id: 'charges-v2', name: 'Charges', score: '' },
   { id: 'associations', name: 'Associations', score: '' },
   { id: 'memorion', name: 'Memorion', score: '' },
   { id: 'trivion', name: 'Trivion', score: '' },
