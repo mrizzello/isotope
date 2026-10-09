@@ -37,10 +37,13 @@
                     }
                     <foreignObject x="0" y="230" width="360" height="160">
                       <div xmlns="http://www.w3.org/1999/xhtml" class="formula {{formulaSize(it)}}" [class.correct]="correct">
-                        <span [innerHTML]="it.symbol"></span>
-                        @if (correct) {
-                          <sup class="charge">{{it.charge}}</sup>
-                        }
+                        <span class="ion">
+                          <span [innerHTML]="it.symbol"></span>
+                          <!-- hors flux : la formule ne bouge pas quand la charge apparaît -->
+                          @if (correct) {
+                            <sup class="charge">{{it.charge}}</sup>
+                          }
+                        </span>
                       </div>
                     </foreignObject>
                   </g>

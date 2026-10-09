@@ -128,11 +128,16 @@
             color: #2f784a;
         }
 
+        .ion {
+            position: relative;
+        }
+
         .charge {
+            position: absolute;
+            left: 100%;
+            top: -0.05em;
             font-family: 'Roboto', sans-serif;
             font-size: 45%;
-            align-self: flex-start;
-            margin-top: 0.4em;
             animation: pop 300ms ease-out;
         }
     }
