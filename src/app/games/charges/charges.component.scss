@@ -53,13 +53,33 @@
         animation: float 10s ease-in-out infinite alternate;
     }
 
-    .prop {
+    .hit {
+        fill: transparent;
+        pointer-events: all;
         cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+
+        &.wrong,
+        &.correct,
+        &.hidden {
+            cursor: default;
+        }
+
+        &.hidden {
+            pointer-events: none;
+        }
+    }
+
+    .formula-box {
+        pointer-events: none;
+    }
+
+    .prop {
+        pointer-events: none;
         transition: opacity 250ms ease-out;
         transform-box: fill-box;
         transform-origin: center;
         filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.18));
-        -webkit-tap-highlight-color: transparent;
 
         circle {
             fill: #ffffff;
@@ -89,7 +109,6 @@
         }
 
         &.wrong {
-            cursor: default;
             animation: shake 300ms ease-in-out;
 
             circle {

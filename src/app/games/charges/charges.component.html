@@ -29,13 +29,15 @@
                   <g [@fadeIn]>
                     @for (prop of it.propositions; track prop; let p = $index) {
                       <g [attr.transform]="'translate(' + arch[p].x + ',' + arch[p].y + ')'">
-                        <g class="prop {{prop.css}}" (click)="selectCharge(it, p)">
+                        <g class="prop {{prop.css}}">
                           <circle r="40"></circle>
                           <text y="14" text-anchor="middle">{{prop.charge}}</text>
                         </g>
+                        <!-- zone de clic : cercle fixe, hors animations et ombre -->
+                        <circle r="42" class="hit {{prop.css}}" (click)="selectCharge(it, p)"></circle>
                       </g>
                     }
-                    <foreignObject x="0" y="230" width="360" height="160">
+                    <foreignObject x="0" y="230" width="360" height="160" class="formula-box">
                       <div xmlns="http://www.w3.org/1999/xhtml" class="formula {{formulaSize(it)}}" [class.correct]="correct">
                         <span class="ion">
                           <span [innerHTML]="it.symbol"></span>
