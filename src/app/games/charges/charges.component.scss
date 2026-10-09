@@ -7,126 +7,182 @@
         height: 100%;
     }
 
-    .svg {
+    // 10 étoiles sur une ligne, même sur un écran de 360 px
+    ::ng-deep app-score-stars .mat-icon {
+        font-size: min(24px, 6vw);
+        width: min(24px, 6vw);
+        height: min(24px, 6vw);
+    }
+
+    .stage {
+        position: relative;
         width: 100%;
+        height: 100%;
+        overflow: hidden;
+        border-radius: 16px;
+        background: #eceff1;
+    }
 
-        .symbol {
-            text-align: right;
-            font-size: 545%;
+    // batterie : niveau et couleur animés
+    .battery {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0.55;
+        border-top: 3px solid rgba(255, 255, 255, 0.7);
+        transition: height 600ms ease-out, background-color 600ms ease-out;
+    }
+
+    .full .battery {
+        animation: charged 600ms ease-in-out 2;
+    }
+
+    .bubbles,
+    .board {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .bubbles circle {
+        fill: rgba(255, 255, 255, 0.35);
+        stroke: rgba(0, 0, 0, 0.08);
+        stroke-width: 1.5;
+        animation: float 10s ease-in-out infinite alternate;
+    }
+
+    .prop {
+        cursor: pointer;
+        transition: opacity 250ms ease-out;
+        transform-box: fill-box;
+        transform-origin: center;
+        filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.18));
+        -webkit-tap-highlight-color: transparent;
+
+        circle {
+            fill: #ffffff;
+            stroke: #dddddd;
+            stroke-width: 2;
+        }
+
+        text {
+            fill: #666;
+            font-family: 'Roboto', sans-serif;
             font-weight: bold;
-            font-family: 'Raleway', sans-serif;
-        }
-
-        .prop-circle {
-            .prop {
-                fill: #E8EAF6;
-                stroke: #9FA8DA;
-                stroke-width: 1%;
-            }
-
-            .correct {
-                .prop {
-                    fill: #C1D7C9;
-                    stroke: #2f784a;
-                }
-
-                text {
-                    fill: #2f784a;
-                }
-            }
-
-            .wrong {
-                .prop {
-                    fill: #E0B3B3;
-                    stroke: #BE8080;
-                }
-
-                text {
-                    fill: #BE8080;
-                }
-            }
-
-            .ghost {
-                stroke: transparent;
-                fill: transparent;
-            }
-
-            .hidden {
-                display: none;
-            }
-
-            text {
-                font-family: 'Roboto', sans-serif;
-                font-weight: bold;
-                font-size: 380%;
-            }
-        }
-
-        .bg {
-            circle {
-                fill: #e3e3e3;
-                stroke: #a3a3a3;
-                stroke-width: 1%;
-                opacity: 0.33;
-            }
-            .move-0{
-                animation: move0 30s 1 alternate;
-            }
-            .move-1{
-                animation: move1 45s 1 alternate;
-            }
-            .move-2{
-                animation: move2 60s 1 alternate;
-            }
-            .move-3{
-                animation: move3 90s 1 alternate;
-            }
+            font-size: 38px;
+            pointer-events: none;
         }
 
         &.correct {
-            .symbol {
-                color: #2f784a;
+            animation: bounce 400ms ease-out;
+
+            circle {
+                fill: #C1D7C9;
+                stroke: #2f784a;
             }
 
-            .bg {
-                circle {
-                    fill: #C1D7C9;
-                    stroke: #2f784a;
-                }
+            text {
+                fill: #2f784a;
             }
+        }
+
+        &.wrong {
+            cursor: default;
+            animation: shake 300ms ease-in-out;
+
+            circle {
+                fill: #E0B3B3;
+                stroke: #BE8080;
+            }
+
+            text {
+                fill: #BE8080;
+            }
+        }
+
+        &.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+    }
+
+    .formula {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        font-family: 'Raleway', sans-serif;
+        font-weight: bold;
+        line-height: 1;
+        color: #37474f;
+        transition: color 250ms ease-out;
+        white-space: nowrap;
+
+        &.xl { font-size: 120px; }
+        &.l { font-size: 92px; }
+        &.m { font-size: 64px; }
+
+        &.correct {
+            color: #2f784a;
+        }
+
+        .charge {
+            font-family: 'Roboto', sans-serif;
+            font-size: 45%;
+            align-self: flex-start;
+            margin-top: 0.4em;
+            animation: pop 300ms ease-out;
+        }
+    }
+
+    .penalty {
+        fill: #BE8080;
+        font-family: 'Roboto', sans-serif;
+        font-weight: bold;
+        font-size: 26px;
+        pointer-events: none;
+        animation: rise 900ms ease-out forwards;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .bubbles circle,
+        .prop,
+        .full .battery {
+            animation: none !important;
         }
     }
 }
 
-@keyframes move0 {
-    0% {
-        transform: translate(0, 0);
-    }
-    100% {
-        transform: translate(250px, 250px);
-    }
+@keyframes float {
+    from { transform: translateY(0); }
+    to { transform: translateY(-40px); }
 }
-@keyframes move1 {
-    0% {
-        transform: translate(0, 0);
-    }
-    100% {
-        transform: translate(-250px, 250px);
-    }
+
+@keyframes bounce {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.18); }
+    100% { transform: scale(1); }
 }
-@keyframes move2 {
-    0% {
-        transform: translate(0, 0);
-    }
-    100% {
-        transform: translate(-250px, -250px);
-    }
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
 }
-@keyframes move3 {
-    0% {
-        transform: translate(0, 0);
-    }
-    100% {
-        transform: translate(250px, -250px);
-    }
+
+@keyframes rise {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-40px); }
+}
+
+@keyframes pop {
+    from { opacity: 0; transform: scale(0.4); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes charged {
+    0%, 100% { opacity: 0.55; }
+    50% { opacity: 0.85; }
 }
