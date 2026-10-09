@@ -1,17 +1,43 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
-import arrayShuffle from 'array-shuffle';
 import { Subscription } from 'rxjs';
 
 import { DataService } from '../../services/data.service';
 import { Ions } from '../../services/data.models';
 
 import { IntroductionService } from '../../services/introduction.service';
-import { IntroductionComponent } from '../../components/introduction/introduction.component';
 import { StopwatchService } from '../../services/stopwatch.service';
-import { StopwatchComponent } from '../../components/stopwatch/stopwatch.component';
 import { ShowResultsService } from '../../services/show-results.service';
-import { ShowResultsComponent } from '../../components/show-results/show-results.component';
+
+import {
+  ChargesItem, IONS_PER_GAME, PENALTY_MS, Proposition,
+  batteryColor, drawGame, formulaSizeClass
+} from './charges.logic';
+
+// positions des 4 bulles sur l'arche /‾‾\ (viewBox 360 × 400)
+const ARCH = [
+  { x: 50, y: 205 },
+  { x: 129, y: 139 },
+  { x: 231, y: 139 },
+  { x: 310, y: 205 }
+];
+const BUBBLES = 24;
+const NEXT_DELAY = 600;     // ms entre la bonne réponse et l'ion suivant
+const PENALTY_LIFE = 900;   // ms d'affichage du « +3 s »
+
+interface Penalty {
+  id: number;
+  x: number;
+  y: number;
+}
+
+interface BgBubble {
+  cx: number;
+  cy: number;
+  r: number;
+  duration: number;
+  delay: number;
+}
 
 @Component({
     selector: 'app-charges',
@@ -45,21 +71,17 @@ export class ChargesComponent implements OnInit, OnDestroy {
   showResults: boolean = false;
   disableClick: boolean = false;
   ions: Ions | null = null;
-  draw: any;
+  draw: ChargesItem[] = [];
   score: number = 0;
   current: number = 0;
-  maxScore: number = 8;
-  circlesNumber: number = 65;
-  minR: any = 10;
-  maxR: any = 80;
-  minX: any = - this.maxR;
-  maxX: any = 510 + this.maxR;
-  minY: any = - this.maxR;
-  maxY: any = 350 - this.maxR;
-
-  @ViewChild(IntroductionComponent) private introduction!: IntroductionComponent;
-  @ViewChild(StopwatchComponent) private stopwatch!: StopwatchComponent;
-  @ViewChild(ShowResultsComponent) private results!: ShowResultsComponent;
+  maxScore: number = IONS_PER_GAME;
+  correct: boolean = false;
+  arch = ARCH;
+  penaltySeconds = PENALTY_MS / 1000;
+  bubbles: BgBubble[] = [];
+  penalties: Penalty[] = [];
+  private penaltyId = 0;
+  private timeouts: ReturnType<typeof setTimeout>[] = [];
 
   private startSubscription: Subscription | undefined;
   private restartSubscription: Subscription | undefined;
@@ -78,7 +100,8 @@ export class ChargesComponent implements OnInit, OnDestroy {
       title: 'Charges',
       p: [
         '<b>Rechargez votre batterie&nbsp!</b>',
-        'Trouvez la bonne charge des ions proposés.'
+        'Trouvez la charge de 10 ions, du plus simple au plus corsé.',
+        'Chaque erreur coûte 3&nbsp;secondes&nbsp;!'
       ]
     });
     this.restartSubscription = this.showResultsService.getRestart().subscribe((data: any) => {
@@ -87,71 +110,54 @@ export class ChargesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const ionsData = this.dataService.getIons();
-    if (ionsData) {
-      this.ions = ionsData;
-      const regex = /\([A-Z]+\)/i;
-      this.ions.cations = this.ions.cations.filter((cation: any) => !regex.test(cation.name));
-    }
+    this.ions = this.dataService.getIons() ?? null;
   }
 
   ngOnDestroy(): void {
     this.restartSubscription?.unsubscribe();
     this.startSubscription?.unsubscribe();
+    this.clearTimeouts();
+    this.stopwatchService.stopStopwatch();
+  }
+
+  get item(): ChargesItem | undefined {
+    return this.draw[this.current];
+  }
+
+  get batteryLevel(): number {
+    return 100 * this.score / IONS_PER_GAME;
+  }
+
+  get batteryColor(): string {
+    return batteryColor(this.score);
+  }
+
+  formulaSize(item: ChargesItem): string {
+    return formulaSizeClass(item.symbol);
   }
 
   initGame() {
+    this.clearTimeouts();
     this.score = 0;
     this.current = 0;
+    this.correct = false;
+    this.penalties = [];
+    this.stopwatchService.stopStopwatch();
     this.stopwatchService.resetStopwatch();
-
-    if (this.ions) {
-      const clones = JSON.parse(JSON.stringify(this.ions));
-
-      let cations = arrayShuffle(clones.cations);
-      cations = cations.slice(0, 4);
-      let anions = clones.anions;
-      anions = arrayShuffle(anions);
-      anions = anions.slice(0, 4);
-
-      this.draw = cations.concat(anions);
-      this.draw = arrayShuffle(this.draw);
-
-      this.draw.forEach((item: any) => {
-        item.visible = false;
-        item.css = '';
-        let charges = ['3+', '2+', '+', '–', '2–', '3–'];
-        charges = charges.filter(charge => charge !== item.charge);
-        charges.unshift(item.charge);
-        charges = charges.slice(0, 4);
-        charges = arrayShuffle(charges);
-        let propositions: any = [];
-        charges.forEach((charge) => {
-          propositions.push({
-            charge: charge,
-            css: ''
-          });
-        });
-        item.propositions = propositions;
-        item.circles = [];
-        for (let i = 0; i < this.circlesNumber; i++) {
-          const rX = Math.floor(Math.random() * (this.maxX - this.minX + 1)) + this.minX;
-          const rY = Math.floor(Math.random() * (this.maxY - this.minY + 1)) + this.minY;
-          const rC = Math.floor(Math.random() * (this.maxR - this.minR + 1)) + this.minR;
-          const rCss = Math.floor(Math.random() * (3 - 0 + 1)) + 0;
-          item.circles.push({
-            cx: rX,
-            cy: rY,
-            r: rC,
-            css: 'move-'+rCss
-          });
-        }
-      });
-    }
+    this.draw = this.ions ? drawGame(this.ions.cations, this.ions.anions) : [];
+    this.bubbles = Array.from({ length: BUBBLES }, () => ({
+      cx: Math.random() * 360,
+      cy: Math.random() * 400,
+      r: 8 + Math.random() * 42,
+      duration: 6 + Math.random() * 10,
+      delay: -Math.random() * 10
+    }));
   }
 
   intro() {
     if (!this.disableClick) {
+      this.clearTimeouts();
+      this.stopwatchService.stopStopwatch();
       this.showIntroduction = true;
       this.showGame = false;
       this.showResults = false;
@@ -165,50 +171,60 @@ export class ChargesComponent implements OnInit, OnDestroy {
     this.showGame = true;
     this.showResults = false;
     this.disableClick = false;
-    this.draw[this.current].visible = true;
     this.stopwatchService.startStopwatch();
   }
 
-  selectCharge(item: any, index: number) {
-    let prop = item.propositions[index];
+  selectCharge(item: ChargesItem, index: number) {
+    const prop: Proposition = item.propositions[index];
     if (this.disableClick || prop.css !== '') {
       return;
     }
-    if (prop.charge == item.charge) {
-      item.css = "correct";
-      item.propositions.forEach((prop:any)=>{
-        prop.css = prop.charge == item.charge ? 'correct' : 'hidden';
-      });
-      this.score++;
-      if (this.score == this.maxScore) {
-        this.stopwatchService.stopStopwatch();
-        this.disableClick = true;
-        setTimeout(() => { this.end() }, 500);
-      } else {
-        this.stopwatchService.stopStopwatch();
-        this.disableClick = true;
-        setTimeout(() => {
-          this.disableClick = false;
-          this.draw[this.current].visible = false;
-          this.current++;
-          this.draw[this.current].visible = true;
-          this.stopwatchService.startStopwatch();
-        }, 500);
-      }
+    if (prop.charge !== item.charge) {
+      prop.css = 'wrong';
+      this.stopwatchService.addTime(PENALTY_MS);
+      const penalty = { id: this.penaltyId++, ...ARCH[index] };
+      this.penalties.push(penalty);
+      this.later(() => {
+        this.penalties = this.penalties.filter(p => p !== penalty);
+      }, PENALTY_LIFE);
+      return;
+    }
+    item.propositions.forEach(p => p.css = p.charge === item.charge ? 'correct' : 'hidden');
+    this.correct = true;
+    this.score++;
+    this.stopwatchService.stopStopwatch();
+    this.disableClick = true;
+    if (this.score === this.maxScore) {
+      this.later(() => this.end(), NEXT_DELAY + 300);
     } else {
-      prop.css = "wrong";
+      this.later(() => {
+        this.disableClick = false;
+        this.correct = false;
+        this.current++;
+        this.stopwatchService.startStopwatch();
+      }, NEXT_DELAY);
     }
   }
 
   end() {
+    this.disableClick = false;
     this.showGame = false;
     this.showResults = true;
     let display: any = [];
     display.title = 'Charges';
-    display.game = 'charges';
+    display.game = 'charges-v2';
     display.time = this.stopwatchService.getDisplayString();
     display.comment = 'pour résoudre le puzzle!';
     this.showResultsService.updateDisplay(display);
+  }
+
+  private later(fn: () => void, ms: number) {
+    this.timeouts.push(setTimeout(fn, ms));
+  }
+
+  private clearTimeouts() {
+    this.timeouts.forEach(t => clearTimeout(t));
+    this.timeouts = [];
   }
 
 }

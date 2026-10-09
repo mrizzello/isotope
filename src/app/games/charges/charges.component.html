@@ -13,60 +13,48 @@
         <mat-grid-tile colspan="2" rowspan="1">
           <app-stopwatch></app-stopwatch>
         </mat-grid-tile>
-        @for (item of draw; track item) {
-          @if (item.visible) {
-            <div [@fadeIn]>
-              <mat-grid-tile colspan="6" rowspan="6">
-                <svg version="1.0" width="100%" height="100%" viewBox="0 0 510 510" class="svg {{item.css}}">
-                  <g class="bg">
-                    @for (c of item.circles; track c) {
-                      <ng-container>
-                        <circle [attr.cx]="c.cx" [attr.cy]="c.cy" [attr.r]="c.r" [attr.class]="c.css"></circle>
-                      </ng-container>
+        <mat-grid-tile colspan="6" rowspan="6">
+          <div class="stage" [class.full]="score === maxScore">
+            <!-- batterie : le fond se remplit et passe du rouge au vert -->
+            <div class="battery" [style.height.%]="batteryLevel" [style.background-color]="batteryColor"></div>
+            <svg class="bubbles" viewBox="0 0 360 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              @for (b of bubbles; track $index) {
+                <circle [attr.cx]="b.cx" [attr.cy]="b.cy" [attr.r]="b.r"
+                  [style.animation-duration.s]="b.duration" [style.animation-delay.s]="b.delay"></circle>
+              }
+            </svg>
+            <svg class="board" viewBox="0 0 360 400">
+              @for (it of draw; track it; let i = $index) {
+                @if (i === current) {
+                  <g [@fadeIn]>
+                    @for (prop of it.propositions; track prop; let p = $index) {
+                      <g [attr.transform]="'translate(' + arch[p].x + ',' + arch[p].y + ')'">
+                        <g class="prop {{prop.css}}" (click)="selectCharge(it, p)">
+                          <circle r="40"></circle>
+                          <text y="14" text-anchor="middle">{{prop.charge}}</text>
+                        </g>
+                      </g>
                     }
-                  </g>
-                  <g class="prop-circle">
-                    <g class="{{item.propositions[0].css}}">
-                      <circle class="prop" cx="454" cy="219" r="46"></circle>
-                      <text x="456" y="237" text-anchor="middle">
-                        {{item.propositions[0].charge}}
-                      </text>
-                      <circle cx="454" cy="219" r="46" class="ghost" (click)="selectCharge(item, 0)"></circle>
-                    </g>
-                    <g class="{{item.propositions[1].css}}">
-                      <circle class="prop" cx="410" cy="312" r="46"></circle>
-                      <text x="409" y="330" text-anchor="middle">
-                        {{item.propositions[1].charge}}
-                      </text>
-                      <circle cx="410" cy="312" r="46" class="ghost" (click)="selectCharge(item, 1)"></circle>
-                    </g>
-                    <g class="{{item.propositions[2].css}}">
-                      <circle class="prop" cx="317" cy="268" r="46"></circle>
-                      <text x="317" y="286" text-anchor="middle">
-                        {{item.propositions[2].charge}}
-                      </text>
-                      <circle cx="317" cy="268" r="46" class="ghost" (click)="selectCharge(item, 2)"></circle>
-                    </g>
-                    <g class="{{item.propositions[3].css}}">
-                      <circle class="prop" cx="361" cy="175" r="46"></circle>
-                      <text x="361" y="193" text-anchor="middle">
-                        {{item.propositions[3].charge}}
-                      </text>
-                      <circle cx="361" cy="175" r="46" class="ghost" (click)="selectCharge(item, 3)"></circle>
-                    </g>
-                  </g>
-                  <g>
-                    <foreignObject x="00" y="310" width="357" height="200" class="symbol">
-                      <div xmlns="http://www.w3.org/1999/xhtml">
-                        <div [innerHTML]="item.symbol"></div>
+                    <foreignObject x="0" y="230" width="360" height="160">
+                      <div xmlns="http://www.w3.org/1999/xhtml" class="formula {{formulaSize(it)}}" [class.correct]="correct">
+                        <span class="ion">
+                          <span [innerHTML]="it.symbol"></span>
+                          <!-- hors flux : la formule ne bouge pas quand la charge apparaît -->
+                          @if (correct) {
+                            <sup class="charge">{{it.charge}}</sup>
+                          }
+                        </span>
                       </div>
                     </foreignObject>
                   </g>
-                </svg>
-              </mat-grid-tile>
-            </div>
-          }
-        }
+                }
+              }
+              @for (pen of penalties; track pen.id) {
+                <text class="penalty" [attr.x]="pen.x" [attr.y]="pen.y - 50" text-anchor="middle">+{{penaltySeconds}} s</text>
+              }
+            </svg>
+          </div>
+        </mat-grid-tile>
         <mat-grid-tile colspan="6" rowspan="2">
           <button mat-mini-fab color="primary" (click)="intro()">
             <mat-icon>arrow_back</mat-icon>

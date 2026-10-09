@@ -32,6 +32,13 @@ export class StopwatchService {
     this.updateDisplayTime();
   }
 
+  // pénalité : avance le chrono, qu'il tourne ou non
+  addTime(ms: number): void {
+    this.elapsedTime += ms;
+    this.startTime -= ms;
+    this.updateDisplayTime();
+  }
+
   private updateDisplayTime(): void {
     const totalMilliseconds = this.elapsedTime;
     const minutes = Math.floor(totalMilliseconds / 60000);
