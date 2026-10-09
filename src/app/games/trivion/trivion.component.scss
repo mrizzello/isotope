@@ -21,6 +21,7 @@
         overflow: hidden;
         border-radius: 16px;
         background: radial-gradient(circle at 50% 50%, #f7f8fc 0%, #eceff1 75%);
+        container-type: size;  // la taille des cartes suit la largeur et la hauteur de la table
     }
 
     // liaisons
@@ -109,13 +110,13 @@
 
     .name {
         width: max-content;
-        max-width: 56vw;
+        max-width: 60cqw;
         min-height: 48px;
-        padding: 0.5rem 1rem;
+        padding: min(0.6rem, 1.3cqh) 1.1rem;
         font-family: 'Raleway', sans-serif;
         font-weight: bold;
-        font-size: 1.1rem;
-        line-height: 1.2;
+        font-size: clamp(1.1rem, min(5.6cqw, 4.4cqh), 1.4rem);
+        line-height: 1.15;
         text-align: center;
         cursor: pointer;
         -webkit-tap-highlight-color: transparent;
