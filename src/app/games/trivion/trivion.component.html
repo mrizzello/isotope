@@ -13,32 +13,38 @@
         <mat-grid-tile colspan="2" rowspan="1">
           <app-stopwatch></app-stopwatch>
         </mat-grid-tile>
-        @for (item of draw; track item) {
-          @if (item.visible) {
-            <div>
-              @for (proposition of item.propositions | slice:0:2; track proposition) {
-                <mat-grid-tile colspan="3" rowspan="2" class="propositions">
-                  <span class="toClick" (click)="selectTile($event, proposition, item)"></span>
-                  <span class="proposition">{{proposition}}</span>
-                </mat-grid-tile>
-              }
-              <mat-grid-tile colspan="6" rowspan="3" [ngClass]="item.css">
-                <div class="symbol">
-                  <span [innerHTML]="item.symbol"></span><sup>{{item.charge}}</sup><br/>
-                  @if (item.group != '') {
-                    <span class="group">groupe&nbsp;:&nbsp;{{item.group}}</span>
+        <mat-grid-tile colspan="6" rowspan="6">
+          @for (item of draw; track item; let i = $index) {
+            @if (i === current) {
+              <div class="table">
+                <!-- liaisons ion → cartes, dessinées derrière les cartes -->
+                <svg class="bonds" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                  @for (prop of item.propositions; track prop; let p = $index) {
+                    <line [attr.x1]="ion.x" [attr.y1]="ion.y" [attr.x2]="prop.x" [attr.y2]="prop.y"
+                      class="{{prop.css}}" [style.animation-delay.ms]="p * 60"></line>
                   }
+                </svg>
+
+                <div class="slot" [style.left.%]="ion.x" [style.top.%]="ion.y">
+                  <div class="card ion" [class.correct]="correct">
+                    <div class="symbol"><span [innerHTML]="item.symbol"></span><sup>{{item.charge}}</sup></div>
+                    @if (item.group) {
+                      <div class="group">groupe&nbsp;:&nbsp;{{item.group}}</div>
+                    }
+                  </div>
                 </div>
-              </mat-grid-tile>
-              @for (proposition of item.propositions | slice:-2; track proposition) {
-                <mat-grid-tile colspan="3" rowspan="2" class="propositions">
-                  <span class="toClick" (click)="selectTile($event, proposition, item)"></span>
-                  <span class="proposition">{{proposition}}</span>
-                </mat-grid-tile>
-              }
-            </div>
+
+                @for (prop of item.propositions; track prop; let p = $index) {
+                  <div class="slot" [style.left.%]="prop.x" [style.top.%]="prop.y">
+                    <button type="button" class="card name {{prop.css}}"
+                      [style.--tilt]="prop.tilt + 'deg'" [style.animation-delay.ms]="p * 60"
+                      [disabled]="prop.css === 'hidden'" (click)="selectName(item, p)">{{prop.name}}</button>
+                  </div>
+                }
+              </div>
+            }
           }
-        }
+        </mat-grid-tile>
         <mat-grid-tile colspan="6" rowspan="2">
           <button mat-mini-fab color="primary" (click)="intro()">
             <mat-icon>arrow_back</mat-icon>

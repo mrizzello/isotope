@@ -1,17 +1,17 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
-import arrayShuffle from 'array-shuffle';
 import { Subscription } from 'rxjs';
 
 import { DataService } from '../../services/data.service';
 import { Ions } from '../../services/data.models';
 
 import { IntroductionService } from '../../services/introduction.service';
-import { IntroductionComponent } from '../../components/introduction/introduction.component';
 import { StopwatchService } from '../../services/stopwatch.service';
-import { StopwatchComponent } from '../../components/stopwatch/stopwatch.component';
 import { ShowResultsService } from '../../services/show-results.service';
-import { ShowResultsComponent } from '../../components/show-results/show-results.component';
+
+import { IONS_PER_GAME, ION_POSITION, Proposition, TrivionItem, drawGame } from './trivion.logic';
+
+const NEXT_DELAY = 700;   // ms entre la bonne réponse et l'ion suivant
 
 @Component({
     selector: 'app-trivion',
@@ -39,14 +39,13 @@ export class TrivionComponent implements OnInit, OnDestroy {
   showResults: boolean = false;
   disableClick: boolean = false;
   ions: Ions | null = null;
-  draw: any;
+  draw: TrivionItem[] = [];
   score: number = 0;
   current: number = 0;
-  maxScore: number = 8;
-
-  @ViewChild(IntroductionComponent) private introduction!: IntroductionComponent;
-  @ViewChild(StopwatchComponent) private stopwatch!: StopwatchComponent;
-  @ViewChild(ShowResultsComponent) private results!: ShowResultsComponent;
+  maxScore: number = IONS_PER_GAME;
+  correct: boolean = false;
+  ion = ION_POSITION;
+  private timeouts: ReturnType<typeof setTimeout>[] = [];
 
   private startSubscription: Subscription | undefined;
   private restartSubscription: Subscription | undefined;
@@ -65,7 +64,7 @@ export class TrivionComponent implements OnInit, OnDestroy {
       title: 'Triv<u>ion</u>',
       p: [
         '<b>C\'est plutôt trivial&nbsp;...<br />ou pas&nbsp;!</b>',
-        'Un ion et quatre propositions,<br />à vous de trouver la bonne réponse&nbsp;!'
+        'Un ion, quatre noms&nbsp;: trouvez le bon<br />pour 10 ions, du plus simple au plus corsé&nbsp;!'
       ]
     });
     this.restartSubscription = this.showResultsService.getRestart().subscribe((data: any) => {
@@ -74,43 +73,30 @@ export class TrivionComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const ionsData = this.dataService.getIons();
-    if (ionsData) {
-      this.ions = ionsData;
-    }
+    this.ions = this.dataService.getIons() ?? null;
   }
 
   ngOnDestroy(): void {
     this.restartSubscription?.unsubscribe();
     this.startSubscription?.unsubscribe();
+    this.clearTimeouts();
+    this.stopwatchService.stopStopwatch();
   }
 
   initGame() {
+    this.clearTimeouts();
     this.score = 0;
     this.current = 0;
+    this.correct = false;
+    this.stopwatchService.stopStopwatch();
     this.stopwatchService.resetStopwatch();
-
-    if (this.ions) {
-      this.draw = JSON.parse(JSON.stringify(this.ions));
-      this.draw = this.draw.cations.concat(this.draw.anions);
-      this.draw = arrayShuffle(this.draw);
-      this.draw = this.draw.slice(0, this.maxScore);
-
-      this.draw.forEach((item: any) => {
-        item.selected = false;
-        item.css = ['symbol-container'];
-        item.visible = false;
-        item.propositions = item.wrongNames;
-        item.propositions.push(item.name);
-        item.propositions = arrayShuffle(item.propositions);
-      });
-
-      this.draw = arrayShuffle(this.draw);
-    }
+    this.draw = this.ions ? drawGame(this.ions.cations, this.ions.anions) : [];
   }
 
   intro() {
     if (!this.disableClick) {
+      this.clearTimeouts();
+      this.stopwatchService.stopStopwatch();
       this.showIntroduction = true;
       this.showGame = false;
       this.showResults = false;
@@ -124,57 +110,54 @@ export class TrivionComponent implements OnInit, OnDestroy {
     this.showGame = true;
     this.showResults = false;
     this.disableClick = false;
-    this.draw[this.current].visible = true;
     this.stopwatchService.startStopwatch();
   }
 
-  selectTile(event: any, proposition: any, item: any) {
-    if (this.disableClick) {
+  selectName(item: TrivionItem, index: number) {
+    const prop: Proposition = item.propositions[index];
+    if (this.disableClick || prop.css !== '') {
       return;
     }
-    const targetElement = event.target as Element;
-    const parent = targetElement.parentElement?.parentElement;
-    if(proposition == item.name){
-      this.score++;
-      if( this.score == this.maxScore ){
-        this.stopwatchService.stopStopwatch();
-        item.css.push('won');
-        if( parent ){
-          parent.classList.add('good');
-        }
-        this.disableClick = true;
-        setTimeout(() => { this.end() }, 500);
-      }else{
-        this.stopwatchService.stopStopwatch();
-        this.disableClick = true;
-        item.css.push('won')
-        if( parent ){
-          parent.classList.add('good');
-        }
-        setTimeout(() => {
-          this.disableClick = false;
-          this.draw[this.current].visible = false;
-          this.current++;
-          this.draw[this.current].visible = true;
-          this.stopwatchService.startStopwatch();
-        }, 500);
-      }
-    }else{
-      if( parent ){
-        parent.classList.add('bad');
-      }
+    if (prop.name !== item.name) {
+      prop.css = 'wrong';
+      return;
+    }
+    item.propositions.forEach(p => p.css = p.name === item.name ? 'correct' : 'hidden');
+    this.correct = true;
+    this.score++;
+    this.stopwatchService.stopStopwatch();
+    this.disableClick = true;
+    if (this.score === this.maxScore) {
+      this.later(() => this.end(), NEXT_DELAY);
+    } else {
+      this.later(() => {
+        this.disableClick = false;
+        this.correct = false;
+        this.current++;
+        this.stopwatchService.startStopwatch();
+      }, NEXT_DELAY);
     }
   }
 
   end() {
+    this.disableClick = false;
     this.showGame = false;
     this.showResults = true;
     let display: any = [];
     display.title = 'Triv<u>ion</u>';
-    display.game = 'trivion';
+    display.game = 'trivion-v2';
     display.time = this.stopwatchService.getDisplayString();
     display.comment = 'pour résoudre le puzzle!';
     this.showResultsService.updateDisplay(display);
+  }
+
+  private later(fn: () => void, ms: number) {
+    this.timeouts.push(setTimeout(fn, ms));
+  }
+
+  private clearTimeouts() {
+    this.timeouts.forEach(t => clearTimeout(t));
+    this.timeouts = [];
   }
 
 }
