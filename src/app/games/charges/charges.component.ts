@@ -16,10 +16,10 @@ import {
 
 // positions des 4 bulles sur l'arche /‾‾\ (viewBox 360 × 400)
 const ARCH = [
-  { x: 50, y: 185 },
-  { x: 129, y: 119 },
-  { x: 231, y: 119 },
-  { x: 310, y: 185 }
+  { x: 50, y: 205 },
+  { x: 129, y: 139 },
+  { x: 231, y: 139 },
+  { x: 310, y: 205 }
 ];
 const BUBBLES = 24;
 const NEXT_DELAY = 600;     // ms entre la bonne réponse et l'ion suivant
