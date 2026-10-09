@@ -20,7 +20,7 @@
                 <!-- liaisons ion → cartes, dessinées derrière les cartes -->
                 <svg class="bonds" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
                   @for (prop of item.propositions; track prop; let p = $index) {
-                    <line [attr.x1]="ion.x" [attr.y1]="ion.y" [attr.x2]="slots[p].x" [attr.y2]="slots[p].y"
+                    <line [attr.x1]="ion.x" [attr.y1]="ion.y" [attr.x2]="prop.x" [attr.y2]="prop.y"
                       class="{{prop.css}}" [style.animation-delay.ms]="p * 60"></line>
                   }
                 </svg>
@@ -35,7 +35,7 @@
                 </div>
 
                 @for (prop of item.propositions; track prop; let p = $index) {
-                  <div class="slot" [style.left.%]="slots[p].x" [style.top.%]="slots[p].y">
+                  <div class="slot" [style.left.%]="prop.x" [style.top.%]="prop.y">
                     <button type="button" class="card name {{prop.css}}"
                       [style.--tilt]="prop.tilt + 'deg'" [style.animation-delay.ms]="p * 60"
                       [disabled]="prop.css === 'hidden'" (click)="selectName(item, p)">{{prop.name}}</button>

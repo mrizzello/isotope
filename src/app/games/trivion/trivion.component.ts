@@ -9,16 +9,8 @@ import { IntroductionService } from '../../services/introduction.service';
 import { StopwatchService } from '../../services/stopwatch.service';
 import { ShowResultsService } from '../../services/show-results.service';
 
-import { IONS_PER_GAME, Proposition, TrivionItem, drawGame } from './trivion.logic';
+import { IONS_PER_GAME, ION_POSITION, Proposition, TrivionItem, drawGame } from './trivion.logic';
 
-// centres des 4 cartes-noms, en % de la table : quinconce gauche / droite autour de l'ion (50, 50)
-const SLOTS = [
-  { x: 33, y: 10 },
-  { x: 67, y: 28 },
-  { x: 67, y: 72 },
-  { x: 33, y: 90 }
-];
-const ION = { x: 50, y: 50 };
 const NEXT_DELAY = 700;   // ms entre la bonne réponse et l'ion suivant
 
 @Component({
@@ -52,8 +44,7 @@ export class TrivionComponent implements OnInit, OnDestroy {
   current: number = 0;
   maxScore: number = IONS_PER_GAME;
   correct: boolean = false;
-  slots = SLOTS;
-  ion = ION;
+  ion = ION_POSITION;
   private timeouts: ReturnType<typeof setTimeout>[] = [];
 
   private startSubscription: Subscription | undefined;

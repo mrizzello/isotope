@@ -1,5 +1,8 @@
 import { Ion } from '../../services/data.models';
-import { IONS_PER_GAME, MAX_TILT, TIER_COUNTS, buildPropositions, drawGame, isTransitionMetal, trivionTier } from './trivion.logic';
+import {
+  IONS_PER_GAME, ION_POSITION, LAYOUTS, MAX_TILT, TIER_COUNTS,
+  buildPropositions, drawGame, isTransitionMetal, pickLayout, trivionTier
+} from './trivion.logic';
 
 const ion = (symbol: string, name: string, wrongNames = [`faux ${name} 1`, `faux ${name} 2`, `faux ${name} 3`]): Ion =>
   ({ symbol, charge: '', name, wrongNames, group: '' });
@@ -45,5 +48,33 @@ describe('trivion.logic', () => {
     expect(props.map(p => p.name)).toContain('sulfate');
     props.forEach(p => expect(Math.abs(p.tilt)).toBeLessThanOrEqual(MAX_TILT));
     expect(sulfate.wrongNames.length).toBe(3);  // pas de mutation des données
+  });
+
+  it('offers 4 layouts with one high and one low card on each side of each half', () => {
+    expect(LAYOUTS.length).toBe(4);
+    expect(new Set(LAYOUTS.map(l => JSON.stringify(l))).size).toBe(4);
+    for (const layout of LAYOUTS) {
+      const top = layout.filter(p => p.y < ION_POSITION.y);
+      const bottom = layout.filter(p => p.y > ION_POSITION.y);
+      for (const half of [top, bottom]) {
+        expect(half.length).toBe(2);
+        expect(half[0].x).not.toBe(half[1].x);  // une à gauche, une à droite
+        expect(half[0].y).not.toBe(half[1].y);  // une haute, une basse
+      }
+    }
+  });
+
+  it('never repeats the layout of the previous ion', () => {
+    for (let n = 0; n < 200; n++) {
+      const previous = n % LAYOUTS.length;
+      expect(pickLayout(previous)).not.toBe(previous);
+    }
+    for (let n = 0; n < 50; n++) {
+      const draw = drawGame(CATIONS, ANIONS);
+      for (let i = 1; i < draw.length; i++) {
+        expect(draw[i].layout).not.toBe(draw[i - 1].layout);
+      }
+      draw.forEach(d => expect(d.propositions.map(p => ({ x: p.x, y: p.y }))).toEqual(LAYOUTS[d.layout]));
+    }
   });
 });
