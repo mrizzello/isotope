@@ -1,4 +1,7 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { LewisComponent } from './lewis.component';
 
@@ -8,7 +11,10 @@ describe('LewisComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LewisComponent ]
+      declarations: [ LewisComponent ],
+      imports: [ NoopAnimationsModule ],
+      providers: [ provideHttpClient() ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
 

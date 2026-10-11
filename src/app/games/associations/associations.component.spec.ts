@@ -1,4 +1,7 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AssociationsComponent } from './associations.component';
 
@@ -8,7 +11,10 @@ describe('AssociationsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AssociationsComponent ]
+      declarations: [ AssociationsComponent ],
+      imports: [ NoopAnimationsModule ],
+      providers: [ provideHttpClient() ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
 
