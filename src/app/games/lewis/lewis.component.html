@@ -13,41 +13,51 @@
         <mat-grid-tile colspan="2" rowspan="1">
           <app-stopwatch></app-stopwatch>
         </mat-grid-tile>
-        @for (item of draw; track item) {
-          @if (item.visible) {
-            <div [@fadeIn]>
-              <mat-grid-tile colspan="6" rowspan="6" [ngClass]="item.css">
-                <svg version="1.0" width="100%" height="100%" viewBox="0 0 310 310" class="svg">
-                  <defs>
-                    <radialGradient id="gradient">
-                      <stop offset="33%" stop-color="#E8EAF6" />
-                      <stop offset="95%" stop-color="#D0D9FF" />
-                    </radialGradient>
-                  </defs>
-                  @for (prop of item.propositions; track prop) {
-                    <g [ngClass]="{'proposition':true}"
-                      [attr.transform]="'translate(' + prop.translate.x + ',' + prop.translate.y + ')'"
-                      (click)="selectStructure(prop)" [class]="prop.css">
-                      <circle stroke-width="2" cx="155" cy="155" r="42"></circle>
-                      <text class="symbol" x="155" y="164" font-family="Arial"
-                      font-size="28" text-anchor="middle">{{item.symbol}}</text>
-                      <g lewis-structure [n]="prop.n" [css]="prop.css"></g>
+        <mat-grid-tile colspan="6" rowspan="6">
+          <svg class="board" viewBox="-22 -22 354 354">
+            <defs>
+              <radialGradient id="lewis-gradient">
+                <stop offset="33%" stop-color="#E8EAF6" />
+                <stop offset="95%" stop-color="#D0D9FF" />
+              </radialGradient>
+              <filter id="lewis-shadow" x="-30%" y="-30%" width="160%" height="160%">
+                <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#1A237E" flood-opacity="0.18" />
+              </filter>
+            </defs>
+            @for (it of draw; track it; let i = $index) {
+              @if (i === current) {
+                <g [@fadeIn]>
+                  <g class="reference" [class.won]="correct">
+                    <circle cx="155" cy="155" r="72" fill="url(#lewis-gradient)"></circle>
+                    <text class="roman" x="155" y="113" text-anchor="middle">{{getRoman(it)}}</text>
+                    <text class="symbol" x="155" y="177" text-anchor="middle">{{it.symbol}}</text>
+                    <text class="name" x="155" y="203" text-anchor="middle">{{it.name}}</text>
+                  </g>
+                  <!-- bulles par-dessus l'élément central ; la bulle survolée passe au premier plan -->
+                  @for (prop of layered(it); track prop) {
+                    <g [attr.transform]="'translate(' + prop.x + ',' + prop.y + ')'">
+                      <g class="prop {{prop.css}}" [class.lift]="prop === hovered && prop.css === ''">
+                        <circle class="halo" cx="155" cy="155" r="44"></circle>
+                        <circle class="disc" cx="155" cy="155" r="44"></circle>
+                        <text class="symbol" x="155" y="164" text-anchor="middle">{{it.symbol}}</text>
+                        <g lewis-structure [n]="prop.n" [css]="prop.css"></g>
+                      </g>
                     </g>
                   }
-                  <g class="reference">
-                    <circle cx="155" cy="155" r="74" fill="url('#gradient')"></circle>
-                    <text class="symbol" transform="matrix(1 0 0 1 155 175)" font-family="Arial"
-                    font-size="66" text-anchor="middle">{{item.symbol}}</text>
-                    <text transform="matrix(1 0 0 1 155 112)" font-family="Arial" font-size="18"
-                    text-anchor="middle" class="ng-binding">{{getRoman(item)}}</text>
-                    <text transform="matrix(1 0 0 1 155 202)" font-family="Arial" font-size="16"
-                    text-anchor="middle" class="ng-binding">{{item.name}}</text>
-                  </g>
-                </svg>
-              </mat-grid-tile>
-            </div>
-          }
-        }
+                  <!-- zones de clic : couche fixe au-dessus de tout, jamais réordonnée -->
+                  @for (prop of it.propositions; track prop) {
+                    <circle class="hit {{prop.css}}" [attr.cx]="155 + prop.x" [attr.cy]="155 + prop.y" r="46"
+                      (pointerenter)="hover(prop, $event)" (pointerleave)="hovered = null"
+                      (click)="selectStructure(it, prop)"></circle>
+                  }
+                </g>
+              }
+            }
+            @for (pen of penalties; track pen.id) {
+              <text class="penalty" [attr.x]="155 + pen.x" [attr.y]="155 + pen.y - 30" text-anchor="middle">+{{penaltySeconds}} s</text>
+            }
+          </svg>
+        </mat-grid-tile>
         <mat-grid-tile colspan="6" rowspan="2">
           <button mat-mini-fab color="primary" (click)="intro()">
             <mat-icon>arrow_back</mat-icon>

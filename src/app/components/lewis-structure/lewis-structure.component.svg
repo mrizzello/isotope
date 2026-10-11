@@ -1,60 +1,60 @@
 <svg [class]="css">
   @if (n == 1) {
     <ng-container>
-      <circle cx="182" cy="155" r="4"></circle>
+      <circle cx="185" cy="155" r="4"></circle>
     </ng-container>
   }
   @if (n == 2) {
     <ng-container>
-      <circle cx="182" cy="155" r="4"></circle>
-      <circle cx="128" cy="155" r="4"></circle>
+      <circle cx="185" cy="155" r="4"></circle>
+      <circle cx="125" cy="155" r="4"></circle>
     </ng-container>
   }
   @if (n == 3) {
     <ng-container>
-      <circle cx="182" cy="155" r="4"></circle>
-      <circle cx="128" cy="155" r="4"></circle>
-      <circle cx="155" cy="132" r="4"></circle>
+      <circle cx="185" cy="155" r="4"></circle>
+      <circle cx="125" cy="155" r="4"></circle>
+      <circle cx="155" cy="130" r="4"></circle>
     </ng-container>
   }
   @if (n == 4) {
     <ng-container>
-      <circle cx="182" cy="155" r="4"></circle>
-      <circle cx="128" cy="155" r="4"></circle>
-      <circle cx="155" cy="132" r="4"></circle>
-      <circle cx="155" cy="178" r="4"></circle>
+      <circle cx="185" cy="155" r="4"></circle>
+      <circle cx="125" cy="155" r="4"></circle>
+      <circle cx="155" cy="130" r="4"></circle>
+      <circle cx="155" cy="180" r="4"></circle>
     </ng-container>
   }
   @if (n == 5) {
     <ng-container>
-      <circle cx="182" cy="155" r="4"></circle>
-      <circle cx="128" cy="155" r="4"></circle>
-      <line y2="132" x2="140" y1="132" x1="170" stroke-linecap="round"></line>
-      <circle cx="155" cy="178" r="4"></circle>
+      <circle cx="185" cy="155" r="4"></circle>
+      <circle cx="125" cy="155" r="4"></circle>
+      <line y2="130" x2="138" y1="130" x1="172" stroke-linecap="round"></line>
+      <circle cx="155" cy="180" r="4"></circle>
     </ng-container>
   }
   @if (n == 6) {
     <ng-container>
-      <circle cx="182" cy="155" r="4"></circle>
-      <circle cx="128" cy="155" r="4"></circle>
-      <line y2="132" x2="140" y1="132" x1="170" stroke-linecap="round"></line>
-      <line y2="178" x2="140" y1="178" x1="170" stroke-linecap="round"></line>
+      <circle cx="185" cy="155" r="4"></circle>
+      <circle cx="125" cy="155" r="4"></circle>
+      <line y2="130" x2="138" y1="130" x1="172" stroke-linecap="round"></line>
+      <line y2="180" x2="138" y1="180" x1="172" stroke-linecap="round"></line>
     </ng-container>
   }
   @if (n == 7) {
     <ng-container>
-      <line x1="128" y1="140" x2="128" y2="170" stroke-linecap="round"></line>
-      <circle cx="182" cy="155" r="4"></circle>
-      <line y1="132" x1="170" y2="132" x2="140" stroke-linecap="round"></line>
-      <line y1="178" x1="170" y2="178" x2="140" stroke-linecap="round"></line>
+      <line x1="125" y1="138" x2="125" y2="172" stroke-linecap="round"></line>
+      <circle cx="185" cy="155" r="4"></circle>
+      <line y1="130" x1="172" y2="130" x2="138" stroke-linecap="round"></line>
+      <line y1="180" x1="172" y2="180" x2="138" stroke-linecap="round"></line>
     </ng-container>
   }
   @if (n == 8) {
     <ng-container>
-      <line x1="128" y1="140" x2="128" y2="170" stroke-linecap="round"></line>
-      <line x1="182" y1="140" x2="182" y2="170" stroke-linecap="round"></line>
-      <line y1="132" x1="170" y2="132" x2="140" stroke-linecap="round"></line>
-      <line y1="178" x1="170" y2="178" x2="140" stroke-linecap="round"></line>
+      <line x1="125" y1="138" x2="125" y2="172" stroke-linecap="round"></line>
+      <line x1="185" y1="138" x2="185" y2="172" stroke-linecap="round"></line>
+      <line y1="130" x1="172" y2="130" x2="138" stroke-linecap="round"></line>
+      <line y1="180" x1="172" y2="180" x2="138" stroke-linecap="round"></line>
     </ng-container>
   }
 </svg>
