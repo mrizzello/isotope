@@ -30,7 +30,6 @@ Isotope propose **8 jeux interactifs** et **2 modules utilitaires** (dans l'ordr
 ### 3. Persistance des scores
 *   Sauvegarde locale des meilleurs scores et bilans cumulés de victoires/défaites (notamment pour HexaIons) grâce à l'utilisation du stockage local (`localStorage`).
 *   La page **Scores (`/scores`)** affiche les records dans l'ordre du menu et propose un bouton **« Réinitialiser les scores »**.
-*   Les records de Charges et de Trivion ont été remis à zéro après la refonte de ces jeux (nouvelles clés `charges-v2` et `trivion-v2`).
 
 ---
 
