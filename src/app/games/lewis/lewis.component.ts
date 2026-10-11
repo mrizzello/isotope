@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
-import arrayShuffle from 'array-shuffle';
 import { Subscription } from 'rxjs';
 
 import { DataService } from '../../services/data.service';
@@ -12,6 +11,17 @@ import { StopwatchService } from '../../services/stopwatch.service';
 import { StopwatchComponent } from '../../components/stopwatch/stopwatch.component';
 import { ShowResultsService } from '../../services/show-results.service';
 import { ShowResultsComponent } from '../../components/show-results/show-results.component';
+import { ELEMENTS_PER_GAME, LewisItem, PENALTY_MS, Proposition, drawGame } from './lewis.logic';
+
+const ROMANS = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
+const NEXT_DELAY = 700;     // ms entre la bonne réponse et l'élément suivant
+const PENALTY_LIFE = 900;   // ms d'affichage du « +3 s »
+
+interface Penalty {
+  id: number;
+  x: number;
+  y: number;
+}
 
 @Component({
     selector: 'app-lewis',
@@ -45,12 +55,16 @@ export class LewisComponent implements OnInit, OnDestroy {
   showResults: boolean = false;
   disableClick: boolean = false;
   structures: Lewis[] | null = null;
-  draw: any;
+  draw: LewisItem[] = [];
   score: number = 0;
   current: number = 0;
-  maxScore: number = 8;
-  romans: any = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
-  propositionsRadius = 112;
+  maxScore: number = ELEMENTS_PER_GAME;
+  correct: boolean = false;
+  hovered: Proposition | null = null;
+  penaltySeconds = PENALTY_MS / 1000;
+  penalties: Penalty[] = [];
+  private penaltyId = 0;
+  private timeouts: ReturnType<typeof setTimeout>[] = [];
 
   @ViewChild(IntroductionComponent) private introduction!: IntroductionComponent;
   @ViewChild(StopwatchComponent) private stopwatch!: StopwatchComponent;
@@ -91,51 +105,26 @@ export class LewisComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.restartSubscription?.unsubscribe();
     this.startSubscription?.unsubscribe();
+    this.clearTimeouts();
+    this.stopwatchService.stopStopwatch();
   }
 
   initGame() {
+    this.clearTimeouts();
     this.score = 0;
     this.current = 0;
+    this.correct = false;
+    this.hovered = null;
+    this.penalties = [];
+    this.stopwatchService.stopStopwatch();
     this.stopwatchService.resetStopwatch();
-
-    if (this.structures) {
-      this.draw = JSON.parse(JSON.stringify(this.structures));
-      this.draw = arrayShuffle(this.draw);
-      this.draw = this.draw.slice(0, this.maxScore);
-
-      this.draw.forEach((item: any) => {
-        item.visible = false;
-
-        let propositions = [];
-        for (let step = 1; step <= 8; step++) {
-          propositions.push({
-            n: step,
-            correct: step == item.col,
-            translate: [],
-            css: ''
-          });
-        }
-
-        propositions = arrayShuffle(propositions);
-
-        let angle = 0;
-        propositions.forEach((proposition, index) => {
-          let radians = angle * (Math.PI / 180);
-          let translate: any = {};
-          translate.x = Math.round(Math.cos(radians) * this.propositionsRadius);
-          translate.y = Math.round(Math.sin(radians) * this.propositionsRadius);
-          proposition.translate = translate;
-          angle += 360 / 8;
-        });
-
-        item.propositions = propositions;
-
-      });
-    }
+    this.draw = this.structures ? drawGame(this.structures) : [];
   }
 
   intro() {
     if (!this.disableClick) {
+      this.clearTimeouts();
+      this.stopwatchService.stopStopwatch();
       this.showIntroduction = true;
       this.showGame = false;
       this.showResults = false;
@@ -149,40 +138,48 @@ export class LewisComponent implements OnInit, OnDestroy {
     this.showGame = true;
     this.showResults = false;
     this.disableClick = false;
-    this.draw[this.current].visible = true;
     this.stopwatchService.startStopwatch();
   }
 
-  selectStructure(proposition: any) {
-    if (this.disableClick) {
+  selectStructure(item: LewisItem, prop: Proposition) {
+    if (this.disableClick || prop.css !== '') {
       return;
     }
-    if( proposition.correct ){
-      proposition.css = "correct";
-      this.draw[this.current].css = 'won';
-      this.score++;
-      if( this.score == this.maxScore ){
-        this.stopwatchService.stopStopwatch();
-        this.disableClick = true;
-        setTimeout(() => { this.end() }, 500);
-      }else{
-        this.stopwatchService.stopStopwatch();
-        this.disableClick = true;
-        setTimeout(() => {
-          this.disableClick = false;
-          this.draw[this.current].visible = false;
-          this.current++;
-          this.draw[this.current].visible = true;
-          this.stopwatchService.startStopwatch();
-        }, 500);
-      }
-    }else{
-      proposition.css = "wrong";
+    if (!prop.correct) {
+      prop.css = 'wrong';
+      this.stopwatchService.addTime(PENALTY_MS);
+      const penalty = { id: this.penaltyId++, x: prop.x, y: prop.y };
+      this.penalties.push(penalty);
+      this.later(() => {
+        this.penalties = this.penalties.filter(p => p !== penalty);
+      }, PENALTY_LIFE);
+      return;
     }
-    
+    item.propositions.forEach(p => {
+      if (p.css === '') {
+        p.css = 'faded';
+      }
+    });
+    prop.css = 'correct';
+    this.correct = true;
+    this.score++;
+    this.stopwatchService.stopStopwatch();
+    this.disableClick = true;
+    if (this.score === this.maxScore) {
+      this.later(() => this.end(), NEXT_DELAY + 300);
+    } else {
+      this.later(() => {
+        this.disableClick = false;
+        this.correct = false;
+        this.hovered = null;
+        this.current++;
+        this.stopwatchService.startStopwatch();
+      }, NEXT_DELAY);
+    }
   }
 
   end() {
+    this.disableClick = false;
     this.showGame = false;
     this.showResults = true;
     let display: any = [];
@@ -193,8 +190,33 @@ export class LewisComponent implements OnInit, OnDestroy {
     this.showResultsService.updateDisplay(display);
   }
 
-  getRoman(item: any) {
-    return this.romans[item.col];
+  // ordre de dessin SVG : la bonne réponse trouvée, sinon la bulle survolée, en dernier (au-dessus des autres)
+  layered(item: LewisItem): Proposition[] {
+    const top = item.propositions.find(p => p.css === 'correct') ?? this.hovered;
+    if (!top || !item.propositions.includes(top)) {
+      return item.propositions;
+    }
+    return [...item.propositions.filter(p => p !== top), top];
+  }
+
+  // survol seulement à la souris : au doigt, pas d'effet
+  hover(prop: Proposition, event: PointerEvent) {
+    if (event.pointerType === 'mouse') {
+      this.hovered = prop;
+    }
+  }
+
+  getRoman(item: LewisItem): string {
+    return ROMANS[item.col];
+  }
+
+  private later(fn: () => void, ms: number) {
+    this.timeouts.push(setTimeout(fn, ms));
+  }
+
+  private clearTimeouts() {
+    this.timeouts.forEach(t => clearTimeout(t));
+    this.timeouts = [];
   }
 
 }
