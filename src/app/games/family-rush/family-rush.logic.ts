@@ -1,6 +1,6 @@
 import { Family } from '../../services/data.models';
 
-// les 5 bacs, dans l'ordre d'affichage ; value = champ `type` de family.json
+// les 5 bacs (affichés dans un ordre tiré au hasard à chaque partie) ; value = champ `type` de family.json
 export const BINS: { label: string; value: string }[] = [
   { label: 'Hydracide', value: 'hydracide' },
   { label: 'Sel', value: 'sel' },

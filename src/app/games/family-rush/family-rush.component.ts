@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Subscription } from 'rxjs';
+import arrayShuffle from 'array-shuffle';
 
 import { DataService } from '../../services/data.service';
 import { Family } from '../../services/data.models';
@@ -146,7 +147,7 @@ export class FamilyRushComponent implements OnInit, OnDestroy {
   }
 
   initGame() {
-    this.bins = BINS.map((bin) => ({
+    this.bins = arrayShuffle(BINS).map((bin) => ({
       ...bin,
       disabledUntil: 0, hintUntil: 0, goodUntil: 0,
       disabled: false, hint: false, good: false
