@@ -17,8 +17,8 @@ const SCORE_DATA: ScoreElement[] = [
   { id: 'memorion', name: 'Memorion', score: '' },
   { id: 'trivion-v2', name: 'Trivion', score: '' },
   { id: 'family', name: 'Family', score: '' },
-  { id: 'hexaions', name: 'HexaIons', score: '' },
   { id: 'family-rush', name: 'Family Rush', score: '' },
+  { id: 'hexaions', name: 'HexaIons', score: '' },
 ];
 
 @Component({
