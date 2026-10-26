@@ -5,31 +5,49 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# un seul déploiement à la fois ; celui en cours n'est pas annulé
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
-
-      - name: Install Angular CLI
-        run: npm install -g @angular/cli
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build
-        run: ng build --output-path docs
+        run: npx ng build --output-path docs
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs
-          publish_branch: gh-pages
-    permissions:
-      contents: write
+          path: ./docs
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
