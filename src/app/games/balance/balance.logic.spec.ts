@@ -4,6 +4,7 @@ import {
   apply,
   canonical,
   chooseAction,
+  drawColors,
   isValidEquation,
   isWinning,
   legalActions,
@@ -55,7 +56,32 @@ describe('balance.logic', () => {
     });
   });
 
+  describe('colors', () => {
+    it('keeps fixed shape colors and draws a different wrong color', () => {
+      for (let i = 0; i < 200; i++) {
+        const colors = drawColors();
+        expect([colors.T, colors.C, colors.S]).toEqual(['#1e88e5', '#e53935', '#43a047']);
+        expect(colors.t).not.toBe(colors.T);
+        expect(colors.c).not.toBe(colors.C);
+        expect(colors.s).not.toBe(colors.S);
+      }
+    });
+
+    it('sorts wrong-colored atoms after the right ones', () => {
+      expect(canonical('tTC')).toBe('TCt');
+    });
+  });
+
   describe('decoys', () => {
+    it('sometimes keeps the shapes but changes a color', () => {
+      const recolored = [...Array(500)].map(() => makeDecoy(EQ)).filter((d) => /[tcs]/.test(d));
+      expect(recolored.length).toBeGreaterThan(0);
+      recolored.forEach((d) => {
+        expect(substances(EQ)).toContain(canonical(d.toUpperCase()));
+        expect(legalActions(state([0, 0, 0], [d]))).toEqual([{ type: 'jeter', handIndex: 0 }]);
+      });
+    });
+
     it('never generates a molecule of the equation', () => {
       EQUATION_BANK.forEach((eq) => {
         for (let i = 0; i < 1000; i++) {

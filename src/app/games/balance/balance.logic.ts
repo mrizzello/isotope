@@ -6,6 +6,12 @@
 export type Atom = 'T' | 'C' | 'S';
 export const ATOMS: Atom[] = ['T', 'C', 'S'];
 
+// Atome de la mauvaise couleur : même forme, en minuscule ('t' est un
+// triangle d'une autre couleur que les triangles de la manche). Il n'apparaît
+// que dans les leurres. Ordre canonique : T < C < S < t < c < s.
+export type AtomToken = Atom | 't' | 'c' | 's';
+const TOKEN_ORDER = 'TCStcs';
+
 // Une molécule est la chaîne canonique (triée) de ses atomes, p. ex. 'TTC'
 export type Molecule = string;
 export type PlayerId = 'human' | 'algo';
@@ -46,7 +52,7 @@ export const DRAW_CONFIG: Record<Level, { proportionEquation: number }> = {
 
 export function canonical(atoms: string): Molecule {
   return atoms.split('')
-    .sort((a, b) => ATOMS.indexOf(a as Atom) - ATOMS.indexOf(b as Atom))
+    .sort((a, b) => TOKEN_ORDER.indexOf(a) - TOKEN_ORDER.indexOf(b))
     .join('');
 }
 
@@ -187,7 +193,8 @@ export function makeDecoy(eq: Equation, rng: Rng = Math.random): Molecule {
   const types = atomsOf(all);
   for (;;) {
     const base = randomItem(all, rng);
-    const ops: string[] = ['ajout'];
+    // « couleur » : un atome change de couleur, la forme reste la même
+    const ops: string[] = ['ajout', 'couleur'];
     if (base.length >= 2) {
       ops.push('retrait');
     }
@@ -201,6 +208,8 @@ export function makeDecoy(eq: Equation, rng: Rng = Math.random): Molecule {
       atoms.push(randomItem(types, rng));
     } else if (op === 'retrait') {
       atoms.splice(position, 1);
+    } else if (op === 'couleur') {
+      atoms[position] = atoms[position].toLowerCase();
     } else {
       atoms[position] = randomItem(types.filter((t) => t !== atoms[position]), rng);
     }
@@ -212,6 +221,26 @@ export function makeDecoy(eq: Equation, rng: Rng = Math.random): Molecule {
 }
 
 // Pioche infinie : chaque tirage est indépendant
+export function shapeOf(token: string): Atom {
+  return token.toUpperCase() as Atom;
+}
+
+// Couleurs fixes des formes ; les autres couleurs de la palette ne servent
+// qu'aux leurres
+export const SHAPE_COLORS: Record<Atom, string> = { T: '#1e88e5', C: '#e53935', S: '#43a047' };
+export const PALETTE = ['#1e88e5', '#e53935', '#43a047', '#8e24aa', '#ffb300', '#424242'];
+
+// Couleurs fixes pour les formes ; pour chaque forme, une « mauvaise » couleur
+// tirée à chaque manche (autre que la sienne, éventuellement celle d'une autre
+// forme), utilisée seulement par les leurres
+export function drawColors(rng: Rng = Math.random): Record<AtomToken, string> {
+  const colors = { ...SHAPE_COLORS } as Record<AtomToken, string>;
+  ATOMS.forEach((atom) => {
+    colors[atom.toLowerCase() as AtomToken] = randomItem(PALETTE.filter((c) => c !== colors[atom]), rng);
+  });
+  return colors;
+}
+
 export function drawMolecule(eq: Equation, proportionEquation: number, rng: Rng = Math.random): Molecule {
   return rng() < proportionEquation ? randomItem(substances(eq), rng) : makeDecoy(eq, rng);
 }

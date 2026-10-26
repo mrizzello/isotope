@@ -82,21 +82,10 @@
   }
 }
 
-// atomes : forme + couleur (lisibles sans la couleur)
+// atomes : couleur en attribut fill (cf. colors dans le composant) ; une
+// couleur inhabituelle signale un leurre
 .molecule {
   display: block;
-
-  .atom-T {
-    fill: #1e88e5;
-  }
-
-  .atom-C {
-    fill: #e53935;
-  }
-
-  .atom-S {
-    fill: #43a047;
-  }
 }
 
 .tile {
