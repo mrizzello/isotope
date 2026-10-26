@@ -32,7 +32,7 @@ function state(coefs: number[], human: string[], algo: string[] = ['TT', 'CC', '
 describe('balance.logic', () => {
   describe('equations', () => {
     it('finds the documented solution of every bank equation', () => {
-      const expected = [[1, 1, 2], [2, 1, 2], [3, 1, 3], [2, 3, 6], [2, 3, 2, 4], [1, 2, 1, 2], [2, 7, 4, 6]];
+      const expected = [[1, 1, 2], [2, 1, 2], [3, 1, 3], [2, 3, 6], [2, 3, 2, 4], [4, 3, 6], [4, 3, 4, 2], [1, 2, 1, 2], [2, 7, 4, 6]];
       EQUATION_BANK.forEach((eq, i) => {
         expect(solve(eq.reactants, eq.products)).toEqual(expected[i]);
       });

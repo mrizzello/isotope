@@ -156,6 +156,8 @@ export const EQUATION_BANK: Equation[] = [
   defineEquation(['T', 'CCC'], ['TC'], 'A'),
   defineEquation(['TTT', 'CC'], ['TC'], 'B'),
   defineEquation(['TCC', 'SS'], ['TS', 'CS'], 'B'),
+  defineEquation(['TTT', 'SS'], ['TTS'], 'B'),
+  defineEquation(['TC', 'SS'], ['TS', 'CCS'], 'B'),
   defineEquation(['STTTT', 'CC'], ['SCC', 'TTC'], 'C'),
   defineEquation(['SSTTTTTT', 'CC'], ['SCC', 'TTC'], 'C')
 ];
