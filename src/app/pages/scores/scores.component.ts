@@ -19,6 +19,7 @@ const SCORE_DATA: ScoreElement[] = [
   { id: 'family', name: 'Family', score: '' },
   { id: 'family-rush', name: 'Family Rush', score: '' },
   { id: 'hexaions', name: 'HexaIons', score: '' },
+  { id: 'balance', name: 'Balance', score: '' },
 ];
 
 @Component({
@@ -58,6 +59,7 @@ export class ScoresComponent {
       }
       this.scoresService.removeItem('scores');
       this.scoresService.removeItem('hexaionsRecord');
+      this.scoresService.removeItem('balanceRecord');
       this.buildDisplay();
     });
   }
@@ -65,11 +67,16 @@ export class ScoresComponent {
   private buildDisplay(): void {
     this.scores = this.scoresService.getItem('scores') || {};
     const hexaionsRecord = this.scoresService.getItem('hexaionsRecord');
+    const balanceRecord = this.scoresService.getItem('balanceRecord');
     this.display = [];
     SCORE_DATA.forEach((item)=>{
       if (item.id === 'hexaions') {
         item.score = hexaionsRecord
           ? hexaionsRecord.won + ' gagnées / ' + hexaionsRecord.lost + ' perdues'
+          : '-';
+      } else if (item.id === 'balance') {
+        item.score = balanceRecord
+          ? balanceRecord.won + ' gagnés / ' + balanceRecord.lost + ' perdus'
           : '-';
       } else {
         item.score = this.scores[item.id] !== undefined ? this.scores[item.id] : '-';

@@ -1,0 +1,154 @@
+<!-- size : taille d'un atome en em (1,1 sur la table, plus grand dans les mains) -->
+<ng-template #tile let-molecule let-size="size">
+  <svg class="molecule" [attr.viewBox]="layout(molecule).viewBox"
+    [style.width.em]="layout(molecule).width * (size ?? 1.1)" [style.height.em]="layout(molecule).rows * (size ?? 1.1)">
+    @for (shape of layout(molecule).atoms; track $index) {
+      @switch (shape.atom) {
+        @case ('T') {
+          <polygon class="atom-T" [attr.points]="trianglePoints(shape)"></polygon>
+        }
+        @case ('C') {
+          <circle class="atom-C" [attr.cx]="shape.x" [attr.cy]="shape.y" r="8"></circle>
+        }
+        @case ('S') {
+          <rect class="atom-S" [attr.x]="shape.x - 7.5" [attr.y]="shape.y - 7.5" width="15" height="15"></rect>
+        }
+      }
+    }
+  </svg>
+</ng-template>
+
+<div class="container">
+
+  @if (showIntroduction) {
+    <app-introduction [@slideInFromLeft]></app-introduction>
+  }
+
+  @if (showGame && state) {
+    <div class="game" [@slideInFromRight]>
+
+      <div class="scores">
+        <span class="chip algo">Robot&nbsp;: {{ roundWins.algo }}</span>
+        <span class="round">
+          <span>niveau {{ level }}</span>
+          <!-- une étoile par manche : orange (joueur) ou bleue (robot) une fois gagnée, grise sinon -->
+          <span class="stars" [attr.aria-label]="'Manche ' + (roundIndex + 1) + ' sur ' + rounds">
+            @for (winner of roundWinners; track $index) {
+              <mat-icon [class.human]="winner === 'human'" [class.algo]="winner === 'algo'"
+                [class.current]="$index === roundIndex && !winner">star</mat-icon>
+            }
+          </span>
+        </span>
+        <span class="chip human">Joueur&nbsp;: {{ roundWins.human }}</span>
+      </div>
+
+      <div class="hand algo" [class.active]="state.current === 'algo' && !roundOver">
+        <div class="tiles">
+          @for (molecule of state.hands.algo; track $index) {
+            <div class="tile" [class.discarding]="discarding?.player === 'algo' && discarding?.handIndex === $index">
+              <ng-container *ngTemplateOutlet="tile; context: { $implicit: molecule, size: handAtomSize }"></ng-container>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="table">
+        <div class="equation" #equation
+          [class.won-human]="state.winner === 'human'"
+          [class.won-algo]="state.winner === 'algo'">
+          <!-- l'équation tient toujours sur une ligne : sa taille (font-size, toutes
+               les dimensions sont en em) s'adapte à la largeur de la table -->
+          <div class="line" #line [style.font-size.em]="tableScale">
+          @for (molecule of substanceList; track $index; let i = $index) {
+            <div class="term">
+            @if (i === reactantCount) {
+              <span class="operator arrow">→</span>
+            } @else if (i > 0) {
+              <span class="operator">+</span>
+            }
+            <div class="substance" [class.active]="tableActive"
+              [class.empty]="state.coefs[i] === 0"
+              [class.refused]="refused === i"
+              [class.flash-human]="flash?.substance === i && flash?.player === 'human'"
+              [class.flash-algo]="flash?.substance === i && flash?.player === 'algo'"
+              (click)="selectSubstance(i)">
+              <!-- équation équilibrée : le coefficient correct au-dessus de la colonne ;
+                   la place est réservée pendant le jeu pour que rien ne bouge -->
+              <span class="coef" [class.shown]="state.winner">{{ state.winner ? state.equation.solution[i] : '' }}</span>
+              <!-- autant de tuiles que de molécules posées, en colonne ; à 0, un emplacement vide -->
+              @for (copy of copies(i); track $index) {
+                <div class="tile" [style.margin-top.em]="$index > 0 ? stackOffset(i, molecule) : 0">
+                  <ng-container *ngTemplateOutlet="tile; context: { $implicit: molecule }"></ng-container>
+                </div>
+              }
+            </div>
+            </div>
+          }
+          </div>
+          @if (roundOver) {
+            <div class="round-message" [class.human]="state.winner === 'human'" [class.algo]="state.winner === 'algo'"
+              [innerHTML]="roundMessage"></div>
+          }
+        </div>
+      </div>
+
+      <div class="status" [innerHTML]="statusText | safeHtml"></div>
+
+      @if (roundOver) {
+        <div class="next">
+          <button mat-flat-button color="primary" (click)="nextRound()">
+            {{ isLastRound ? 'Voir le résultat' : 'Manche suivante' }}
+          </button>
+        </div>
+      } @else {
+        <div class="turn">
+          {{ state.current === 'human' ? 'À toi de jouer !' : 'Le robot joue…' }}
+        </div>
+      }
+
+      @if (showTutorial) {
+        <!-- tutoriel : flèches vers les deux actions possibles, aux premiers tours du joueur -->
+        <div class="tutorial">
+          <span class="hint pose">
+            <mat-icon>arrow_upward</mat-icon>
+            <span><b>Poser</b>&nbsp;: touche une molécule de ta main, puis la même dans l'équation</span>
+          </span>
+          <span class="hint discard">
+            <span><b>Jeter</b></span>
+            <mat-icon>arrow_downward</mat-icon>
+          </span>
+        </div>
+      }
+
+      <div class="hand human" [class.active]="state.current === 'human' && !roundOver">
+        <div class="tiles">
+          <div class="molecules">
+            @for (molecule of state.hands.human; track $index) {
+              <div class="tile" [class.selected]="selected === $index"
+                [class.discarding]="discarding?.player === 'human' && discarding?.handIndex === $index"
+                (click)="selectHand($index)">
+                <ng-container *ngTemplateOutlet="tile; context: { $implicit: molecule, size: handAtomSize }"></ng-container>
+              </div>
+            }
+          </div>
+          <button class="trash" type="button" aria-label="Poubelle" [class.ready]="selected !== null"
+            [class.gulp]="discarding?.player === 'human'" (click)="discard()">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="restart">
+        <button mat-mini-fab color="primary" (click)="intro()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </div>
+
+    </div>
+  }
+
+  @if (showResults) {
+    <app-show-results [@slideInFromRight]></app-show-results>
+  }
+
+</div>

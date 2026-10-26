@@ -1,0 +1,465 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.container {
+  height: 100%;
+}
+
+// le jeu tient dans la hauteur de l'écran (iPhone SE compris) : la table
+// prend la place restante et l'équation s'y adapte (tableScale)
+.game {
+  --hand-height: 5.5rem; // la table fait au plus deux fois cette hauteur
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem 1rem; // marge de 1rem aux bords gauche et droit
+  box-sizing: border-box;
+}
+
+// Robot = bleu, Joueur = orange, comme HexaIons
+.scores {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 0.5rem;
+
+  // les pastilles ne passent jamais sur deux lignes
+  .chip {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    color: #ffffff;
+    font-weight: bold;
+
+    &.algo {
+      background-color: #3949ab;
+    }
+
+    &.human {
+      background-color: #f7931e;
+    }
+  }
+
+  .round {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.85rem;
+    line-height: 1.2;
+    color: #616161;
+  }
+
+  .stars {
+    display: flex;
+
+    .mat-icon {
+      // 2,25 rem, réduites si la place manque entre les pastilles
+      width: min(2.25rem, 8vw);
+      height: min(2.25rem, 8vw);
+      font-size: min(2.25rem, 8vw);
+      color: #bdbdbd;
+      transition: color 400ms ease;
+
+      // manche en cours : étoile grise un peu plus foncée
+      &.current {
+        color: #9e9e9e;
+      }
+
+      &.human {
+        color: #f7931e;
+      }
+
+      &.algo {
+        color: #3949ab;
+      }
+    }
+  }
+}
+
+// atomes : forme + couleur (lisibles sans la couleur)
+.molecule {
+  display: block;
+
+  .atom-T {
+    fill: #1e88e5;
+  }
+
+  .atom-C {
+    fill: #e53935;
+  }
+
+  .atom-S {
+    fill: #43a047;
+  }
+}
+
+.tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  padding: 0.3rem;
+  box-sizing: border-box;
+  border: 2px solid #c5cae9;
+  border-radius: 0.5rem;
+  background-color: #ffffff;
+}
+
+.hand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  min-height: var(--hand-height);
+  padding: 0.5rem;
+  box-sizing: border-box;
+  border-radius: 0.75rem;
+  border: 2px solid transparent;
+
+  .tiles {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 4rem;
+  }
+
+  // tuiles agrandies ; une molécule très longue rétrécit pour que la main
+  // tienne sur une ligne en largeur téléphone
+  .tile {
+    flex: 0 1 auto;
+    min-width: 3.25rem;
+    min-height: 3.25rem;
+
+    .molecule {
+      max-width: 100%;
+    }
+  }
+
+  &.algo.active {
+    border-color: #3949ab;
+  }
+
+  // molécule jetée : « bounceOut » d'animate.css (750 ms, cf. DISCARD_DURATION)
+  .tile.discarding {
+    position: relative;
+    z-index: 1; // passe au-dessus des tuiles voisines
+    pointer-events: none;
+    animation: bounce-out 750ms forwards;
+  }
+
+
+  &.human {
+    .tile {
+      cursor: pointer;
+      transition: transform 150ms ease;
+
+      &.selected {
+        border-color: #f7931e;
+        background-color: #fff3e0;
+        transform: translateY(-0.4rem);
+      }
+    }
+
+    &.active {
+      border-color: #f7931e;
+    }
+
+    // la poubelle reste au bord droit (sous la flèche « Jeter » du tutoriel),
+    // les molécules sont centrées dans l'espace restant
+    .tiles {
+      align-self: stretch;
+    }
+
+    .molecules {
+      flex: 1 1 auto;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+  }
+
+  .trash {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 3.5rem;
+    height: 3.25rem;
+    padding: 0 0.25rem;
+    border: 2px solid #bdbdbd;
+    border-radius: 0.5rem;
+    background-color: #ffffff;
+    color: #757575;
+    cursor: pointer;
+
+    // une molécule de la main est sélectionnée : la poubelle est prête
+    &.ready,
+    &.gulp {
+      color: #c62828;
+      border-color: #c62828;
+    }
+
+    // la poubelle « avale » la molécule jetée
+    &.gulp {
+      animation: gulp 750ms ease-in-out;
+    }
+  }
+}
+
+// la table occupe l'espace entre les deux mains et y centre l'équation
+.table {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.equation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 0 1 auto;
+  min-height: min(2 * var(--hand-height), 100%);
+  box-sizing: border-box;
+  padding: 0.5rem 0.75rem;
+  overflow: hidden;
+  border: 2px solid #c5cae9;
+  border-radius: 0.75rem;
+  background-color: transparent;
+  transition: background-color 400ms ease, border-color 400ms ease;
+
+  // fin de manche : la table prend la couleur du gagnant
+  &.won-human {
+    border-color: #f7931e;
+    background-color: #ffe0b2;
+  }
+
+  &.won-algo {
+    border-color: #3949ab;
+    background-color: #c5cae9;
+  }
+
+  // équation sur une seule ligne ; colonnes alignées par le haut pour que
+  // les coefficients soient sur une même ligne. Dimensions en em : la taille
+  // suit tableScale.
+  .line {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 0.35em;
+    width: max-content;
+
+    .tile {
+      min-width: 2.5em;
+      min-height: 2.5em;
+      padding: 0.3em;
+      border-radius: 0.5em;
+    }
+  }
+
+  // message de fin de manche, sous l'équation
+  .round-message {
+    margin-top: 0.5rem;
+    text-align: center;
+    font-weight: bold;
+
+    &.human {
+      color: #e67e00;
+    }
+
+    &.algo {
+      color: #3949ab;
+    }
+  }
+
+  .term {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 0.35em;
+  }
+
+  // opérateur centré sur la première tuile (ligne du coefficient + demi-tuile) ;
+  // son em vaut 1,4 em de la ligne
+  .operator {
+    margin-top: calc(1.65em / 1.4 + 2px);
+    font-size: 1.4em;
+    line-height: 1;
+    font-weight: bold;
+    color: #424242;
+
+    &.arrow {
+      margin-left: 0.1em;
+      margin-right: 0.1em;
+    }
+  }
+}
+
+.substance {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2em;
+
+  // cliquable seulement quand une molécule de la main est sélectionnée
+  &.active {
+    cursor: pointer;
+  }
+
+  // coefficient nul : emplacement visible mais vide
+  &.empty {
+    .tile {
+      border-style: dashed;
+      background-color: transparent;
+
+      .molecule {
+        opacity: 0.35;
+      }
+    }
+  }
+
+  // coefficient affiché une fois l'équation équilibrée, à la couleur du gagnant
+  .coef {
+    height: 1em;
+    font-size: 1.3em;
+    font-weight: bold;
+    line-height: 1;
+
+    &.shown {
+      animation: coef-in 400ms ease-out;
+    }
+  }
+
+  .won-human & .coef {
+    color: #e67e00;
+  }
+
+  .won-algo & .coef {
+    color: #3949ab;
+  }
+
+  &.refused .tile {
+    animation: shake 400ms ease;
+    border-color: #c62828;
+  }
+
+  // dernière molécule posée, à la couleur du joueur
+  &.flash-human .tile {
+    animation: pulse-human 700ms ease;
+  }
+
+  &.flash-algo .tile {
+    animation: pulse-algo 700ms ease;
+  }
+}
+
+@keyframes coef-in {
+  from { opacity: 0; transform: scale(0.3); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+@keyframes pulse-human {
+  0% { box-shadow: 0 0 0 0 rgba(247, 147, 30, 0.8); }
+  100% { box-shadow: 0 0 0 12px rgba(247, 147, 30, 0); }
+}
+
+@keyframes pulse-algo {
+  0% { box-shadow: 0 0 0 0 rgba(57, 73, 171, 0.8); }
+  100% { box-shadow: 0 0 0 12px rgba(57, 73, 171, 0); }
+}
+
+.tutorial {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 0.75rem;
+  // même retrait que le contenu de la main (padding + bordure) : « Jeter »
+  // tombe au-dessus de la poubelle
+  padding: 0 calc(0.5rem + 2px);
+  color: #e67e00;
+  font-size: 0.8rem;
+  line-height: 1.2;
+
+  .hint {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+
+    .mat-icon {
+      flex-shrink: 0;
+      animation: bounce 900ms ease-in-out infinite;
+    }
+  }
+
+  // la flèche « Jeter » est alignée au-dessus de la poubelle
+  .discard {
+    flex-direction: column;
+    flex-shrink: 0;
+    width: 3.5rem;
+
+    .mat-icon {
+      animation-name: bounce-down;
+    }
+  }
+}
+
+// d'après bounceOut d'animate.css (https://animate.style)
+@keyframes bounce-out {
+  20% { transform: scale3d(0.9, 0.9, 0.9); }
+  50%, 55% { opacity: 1; transform: scale3d(1.1, 1.1, 1.1); }
+  to { opacity: 0; transform: scale3d(0.3, 0.3, 0.3); }
+}
+
+@keyframes gulp {
+  0%, 60% { transform: scale(1); }
+  80% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes bounce-down {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+.status {
+  min-height: 2.4em;
+  line-height: 1.2;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.turn,
+.next {
+  text-align: center;
+  font-weight: bold;
+}
+
+.restart {
+  margin-top: auto;
+  text-align: center;
+}

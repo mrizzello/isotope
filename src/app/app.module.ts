@@ -25,6 +25,7 @@ import { FamilyComponent } from './games/family/family.component';
 import { ChargesComponent } from './games/charges/charges.component';
 import { HexaionsComponent } from './games/hexaions/hexaions.component';
 import { FamilyRushComponent } from './games/family-rush/family-rush.component';
+import { BalanceComponent } from './games/balance/balance.component';
 
 import { HomeComponent } from './pages/home/home.component';
 import { InfosComponent } from './pages/infos/infos.component';
@@ -50,6 +51,7 @@ import { PictiochimieScoreComponent } from './pages/pictiochimie-score/pictiochi
         FamilyComponent,
         ChargesComponent,
         HexaionsComponent,
+        BalanceComponent,
         FamilyRushComponent,
         ClockComponent,
         InfosComponent,
