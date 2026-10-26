@@ -9,7 +9,6 @@ import { ScoresService } from '../../services/scores.service';
 import {
   Action,
   Atom,
-  AtomToken,
   DRAW_CONFIG,
   Equation,
   Level,
@@ -19,10 +18,8 @@ import {
   apply,
   canPose,
   chooseAction,
-  drawColors,
   newRound,
   pickEquations,
-  shapeOf,
   substanceIndex,
   substances
 } from './balance.logic';
@@ -36,11 +33,14 @@ const STACK_LIMIT = 4;
 const STACK_GAP = 0.2; // écart entre tuiles en em, cf. .substance dans le scss
 const TUTORIAL_TURNS = 2; // nombre de tours du joueur guidés par le tutoriel, par match
 const DISCARD_DURATION = 750; // durée de l'animation d'une molécule jetée, en ms (cf. scss)
-const ATOM_GLYPHS: Record<Atom, string> = { T: '▲', C: '●', S: '■' };
+const ATOM_GLYPHS: Record<Atom, { glyph: string; color: string }> = {
+  T: { glyph: '▲', color: '#1e88e5' },
+  C: { glyph: '●', color: '#e53935' },
+  S: { glyph: '■', color: '#43a047' }
+};
 
 export interface AtomShape {
-  atom: Atom; // forme
-  token: AtomToken; // forme et couleur (minuscule : mauvaise couleur)
+  atom: Atom;
   x: number; // centre
   y: number;
 }
@@ -96,7 +96,6 @@ export class BalanceComponent implements OnDestroy {
   algoDelay: number = 1000;
   rounds: number = ROUNDS;
   handAtomSize: number = 1.5; // taille d'un atome dans les mains, en rem
-  colors: Record<AtomToken, string> = drawColors(); // couleurs de la manche
   tableScale: number = 1; // facteur de taille de l'équation (≤ 1) pour qu'elle tienne sur une ligne
 
   private layouts = new Map<Molecule, MoleculeLayout>();
@@ -250,8 +249,7 @@ export class BalanceComponent implements OnDestroy {
         const inRow = Math.min(ATOMS_PER_ROW, molecule.length - row * ATOMS_PER_ROW);
         const offset = (cols - inRow) * ATOM_SIZE / 2;
         return {
-          atom: shapeOf(atom),
-          token: atom as AtomToken,
+          atom: atom as Atom,
           x: offset + (i % ATOMS_PER_ROW + 0.5) * ATOM_SIZE,
           y: (row + 0.5) * ATOM_SIZE
         };
@@ -293,7 +291,6 @@ export class BalanceComponent implements OnDestroy {
 
   startRound() {
     const first: PlayerId = Math.random() < 0.5 ? 'human' : 'algo';
-    this.colors = drawColors();
     this.state = newRound(this.equations[this.roundIndex], first, DRAW_CONFIG[this.level].proportionEquation);
     this.roundOver = false;
     this.roundMessage = '';
@@ -357,8 +354,7 @@ export class BalanceComponent implements OnDestroy {
 
   formula(molecule: Molecule): string {
     return molecule.split('').map((atom) => {
-      const glyph = ATOM_GLYPHS[shapeOf(atom)];
-      const color = this.colors[atom as AtomToken];
+      const { glyph, color } = ATOM_GLYPHS[atom as Atom];
       return '<span style="color:' + color + '">' + glyph + '</span>';
     }).join('');
   }

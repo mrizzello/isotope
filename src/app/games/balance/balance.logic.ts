@@ -2,16 +2,9 @@
 // Fonctions pures, sans aucun import : le fichier est aussi exécuté
 // directement par Node dans scripts/simulate-balance.ts.
 
-// ▲ triangle, ● rond, ■ carré (ordre canonique T < C < S). La couleur de
-// chaque forme est tirée au hasard à chaque manche (drawColors).
+// ▲ triangle bleu, ● rond rouge, ■ carré vert (ordre canonique T < C < S)
 export type Atom = 'T' | 'C' | 'S';
 export const ATOMS: Atom[] = ['T', 'C', 'S'];
-
-// Atome de la mauvaise couleur : même forme, en minuscule ('t' est un
-// triangle d'une autre couleur que les triangles de la manche). Il n'apparaît
-// que dans les leurres. Ordre canonique : T < C < S < t < c < s.
-export type AtomToken = Atom | 't' | 'c' | 's';
-const TOKEN_ORDER = 'TCStcs';
 
 // Une molécule est la chaîne canonique (triée) de ses atomes, p. ex. 'TTC'
 export type Molecule = string;
@@ -53,7 +46,7 @@ export const DRAW_CONFIG: Record<Level, { proportionEquation: number }> = {
 
 export function canonical(atoms: string): Molecule {
   return atoms.split('')
-    .sort((a, b) => TOKEN_ORDER.indexOf(a) - TOKEN_ORDER.indexOf(b))
+    .sort((a, b) => ATOMS.indexOf(a as Atom) - ATOMS.indexOf(b as Atom))
     .join('');
 }
 
@@ -194,8 +187,7 @@ export function makeDecoy(eq: Equation, rng: Rng = Math.random): Molecule {
   const types = atomsOf(all);
   for (;;) {
     const base = randomItem(all, rng);
-    // « couleur » : un atome change de couleur, la forme reste la même
-    const ops: string[] = ['ajout', 'couleur'];
+    const ops: string[] = ['ajout'];
     if (base.length >= 2) {
       ops.push('retrait');
     }
@@ -209,8 +201,6 @@ export function makeDecoy(eq: Equation, rng: Rng = Math.random): Molecule {
       atoms.push(randomItem(types, rng));
     } else if (op === 'retrait') {
       atoms.splice(position, 1);
-    } else if (op === 'couleur') {
-      atoms[position] = atoms[position].toLowerCase();
     } else {
       atoms[position] = randomItem(types.filter((t) => t !== atoms[position]), rng);
     }
@@ -222,28 +212,6 @@ export function makeDecoy(eq: Equation, rng: Rng = Math.random): Molecule {
 }
 
 // Pioche infinie : chaque tirage est indépendant
-export function shapeOf(token: string): Atom {
-  return token.toUpperCase() as Atom;
-}
-
-// Couleurs bien distinctes, tirées à chaque manche
-export const PALETTE = ['#1e88e5', '#e53935', '#43a047', '#8e24aa', '#ffb300', '#424242'];
-
-// Une couleur différente par forme ; pour chaque forme, une « mauvaise »
-// couleur (autre que la sienne, éventuellement celle d'une autre forme)
-export function drawColors(rng: Rng = Math.random): Record<AtomToken, string> {
-  const shuffled = [...PALETTE];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(rng() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  const colors = { T: shuffled[0], C: shuffled[1], S: shuffled[2] } as Record<AtomToken, string>;
-  ATOMS.forEach((atom) => {
-    colors[atom.toLowerCase() as AtomToken] = randomItem(PALETTE.filter((c) => c !== colors[atom]), rng);
-  });
-  return colors;
-}
-
 export function drawMolecule(eq: Equation, proportionEquation: number, rng: Rng = Math.random): Molecule {
   return rng() < proportionEquation ? randomItem(substances(eq), rng) : makeDecoy(eq, rng);
 }
