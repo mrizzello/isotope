@@ -5,13 +5,13 @@
     @for (shape of layout(molecule).atoms; track $index) {
       @switch (shape.atom) {
         @case ('T') {
-          <polygon class="atom-T" [attr.points]="trianglePoints(shape)"></polygon>
+          <polygon [attr.fill]="colors[shape.token]" [attr.points]="trianglePoints(shape)"></polygon>
         }
         @case ('C') {
-          <circle class="atom-C" [attr.cx]="shape.x" [attr.cy]="shape.y" r="8"></circle>
+          <circle [attr.fill]="colors[shape.token]" [attr.cx]="shape.x" [attr.cy]="shape.y" r="8"></circle>
         }
         @case ('S') {
-          <rect class="atom-S" [attr.x]="shape.x - 7.5" [attr.y]="shape.y - 7.5" width="15" height="15"></rect>
+          <rect [attr.fill]="colors[shape.token]" [attr.x]="shape.x - 7.5" [attr.y]="shape.y - 7.5" width="15" height="15"></rect>
         }
       }
     }
