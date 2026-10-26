@@ -4,6 +4,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { BalanceComponent } from './balance.component';
+import { HAND_SIZE } from './balance.logic';
 import { SafeHtmlPipe } from '../../pipes/sanitize.pipe';
 
 describe('BalanceComponent', () => {
@@ -38,9 +39,32 @@ describe('BalanceComponent', () => {
     expect(new Set(component.equations).size).toBe(3);
     expect(component.state).not.toBeNull();
     expect(component.state!.coefs.every((c) => c === 0)).toBeTrue();
-    expect(component.state!.hands.human.length).toBe(3);
-    expect(component.state!.hands.algo.length).toBe(3);
+    expect(component.state!.hands.human.length).toBe(HAND_SIZE);
+    expect(component.state!.hands.algo.length).toBe(HAND_SIZE);
     expect(component.showGame).toBeTrue();
+  });
+
+  it('should ignore a click on the table when no hand molecule is selected', () => {
+    component.start();
+    component.state = { ...component.state!, current: 'human' };
+    component.disableClick = false;
+    const status = component.statusText;
+    expect(component.tableActive).toBeFalse();
+    component.selectSubstance(0);
+    expect(component.statusText).toBe(status);
+    expect(component.state!.coefs.every((c) => c === 0)).toBeTrue();
+    component.selectHand(0);
+    expect(component.tableActive).toBeTrue();
+  });
+
+  it('should discard the hand molecule when the trash is clicked without selection', () => {
+    component.start();
+    component.state = { ...component.state!, current: 'human' };
+    component.disableClick = false;
+    component.algoDelay = 1e9;
+    component.discard();
+    expect(component.discarding).toEqual({ player: 'human', handIndex: 0 });
+    component.ngOnDestroy();
   });
 
   it('should animate a discarded molecule before replacing it', fakeAsync(() => {

@@ -1,4 +1,4 @@
-// Simulation du jeu Balance (section 10.2 de regles-jeu-equilibrage.md) :
+// Simulation du jeu Balance :
 // l'algorithme joue contre lui-même pour chaque paire de niveaux et chaque
 // équation de la banque.
 //

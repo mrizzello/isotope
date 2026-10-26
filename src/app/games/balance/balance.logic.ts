@@ -1,4 +1,4 @@
-// Moteur de règles du jeu Balance (cf. regles-jeu-equilibrage.md).
+// Moteur de règles du jeu Balance.
 // Fonctions pures, sans aucun import : le fichier est aussi exécuté
 // directement par Node dans scripts/simulate-balance.ts.
 
@@ -35,9 +35,9 @@ export interface RoundState {
   proportionEquation: number; // part des molécules de l'équation dans la pioche
 }
 
-export const HAND_SIZE = 3;
+export const HAND_SIZE = 1;
 
-// Pondération de la pioche par niveau du robot (section 6)
+// Pondération de la pioche par niveau du robot
 export const DRAW_CONFIG: Record<Level, { proportionEquation: number }> = {
   1: { proportionEquation: 0.8 },
   2: { proportionEquation: 0.8 },
@@ -75,8 +75,8 @@ function lcm(a: number, b: number): number {
   return Math.abs(a * b) / gcd(a, b);
 }
 
-// Résout le système « atomes côté réactifs = atomes côté produits » en entiers
-// (section 7.2). Retourne null si l'espace des solutions n'est pas de
+// Résout le système « atomes côté réactifs = atomes côté produits » en entiers.
+// Retourne null si l'espace des solutions n'est pas de
 // dimension 1 ou s'il n'existe pas de solution strictement positive.
 export function solve(reactants: Molecule[], products: Molecule[]): number[] | null {
   const all = [...reactants, ...products];
@@ -125,7 +125,7 @@ export function solve(reactants: Molecule[], products: Molecule[]): number[] | n
   return solution.every((v) => v >= 1) ? solution : null;
 }
 
-// Critères de validité de la section 7.1
+// Critères de validité d'une équation
 export function isValidEquation(reactants: Molecule[], products: Molecule[]): boolean {
   const all = [...reactants, ...products];
   if (all.length < 3 || new Set(all).size !== all.length) {
@@ -149,7 +149,7 @@ function defineEquation(reactants: string[], products: string[], difficulty: Dif
   return { reactants: r, products: p, solution: solve(r, p) as number[], difficulty };
 }
 
-// Banque d'équations (section 7.3), solutions calculées
+// Banque d'équations, solutions calculées
 export const EQUATION_BANK: Equation[] = [
   defineEquation(['TT', 'CC'], ['TC'], 'A'),
   defineEquation(['TT', 'CC'], ['TTC'], 'A'),
@@ -179,7 +179,7 @@ export function substanceIndex(eq: Equation, molecule: Molecule): number {
 }
 
 // Leurre : une seule modification (ajout, retrait ou remplacement d'un atome)
-// appliquée à une substance de l'équation (section 6.1)
+// appliquée à une substance de l'équation
 export function makeDecoy(eq: Equation, rng: Rng = Math.random): Molecule {
   const all = substances(eq);
   const types = atomsOf(all);
@@ -235,7 +235,7 @@ export function isWinning(eq: Equation, coefs: number[]): boolean {
   return coefs.every((c, i) => c === eq.solution[i]);
 }
 
-// D = Σ |cᵢ − sᵢ| (section 8)
+// D = Σ |cᵢ − sᵢ|
 export function distance(eq: Equation, coefs: number[]): number {
   return coefs.reduce((sum, c, i) => sum + Math.abs(c - eq.solution[i]), 0);
 }
@@ -303,7 +303,7 @@ function winsNow(state: RoundState, action: Action): boolean {
   return action.type === 'pose' && isWinning(state.equation, tableAfter(state, action));
 }
 
-// Niveau 2 : glouton sur la distance D (section 9)
+// Niveau 2 : glouton sur la distance D
 function greedy(state: RoundState, actions: Action[], rng: Rng): Action {
   const winning = actions.filter((a) => winsNow(state, a));
   if (winning.length > 0) {

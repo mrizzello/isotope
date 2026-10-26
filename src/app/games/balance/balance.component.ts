@@ -82,6 +82,7 @@ export class BalanceComponent implements OnDestroy {
   equations: Equation[] = [];
   roundIndex: number = 0;
   roundWins: Record<PlayerId, number> = { human: 0, algo: 0 };
+  roundWinners: (PlayerId | null)[] = []; // gagnant de chaque manche, null tant qu'elle n'est pas jouée
   state: RoundState | null = null;
   roundOver: boolean = false;
 
@@ -221,6 +222,7 @@ export class BalanceComponent implements OnDestroy {
     this.equations = pickEquations(ROUNDS);
     this.roundIndex = 0;
     this.roundWins = { human: 0, algo: 0 };
+    this.roundWinners = Array(ROUNDS).fill(null);
     this.humanMoves = 0;
     this.showIntroduction = false;
     this.showGame = true;
@@ -262,12 +264,13 @@ export class BalanceComponent implements OnDestroy {
     this.selected = this.selected === index ? null : index;
   }
 
+  get tableActive(): boolean {
+    return this.humanCanPlay() && this.selected !== null;
+  }
+
   selectSubstance(substance: number) {
-    if (!this.humanCanPlay() || !this.state) {
-      return;
-    }
-    if (this.selected === null) {
-      this.statusText = 'Choisis d\'abord une molécule de ta main.';
+    // table inactive tant qu'aucune molécule de la main n'est sélectionnée
+    if (!this.tableActive || !this.state || this.selected === null) {
       return;
     }
     const formula = this.formula(this.substanceList[substance]);
@@ -281,23 +284,20 @@ export class BalanceComponent implements OnDestroy {
     }
   }
 
-  // seules les molécules de la main vont à la poubelle
+  // seules les molécules de la main vont à la poubelle ; sans sélection,
+  // un clic sur la poubelle jette directement la tuile de la main
   discard() {
     if (!this.humanCanPlay()) {
       return;
     }
-    if (this.selected === null) {
-      this.statusText = 'Choisis d\'abord une molécule de ta main à jeter.';
-      return;
-    }
-    this.play({ type: 'jeter', handIndex: this.selected });
+    this.play({ type: 'jeter', handIndex: this.selected ?? 0 });
   }
 
   formula(molecule: Molecule): string {
-    return '[' + molecule.split('').map((atom) => {
+    return molecule.split('').map((atom) => {
       const { glyph, color } = ATOM_GLYPHS[atom as Atom];
       return '<span style="color:' + color + '">' + glyph + '</span>';
-    }).join('') + ']';
+    }).join('');
   }
 
   private humanCanPlay(): boolean {
@@ -354,6 +354,7 @@ export class BalanceComponent implements OnDestroy {
 
     if (this.state.winner) {
       this.roundWins[this.state.winner]++;
+      this.roundWinners[this.roundIndex] = this.state.winner;
       this.roundOver = true;
       this.roundMessage = this.state.winner === 'human'
         ? 'Équation équilibrée&nbsp;: tu gagnes la manche&nbsp;!'

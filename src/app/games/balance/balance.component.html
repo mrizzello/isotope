@@ -30,14 +30,19 @@
       <div class="scores">
         <span class="chip algo">Robot&nbsp;: {{ roundWins.algo }}</span>
         <span class="round">
-          <span>Manche {{ roundIndex + 1 }}/{{ rounds }}</span>
           <span>niveau {{ level }}</span>
+          <!-- une étoile par manche : orange (joueur) ou bleue (robot) une fois gagnée, grise sinon -->
+          <span class="stars" [attr.aria-label]="'Manche ' + (roundIndex + 1) + ' sur ' + rounds">
+            @for (winner of roundWinners; track $index) {
+              <mat-icon [class.human]="winner === 'human'" [class.algo]="winner === 'algo'"
+                [class.current]="$index === roundIndex && !winner">star</mat-icon>
+            }
+          </span>
         </span>
         <span class="chip human">Joueur&nbsp;: {{ roundWins.human }}</span>
       </div>
 
       <div class="hand algo" [class.active]="state.current === 'algo' && !roundOver">
-        <span class="label">Main du robot</span>
         <div class="tiles">
           @for (molecule of state.hands.algo; track $index) {
             <div class="tile" [class.discarding]="discarding?.player === 'algo' && discarding?.handIndex === $index">
@@ -60,12 +65,15 @@
             } @else if (i > 0) {
               <span class="operator">+</span>
             }
-            <div class="substance"
+            <div class="substance" [class.active]="tableActive"
               [class.empty]="state.coefs[i] === 0"
               [class.refused]="refused === i"
               [class.flash-human]="flash?.substance === i && flash?.player === 'human'"
               [class.flash-algo]="flash?.substance === i && flash?.player === 'algo'"
               (click)="selectSubstance(i)">
+              <!-- équation équilibrée : le coefficient correct au-dessus de la colonne ;
+                   la place est réservée pendant le jeu pour que rien ne bouge -->
+              <span class="coef" [class.shown]="state.winner">{{ state.winner ? state.equation.solution[i] : '' }}</span>
               <!-- autant de tuiles que de molécules posées, en colonne ; à 0, un emplacement vide -->
               @for (copy of copies(i); track $index) {
                 <div class="tile" [style.margin-top.rem]="$index > 0 ? stackOffset(i, molecule) : 0">
@@ -111,7 +119,6 @@
       }
 
       <div class="hand human" [class.active]="state.current === 'human' && !roundOver">
-        <span class="label">Ta main</span>
         <div class="tiles">
           <div class="molecules">
             @for (molecule of state.hands.human; track $index) {
@@ -122,10 +129,9 @@
               </div>
             }
           </div>
-          <button class="trash" type="button" [class.ready]="selected !== null"
+          <button class="trash" type="button" aria-label="Poubelle" [class.ready]="selected !== null"
             [class.gulp]="discarding?.player === 'human'" (click)="discard()">
             <mat-icon>delete</mat-icon>
-            <span>Poubelle</span>
           </button>
         </div>
       </div>
