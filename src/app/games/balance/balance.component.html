@@ -1,7 +1,7 @@
-<!-- size : taille d'un atome en rem (1,1 sur la table, plus grand dans les mains) -->
+<!-- size : taille d'un atome en em (1,1 sur la table, plus grand dans les mains) -->
 <ng-template #tile let-molecule let-size="size">
   <svg class="molecule" [attr.viewBox]="layout(molecule).viewBox"
-    [style.width.rem]="layout(molecule).width * (size ?? 1.1)" [style.height.rem]="layout(molecule).rows * (size ?? 1.1)">
+    [style.width.em]="layout(molecule).width * (size ?? 1.1)" [style.height.em]="layout(molecule).rows * (size ?? 1.1)">
     @for (shape of layout(molecule).atoms; track $index) {
       @switch (shape.atom) {
         @case ('T') {
@@ -53,12 +53,13 @@
       </div>
 
       <div class="table">
-        <div class="equation"
+        <div class="equation" #equation
           [class.won-human]="state.winner === 'human'"
           [class.won-algo]="state.winner === 'algo'">
+          <!-- l'équation tient toujours sur une ligne : sa taille (font-size, toutes
+               les dimensions sont en em) s'adapte à la largeur de la table -->
+          <div class="line" #line [style.font-size.em]="tableScale">
           @for (molecule of substanceList; track $index; let i = $index) {
-            <!-- l'opérateur reste collé à la substance qui le suit : un retour
-                 à la ligne ne laisse jamais un « + » ou une flèche en fin de ligne -->
             <div class="term">
             @if (i === reactantCount) {
               <span class="operator arrow">→</span>
@@ -76,13 +77,14 @@
               <span class="coef" [class.shown]="state.winner">{{ state.winner ? state.equation.solution[i] : '' }}</span>
               <!-- autant de tuiles que de molécules posées, en colonne ; à 0, un emplacement vide -->
               @for (copy of copies(i); track $index) {
-                <div class="tile" [style.margin-top.rem]="$index > 0 ? stackOffset(i, molecule) : 0">
+                <div class="tile" [style.margin-top.em]="$index > 0 ? stackOffset(i, molecule) : 0">
                   <ng-container *ngTemplateOutlet="tile; context: { $implicit: molecule }"></ng-container>
                 </div>
               }
             </div>
             </div>
           }
+          </div>
           @if (roundOver) {
             <div class="round-message" [class.human]="state.winner === 'human'" [class.algo]="state.winner === 'algo'"
               [innerHTML]="roundMessage"></div>

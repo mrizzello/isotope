@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, ElementRef, NgZone, OnDestroy, ViewChild } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Subscription } from 'rxjs';
 
@@ -30,7 +30,7 @@ const ATOMS_PER_ROW = 4;
 // au-delà de STACK_LIMIT molécules, la colonne garde la hauteur de STACK_LIMIT
 // tuiles et les tuiles se chevauchent
 const STACK_LIMIT = 4;
-const STACK_GAP = 0.2; // écart entre tuiles en rem, cf. .substance dans le scss
+const STACK_GAP = 0.2; // écart entre tuiles en em, cf. .substance dans le scss
 const TUTORIAL_TURNS = 2; // nombre de tours du joueur guidés par le tutoriel, par match
 const DISCARD_DURATION = 750; // durée de l'animation d'une molécule jetée, en ms (cf. scss)
 const ATOM_GLYPHS: Record<Atom, { glyph: string; color: string }> = {
@@ -96,13 +96,30 @@ export class BalanceComponent implements OnDestroy {
   algoDelay: number = 1000;
   rounds: number = ROUNDS;
   handAtomSize: number = 1.5; // taille d'un atome dans les mains, en rem
+  tableScale: number = 1; // facteur de taille de l'équation (≤ 1) pour qu'elle tienne sur une ligne
 
   private layouts = new Map<Molecule, MoleculeLayout>();
   private timers: ReturnType<typeof setTimeout>[] = [];
   private startSubscription: Subscription | undefined;
   private restartSubscription: Subscription | undefined;
+  private resizeObserver: ResizeObserver | undefined;
+  private equationElement: HTMLElement | undefined;
+  private lineElement: HTMLElement | undefined;
+
+  // la table n'existe que pendant le jeu : on observe la table et l'équation
+  // dès qu'elles apparaissent (changement de largeur ou d'équation)
+  @ViewChild('equation') set equationRef(ref: ElementRef<HTMLElement> | undefined) {
+    this.equationElement = ref?.nativeElement;
+    this.observe();
+  }
+
+  @ViewChild('line') set lineRef(ref: ElementRef<HTMLElement> | undefined) {
+    this.lineElement = ref?.nativeElement;
+    this.observe();
+  }
 
   constructor(
+    private zone: NgZone,
     private introductionService: IntroductionService,
     private showResultsService: ShowResultsService,
     private scoresService: ScoresService
@@ -139,9 +156,51 @@ export class BalanceComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.resizeObserver?.disconnect();
     this.clearTimers();
     this.restartSubscription?.unsubscribe();
     this.startSubscription?.unsubscribe();
+  }
+
+  private observe() {
+    if (typeof ResizeObserver === 'undefined') {
+      return;
+    }
+    this.resizeObserver ??= new ResizeObserver(() => this.zone.run(() => this.fitEquation()));
+    this.resizeObserver.disconnect();
+    const table = this.equationElement?.parentElement;
+    if (this.equationElement && this.lineElement && table) {
+      this.resizeObserver.observe(table);
+      this.resizeObserver.observe(this.equationElement);
+      this.resizeObserver.observe(this.lineElement);
+    }
+  }
+
+  // les dimensions de l'équation sont proportionnelles à tableScale : on en
+  // déduit sa taille à l'échelle 1, puis l'échelle qui la fait tenir dans la
+  // largeur de la table et dans la hauteur laissée par les mains
+  private fitEquation() {
+    const table = this.equationElement?.parentElement;
+    if (!this.equationElement || !this.lineElement || !table) {
+      return;
+    }
+    const style = getComputedStyle(this.equationElement);
+    const message = this.equationElement.querySelector<HTMLElement>('.round-message');
+    const width = this.equationElement.clientWidth
+      - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+    const height = table.clientHeight
+      - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom)
+      - parseFloat(style.borderTopWidth) - parseFloat(style.borderBottomWidth)
+      - (message ? message.offsetHeight + parseFloat(getComputedStyle(message).marginTop) : 0);
+    const naturalWidth = this.lineElement.offsetWidth / this.tableScale;
+    const naturalHeight = this.lineElement.offsetHeight / this.tableScale;
+    if (width <= 0 || height <= 0 || naturalWidth <= 0 || naturalHeight <= 0) {
+      return;
+    }
+    const scale = Math.min(1, width / naturalWidth, height / naturalHeight);
+    if (Math.abs(scale - this.tableScale) > 0.005) {
+      this.tableScale = scale;
+    }
   }
 
   get substanceList(): Molecule[] {
@@ -160,7 +219,7 @@ export class BalanceComponent implements OnDestroy {
     if (count <= STACK_LIMIT) {
       return 0;
     }
-    // hauteur d'une tuile : atomes (1,1 rem par ligne) + padding + bordure, 2,5 rem au minimum
+    // hauteur d'une tuile : atomes (1,1 em par ligne) + padding + bordure, 2,5 em au minimum
     const height = Math.max(2.5, this.layout(molecule).rows * 1.1 + 0.85);
     const column = STACK_LIMIT * height + (STACK_LIMIT - 1) * STACK_GAP;
     const step = (column - height) / (count - 1);

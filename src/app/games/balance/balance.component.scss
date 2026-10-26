@@ -1,14 +1,21 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
 .container {
   height: 100%;
 }
 
+// le jeu tient dans la hauteur de l'écran (iPhone SE compris) : la table
+// prend la place restante et l'équation s'y adapte (tableScale)
 .game {
-  --hand-height: 7rem; // la table fait au départ deux fois cette hauteur
+  --hand-height: 5.5rem; // la table fait au plus deux fois cette hauteur
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.5rem;
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   padding: 0.5rem 1rem; // marge de 1rem aux bords gauche et droit
   box-sizing: border-box;
 }
@@ -19,7 +26,12 @@
   justify-content: space-between;
   align-items: center;
 
+  gap: 0.5rem;
+
+  // les pastilles ne passent jamais sur deux lignes
   .chip {
+    flex-shrink: 0;
+    white-space: nowrap;
     padding: 0.25rem 0.75rem;
     border-radius: 1rem;
     color: #ffffff;
@@ -47,9 +59,10 @@
     display: flex;
 
     .mat-icon {
-      width: 2.25rem;
-      height: 2.25rem;
-      font-size: 2.25rem;
+      // 2,25 rem, réduites si la place manque entre les pastilles
+      width: min(2.25rem, 8vw);
+      height: min(2.25rem, 8vw);
+      font-size: min(2.25rem, 8vw);
       color: #bdbdbd;
       transition: color 400ms ease;
 
@@ -207,6 +220,7 @@
 // la table occupe l'espace entre les deux mains et y centre l'équation
 .table {
   flex: 1 1 auto;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -214,15 +228,14 @@
 
 .equation {
   display: flex;
-  flex-wrap: wrap;
-  // colonnes alignées par le haut : les coefficients sont sur une même ligne
-  align-items: flex-start;
-  align-content: center;
-  min-height: calc(2 * var(--hand-height));
-  box-sizing: border-box;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  gap: 0.5rem 0.35rem;
-  padding: 0.75rem 0.25rem;
+  flex: 0 1 auto;
+  min-height: min(2 * var(--hand-height), 100%);
+  box-sizing: border-box;
+  padding: 0.5rem 0.75rem;
+  overflow: hidden;
   border: 2px solid #c5cae9;
   border-radius: 0.75rem;
   background-color: transparent;
@@ -239,9 +252,26 @@
     background-color: #c5cae9;
   }
 
-  // message de fin de manche, sur toute la largeur sous l'équation
+  // équation sur une seule ligne ; colonnes alignées par le haut pour que
+  // les coefficients soient sur une même ligne. Dimensions en em : la taille
+  // suit tableScale.
+  .line {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 0.35em;
+    width: max-content;
+
+    .tile {
+      min-width: 2.5em;
+      min-height: 2.5em;
+      padding: 0.3em;
+      border-radius: 0.5em;
+    }
+  }
+
+  // message de fin de manche, sous l'équation
   .round-message {
-    flex-basis: 100%;
     margin-top: 0.5rem;
     text-align: center;
     font-weight: bold;
@@ -255,25 +285,25 @@
     }
   }
 
-  // un opérateur et la substance qui le suit ne se séparent pas
   .term {
     display: flex;
     flex-wrap: nowrap;
     align-items: flex-start;
-    gap: 0.35rem;
+    gap: 0.35em;
   }
 
-  // opérateur centré sur la première tuile (ligne du coefficient + demi-tuile)
+  // opérateur centré sur la première tuile (ligne du coefficient + demi-tuile) ;
+  // son em vaut 1,4 em de la ligne
   .operator {
-    margin-top: calc(1.65rem + 2px);
-    font-size: 1.4rem;
+    margin-top: calc(1.65em / 1.4 + 2px);
+    font-size: 1.4em;
     line-height: 1;
     font-weight: bold;
     color: #424242;
 
     &.arrow {
-      margin-left: 0.15rem;
-      margin-right: 0.15rem;
+      margin-left: 0.1em;
+      margin-right: 0.1em;
     }
   }
 }
@@ -283,7 +313,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.2rem;
+  gap: 0.2em;
 
   // cliquable seulement quand une molécule de la main est sélectionnée
   &.active {
@@ -304,8 +334,8 @@
 
   // coefficient affiché une fois l'équation équilibrée, à la couleur du gagnant
   .coef {
-    height: 1.3rem;
-    font-size: 1.3rem;
+    height: 1em;
+    font-size: 1.3em;
     font-weight: bold;
     line-height: 1;
 
@@ -417,7 +447,8 @@
 }
 
 .status {
-  min-height: 2.5rem;
+  min-height: 2.4em;
+  line-height: 1.2;
   text-align: center;
   font-size: 0.9rem;
 }
@@ -431,5 +462,4 @@
 .restart {
   margin-top: auto;
   text-align: center;
-  padding-bottom: 0.5rem;
 }
