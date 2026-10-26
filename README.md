@@ -7,7 +7,7 @@
 ## 🚀 Fonctionnalités principales
 
 ### 1. Bibliothèque de Mini-Jeux Chimiques
-Isotope propose **8 jeux interactifs** et **2 modules utilitaires** (dans l'ordre du menu) :
+Isotope propose **9 jeux interactifs** et **2 modules utilitaires** (dans l'ordre du menu) :
 
 *   **Structure de Lewis (`/lewis`)** : Retrouvez la structure de Lewis d'un élément parmi 8 propositions disposées en cercle autour de lui (le groupe est indiqué en chiffre romain). La difficulté augmente par paliers de groupes (I–III, puis IV–V, puis VI–VIII). Chaque erreur ajoute **+3 s** au chrono.
 *   **Charges (`/charges`)** : Trouvez la charge correcte (signe et valeur) de 10 ions de difficulté croissante (paliers 3/3/2/2, sans métaux de transition). Les 4 charges proposées forment une arche au-dessus de la formule, et le fond « batterie » se remplit au fil des réponses. Chaque erreur ajoute **+3 s** au chrono.
@@ -20,6 +20,7 @@ Isotope propose **8 jeux interactifs** et **2 modules utilitaires** (dans l'ordr
     *   En cas d'erreur, le bon bac clignote en vert et le mauvais est bloqué 1 seconde.
 *   **HexaIons (`/hexaions`)** : Jeu de plateau stratégique sur grille hexagonale où vous jouez contre un robot. Posez des cations et des anions pour former des molécules électriquement neutres (charge nette de 0).
     *   *Règles de bonus :* Les sels acides rapportent **3 points supplémentaires**, et les molécules de 3 ions ou plus rapportent **2 points supplémentaires**.
+*   **Balance (`/balance`)** : Jeu d'équilibrage d'équations abstraites contre un robot (niveau 1, 2 ou 3 au choix). Les molécules sont des tuiles d'atomes (▲ bleu, ● rouge, ■ vert) qu'on ne peut pas modifier : à son tour, on **pose** une molécule de sa main sur la substance identique ou on la **jette** à la poubelle. Une molécule posée ne peut plus être retirée, et une pose qui dépasserait la solution est refusée. Celui qui complète les plus petits coefficients équilibrés gagne la manche ; le match se joue en 3 manches sur 3 équations différentes. Règles de départ dans `regles-jeu-equilibrage.md` (le retrait, action C, a été supprimé), simulation robot contre robot avec `npm run simulate:balance`.
 *   **Horloge Chimique (`/clock`)** : Une horloge numérique originale où les heures et les minutes sont affichées sous la forme des noms des éléments chimiques correspondants à leur numéro atomique (ex. : 6h15 s'affiche comme "Carbone : Phosphore").
 *   **Pictiochimie (`/pictiochimie` & `/pictiochimie-score`)** : Un outil de type Pictionary pour la chimie avec un tableau de score séparé (`/pictiochimie-score`) ouvrable dans un autre onglet pour animer des sessions de dessin en classe.
 
@@ -48,8 +49,9 @@ src/app/
 │   ├── score-stars/     # Évaluation visuelle du score (étoiles)
 │   ├── show-results/    # Écran de fin de jeu avec affichage du score et du GIF
 │   └── stopwatch/       # Chronomètre global pour les jeux chronométrés
-├── games/               # Code source individuel des 8 mini-jeux
+├── games/               # Code source individuel des 9 mini-jeux
 │   ├── associations/
+│   ├── balance/         # Contient également le moteur de règles balance.logic.ts
 │   ├── charges/
 │   ├── family/
 │   ├── family-rush/     # Contient également le fichier de logique family-rush.logic.ts
