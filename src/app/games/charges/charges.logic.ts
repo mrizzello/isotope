@@ -8,7 +8,7 @@ export const ALL_CHARGES = ['3+', '2+', '+', '–', '2–', '3–'];
 export const PROPOSITIONS = 4;
 
 // palier 1 = monoatomiques (déduits du tableau périodique), palier 3 = tous les autres polyatomiques
-const TIER_2 = ['NH4', 'H3O', 'NO3', 'SO4', 'CO3', 'PO4', 'CN'];
+const TIER_2 = ['NH4', 'H3O', 'NO3', 'SO4', 'CO3', 'PO4', 'CN', 'OH'];
 const TIER_4 = ['Cr2O7', 'CrO4', 'S2O3', 'CH3COO', 'HCOO'];
 
 export interface Proposition {

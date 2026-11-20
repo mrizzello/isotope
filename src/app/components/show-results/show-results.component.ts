@@ -64,7 +64,9 @@ export class ShowResultsComponent {
       }
       let gameScore = scores[data.game];
       this.bestScore = false;
-      if (data.points !== undefined) {
+      if (data.noScore) {
+        // jeu sans score enregistré (Sudoku ionique)
+      } else if (data.points !== undefined) {
         // score en points : plus haut = meilleur
         if (gameScore == undefined || data.points >= gameScore) {
           scores[data.game] = data.points;
