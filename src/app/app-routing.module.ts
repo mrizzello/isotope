@@ -11,6 +11,7 @@ import { FamilyComponent } from './games/family/family.component';
 import { HexaionsComponent } from './games/hexaions/hexaions.component';
 import { FamilyRushComponent } from './games/family-rush/family-rush.component';
 import { BalanceComponent } from './games/balance/balance.component';
+import { SudokuComponent } from './games/sudoku/sudoku.component';
 import { ClockComponent } from './pages/clock/clock.component';
 import { InfosComponent } from './pages/infos/infos.component';
 import { ScoresComponent } from './pages/scores/scores.component';
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'hexaions', component: HexaionsComponent },
   { path: 'family-rush', component: FamilyRushComponent },
   { path: 'balance', component: BalanceComponent },
+  { path: 'sudoku', component: SudokuComponent },
   { path: 'clock', component: ClockComponent },
   { path: 'infos', component: InfosComponent },
   { path: 'scores', component: ScoresComponent },

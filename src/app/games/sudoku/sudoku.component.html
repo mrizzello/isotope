@@ -1,0 +1,85 @@
+<div class="container">
+
+  @if (showIntroduction) {
+    <app-introduction [@slideInFromLeft]></app-introduction>
+  }
+
+  @if (showGame && puzzle) {
+    <div class="game" [@slideInFromRight]>
+
+      <!-- la planche (libellés + grille) prend la place restante, en restant carrée -->
+      <div class="board-area">
+        <div class="board">
+          <div class="labels">
+            <span class="label shaded">{{ label(0) }}</span>
+            <span class="label">{{ label(1) }}</span>
+          </div>
+          <div class="grid">
+            @for (i of indexes; track i) {
+              <button type="button" class="cell"
+                [class.shaded]="box(i) === 0 || box(i) === 3"
+                [class.given]="puzzle.givens[i]"
+                [class.valid]="!puzzle.givens[i] && status(i) === 'valid'"
+                [class.invalid]="!puzzle.givens[i] && status(i) === 'invalid'"
+                [class.wrong]="wrong.has(i)"
+                [class.ionic]="ionic(i)"
+                [class.box-right]="i % 4 === 1"
+                [class.box-bottom]="i >= 4 && i < 8"
+                [attr.aria-label]="'Case ' + (i + 1)"
+                (click)="touchCell(i)">
+                @if (ionic(i)) {
+                  <span class="ion-part cation" [innerHTML]="ionPart(i, 'cation')"></span>
+                  <span class="ion-part anion" [innerHTML]="ionPart(i, 'anion')"></span>
+                } @else {
+                  <span class="formula" [innerHTML]="formula(i)"></span>
+                }
+              </button>
+            }
+          </div>
+          <div class="labels">
+            <span class="label">{{ label(2) }}</span>
+            <span class="label shaded">{{ label(3) }}</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="message" aria-live="polite">{{ message }}</p>
+
+      <div class="keypad">
+        <div class="ions">
+          @for (ion of puzzle.cations; track $index) {
+            <button type="button" class="ion cation" [class.selected]="isSelected('cation', $index)"
+              (click)="selectIon('cation', $index)">
+              <span class="symbol"><span [innerHTML]="ion.symbol"></span><sup>{{ charge(ion, '+') }}</sup></span>
+            </button>
+          }
+        </div>
+        <div class="ions">
+          @for (ion of puzzle.anions; track $index) {
+            <button type="button" class="ion anion" [class.selected]="isSelected('anion', $index)"
+              (click)="selectIon('anion', $index)">
+              <span class="symbol"><span [innerHTML]="ion.symbol"></span><sup>{{ charge(ion, '–') }}</sup></span>
+            </button>
+          }
+        </div>
+        <div class="actions">
+          <button mat-mini-fab color="primary" type="button" aria-label="Retour" (click)="intro()">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+          <button type="button" class="ion erase" [class.selected]="isSelected('erase')" (click)="selectErase()">
+            <mat-icon>backspace</mat-icon> Effacer
+          </button>
+          <button mat-flat-button color="primary" type="button" class="check" [disabled]="!filled" (click)="check()">
+            Vérifier
+          </button>
+        </div>
+      </div>
+
+    </div>
+  }
+
+  @if (showResults) {
+    <app-show-results [@slideInFromRight]></app-show-results>
+  }
+
+</div>

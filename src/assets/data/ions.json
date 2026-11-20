@@ -421,6 +421,17 @@
       "group": ""
     },
     {
+      "symbol": "OH",
+      "charge": "–",
+      "name": "hydroxyde",
+      "wrongNames": [
+        "oxyde",
+        "hydrure",
+        "peroxyde"
+      ],
+      "group": ""
+    },
+    {
       "symbol": "ClO",
       "charge": "–",
       "name": "hypochlorite",

@@ -29,6 +29,7 @@ describe('charges.logic', () => {
     expect(tierOf(ion('Cl', '–'))).toBe(1);
     expect(tierOf(ion('SO<sub>4</sub>', '2–'))).toBe(2);
     expect(tierOf(ion('NH<sub>4</sub>', '+'))).toBe(2);
+    expect(tierOf(ion('OH', '–'))).toBe(2);
     expect(tierOf(ion('ClO<sub>3</sub>', '–'))).toBe(3);
     expect(tierOf(ion('Cr<sub>2</sub>O<sub>7</sub>', '2–'))).toBe(4);
   });

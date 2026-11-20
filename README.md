@@ -21,6 +21,7 @@ Isotope propose **9 jeux interactifs** et **2 modules utilitaires** (dans l'ordr
 *   **HexaIons (`/hexaions`)** : Jeu de plateau stratégique sur grille hexagonale où vous jouez contre un robot. Posez des cations et des anions pour former des molécules électriquement neutres (charge nette de 0).
     *   *Règles de bonus :* Les sels acides rapportent **3 points supplémentaires**, et les molécules de 3 ions ou plus rapportent **2 points supplémentaires**.
 *   **Balance (`/balance`)** : Jeu d'équilibrage d'équations abstraites contre un robot (niveau 1, 2 ou 3 au choix). Les molécules sont des tuiles d'atomes (▲ bleu, ● rouge, ■ vert) qu'on ne peut pas modifier. Chaque joueur a une seule molécule en main, tirée d'une pioche infinie (80 % de molécules de l'équation, 20 % de leurres : un atome ajouté, retiré, remplacé ou d'une autre couleur). À son tour, on **pose** sa molécule sur la substance identique ou on la **jette** à la poubelle, puis on en tire une nouvelle. Une molécule posée ne peut plus être retirée, et une pose qui dépasserait la solution est refusée. Celui qui complète les plus petits coefficients équilibrés gagne la manche ; les coefficients s'affichent alors au-dessus des colonnes. Le match se joue toujours en 3 manches sur 3 équations différentes, avec un premier joueur tiré au sort à chaque manche. Le robot joue au hasard (niveau 1), de façon gloutonne (niveau 2) ou gloutonne et défensive (niveau 3). Simulation robot contre robot avec `npm run simulate:balance`.
+*   **Sudoku ionique (`/sudoku`)** : Adaptation d'un sudoku papier sur une grille 4×4 générée au hasard, avec une solution unique et 4 cases données. Chaque boîte 2×2 regroupe les composés d'un cation, et chaque ligne, colonne et boîte contient une fois chacun des 4 anions. Les ions sont tirés d'un sous-ensemble de `ions.json` (H⁺, Na⁺, K⁺, NH₄⁺, Mg²⁺, Ca²⁺, Fe²⁺, Cu²⁺, Al³⁺, Fe³⁺ ; F⁻, Cl⁻, OH⁻, NO₃⁻, SO₄²⁻, PO₄³⁻). On touche un ion du clavier (il reste sélectionné), puis une case : chaque toucher ajoute une unité de cet ion, jusqu'à 3 au maximum. Une case n'accepte qu'un seul cation et un seul anion ; **Effacer** la vide. La formule s'affiche en vert si les indices sont justes et simplifiés, en rouge sinon. **Vérifier** (grille remplie) marque les cases fausses, et on peut revérifier sans limite. Pas de score enregistré.
 *   **Horloge Chimique (`/clock`)** : Une horloge numérique originale où les heures et les minutes sont affichées sous la forme des noms des éléments chimiques correspondants à leur numéro atomique (ex. : 6h15 s'affiche comme "Carbone : Phosphore").
 *   **Pictiochimie (`/pictiochimie` & `/pictiochimie-score`)** : Un outil de type Pictionary pour la chimie avec un tableau de score séparé (`/pictiochimie-score`) ouvrable dans un autre onglet pour animer des sessions de dessin en classe.
 
@@ -49,7 +50,7 @@ src/app/
 │   ├── score-stars/     # Évaluation visuelle du score (étoiles)
 │   ├── show-results/    # Écran de fin de jeu avec affichage du score et du GIF
 │   └── stopwatch/       # Chronomètre global pour les jeux chronométrés
-├── games/               # Code source individuel des 9 mini-jeux
+├── games/               # Code source individuel des 10 mini-jeux
 │   ├── associations/
 │   ├── balance/         # Contient également le moteur de règles balance.logic.ts
 │   ├── charges/
@@ -58,6 +59,7 @@ src/app/
 │   ├── hexaions/        # Contient également le fichier de logique hexaions.logic.ts
 │   ├── lewis/
 │   ├── memorion/
+│   ├── sudoku/          # Contient également le moteur de règles sudoku.logic.ts
 │   └── trivion/
 ├── pages/               # Pages globales de l'application
 │   ├── clock/           # Horloge chimique
